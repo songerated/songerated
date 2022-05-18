@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import Header from './components/Header';
 import PlaceToVisit from './components/PlaceToVisit';
+import SignUp from './components/SignUp';
+import { Container } from 'react-bootstrap';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +22,10 @@ export default function App() {
       <CssBaseline />
       <Header />
       <PlaceToVisit />
+      <Container className="d-flex align-items-center justify-content-center"
+      style={{ minHeight: "100vh" }}>
+        <SignUp />
+      </Container>
     </div>
   );
 }
