@@ -1,5 +1,18 @@
 import React, { useRef } from 'react'
 import {Form, Button, Card} from 'react-bootstrap'
+import { makeStyles } from '@material-ui/core/styles';
+import { Container } from 'react-bootstrap';
+import Box from '@mui/material/Box';
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      minHeight: '100vh',
+      backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/music_setup.jpg'})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+    },
+  }));
 
 export default function SignUp() {
     const emailRef = useRef()
@@ -9,29 +22,39 @@ export default function SignUp() {
        Using the card and form feature in React Bootstrap, creating a form inside a card with 
       email and password with confirmation 
     */
+    const classes = useStyles();
+      
   return (
-    <>
+    <div className={classes.root}>
+        <Container className="d-flex align-items-center justify-content-center"
+        style={{ minHeight: "100vh" }}>
+        <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
-            <Card.Body>
-                <h2 className='text-center mb-4'>Sign Up</h2>
-                <Form.Group id="email">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type = "email" ref={emailRef} required />
-                </Form.Group>
-                <Form.Group id="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type = "password" ref={passwordRef} required />
-                </Form.Group>
-                <Form.Group id="password-confirm">
-                    <Form.Label>Password Confirmation</Form.Label>
-                    <Form.Control type = "email" ref={passwordConfirmRef} required />
-                </Form.Group>
-                <Button className = "w-100" type = "submit">Sign Up</Button>
-            </Card.Body>
-        </Card>
-        <div className="w-100 text-center-mt-2">
-            Already have an account? Login
+                <Card.Body>
+                    <h2 className='text-center mb-4'>Sign Up</h2>
+                    <Form.Group id="email" style={{padding: '8px'}}>
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type = "email" ref={emailRef} required />
+                    </Form.Group>
+                    <Form.Group id="password" style={{padding: '8px'}}>
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type = "password" ref={passwordRef} required />
+                    </Form.Group>
+                    <Form.Group id="password-confirm" style={{padding: '8px'}}>
+                        <Form.Label>Password Confirmation</Form.Label>
+                        <Form.Control type = "email" ref={passwordConfirmRef} required />
+                    </Form.Group>
+                    <Box sx={{margin:'8px'}}>
+                        <Button className = "w-100" type = "submit" >Sign Up</Button>
+                    </Box>
+                </Card.Body>
+            </Card>
+            <div className="w-100 text-center-mt-2">
+                Already have an account? Login
+            </div>
         </div>
-    </>
+        </Container>
+   </ div>
+   
   )
 }
