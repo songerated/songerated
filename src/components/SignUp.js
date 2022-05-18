@@ -5,12 +5,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container } from 'react-bootstrap';
 import Box from '@mui/material/Box';
 import {useNavigate} from 'react-router-dom';
-
+import ResponsiveAppBar from './ResponsiveAppBar';
 
 const useStyles = makeStyles((theme) => ({
     root: {
       minHeight: '100vh',
-      backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/music_setup.jpg'})`,
+      backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/music_setup_blur.jpg'})`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
     },
@@ -30,6 +30,7 @@ export default function SignUp() {
       
   return (
     <div className={classes.root}>
+        <ResponsiveAppBar />
         <Container className="d-flex align-items-center justify-content-center"
         style={{ minHeight: "100vh" }}>
         <div className="w-100" style={{ maxWidth: "400px" }}>
