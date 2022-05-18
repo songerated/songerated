@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {Form, Button, Card} from 'react-bootstrap'
 
 export default function SignUp() {
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    const passwordConfirmRef = useRef()
+    /* 
+       Using the card and form feature in React Bootstrap, creating a form inside a card with 
+      email and password with confirmation 
+    */
   return (
     <>
-    /*Using the card and form feature in React Bootstrap, creating a form inside a card with 
-    email and password with confirmation */
         <Card>
             <Card.Body>
                 <h2 className='text-center mb-4'>Sign Up</h2>
