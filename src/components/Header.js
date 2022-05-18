@@ -4,6 +4,8 @@ import { AppBar, IconButton, Toolbar, Collapse } from '@material-ui/core';
 import SortIcon from '@material-ui/icons/Sort';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link as Scroll } from 'react-scroll';
+import Button from '@mui/material/Button';
+import {useNavigate} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +50,10 @@ export default function Header() {
   useEffect(() => {
     setChecked(true);
   }, []);
+
+  const navigate = useNavigate();
+  const handleOnClick = () => navigate('/signup', {replace: true});
+
   return (
     <div className={classes.root} id="header">
       <AppBar className={classes.appbar} elevation={0}>
@@ -58,6 +64,9 @@ export default function Header() {
           <IconButton>
             <SortIcon className={classes.icon} />
           </IconButton>
+          <Button variant="contained" onClick={handleOnClick}>
+            Sign Up
+          </Button>
         </Toolbar>
       </AppBar>
 

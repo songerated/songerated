@@ -1,8 +1,10 @@
 import React, { useRef } from 'react'
-import {Form, Button, Card} from 'react-bootstrap'
+import {Form, Card} from 'react-bootstrap'
+import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container } from 'react-bootstrap';
 import Box from '@mui/material/Box';
+import {useNavigate} from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,6 +25,8 @@ export default function SignUp() {
       email and password with confirmation 
     */
     const classes = useStyles();
+    const navigate = useNavigate();
+    const handleOnClick = () => navigate('/spotifylink', {replace: true});
       
   return (
     <div className={classes.root}>
@@ -45,7 +49,7 @@ export default function SignUp() {
                         <Form.Control type = "email" ref={passwordConfirmRef} required />
                     </Form.Group>
                     <Box sx={{margin:'8px'}}>
-                        <Button className = "w-100" type = "submit" >Sign Up</Button>
+                        <Button className = "w-100" type = "submit" onClick={handleOnClick}>Sign Up</Button>
                     </Box>
                 </Card.Body>
             </Card>
