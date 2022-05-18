@@ -13,9 +13,20 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import MusicVideoTwoToneIcon from '@mui/icons-material/MusicVideoTwoTone';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 
 const pages = ['Home', 'About', 'Team'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#1976d2',
+    },
+  },
+});
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -37,7 +48,8 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <ThemeProvider theme={darkTheme}>
+    <AppBar position="static" sx={{ bgcolor: "transparent" }} enableColorOnDark>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <MusicVideoTwoToneIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -158,6 +170,7 @@ const ResponsiveAppBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
+    </ThemeProvider>
   );
 };
 export default ResponsiveAppBar;
