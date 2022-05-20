@@ -7,6 +7,8 @@ import ResponsiveAppBar from './components/ResponsiveAppBar';
 import { Container } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Stack from '@mui/material/Stack';
+import {useNavigate} from 'react-router-dom';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SpotifyLink() {
     const classes = useStyles();
 
+    const navigate = useNavigate();
+    const handleOnClick = () => navigate('/connectspotify', {replace: true});
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -55,7 +59,7 @@ export default function SpotifyLink() {
 
                     <Box sx={{padding: '16px'}}>
                         <center>
-                            <Button variant="contained" sx={{ bgcolor: "black" }}>Submit</Button>
+                            <Button variant="contained" sx={{ bgcolor: "black" }}  onClick={handleOnClick}>Submit</Button>
                         </center>
                     </Box>
                     </center>
