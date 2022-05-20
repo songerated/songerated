@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         color: "green"
       }
   }));
-export default function LogIn()  {
+export default function ConnectSpotify()  {
     const classes = useStyles();
 
   return (
