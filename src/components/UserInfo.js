@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import ResponsiveAppBar from './ResponsiveAppBar';
-import Spotifyhtml from './Spotifyhtml.js';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,13 +14,12 @@ const useStyles = makeStyles((theme) => ({
         color: "green"
       }
   }));
-export default function LogIn()  {
+export default function UserInfo()  {
     const classes = useStyles();
 
   return (
     <div class={classes.root}>
         <ResponsiveAppBar/>
-        <Spotifyhtml/>
     </div>
   )
 }
