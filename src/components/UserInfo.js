@@ -171,7 +171,7 @@ export default function UserInfo()  {
                   }</StyledTableCell>
                   <StyledTableCell align="right">{track.album.name}</StyledTableCell>
                   <StyledTableCell align="right">{track.popularity}</StyledTableCell>
-                  <StyledTableCell align="right">{track.explicit}</StyledTableCell>
+                  <StyledTableCell align="right">{track.explicit.toString()}</StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -188,14 +188,14 @@ export default function UserInfo()  {
         <center>
           <Box sx={{margin: '32px', width:"80%" }}>
             <form onSubmit={getTopTracks}>
-                <Button type={"submit"} onClick={renderTopTracks}>Get your spotify data</Button>
+                <Button type={"submit"} variant="contained" sx={{ bgcolor: "black", margin:'16px' }}  onClick={renderTopTracks}>Get your most listened songs</Button>
                 {renderTopTracks()}
               </form>
           </Box>
           <Box sx={{ margin: '32px', width:"80%" }}>
 
               <form onSubmit={getTopArtists}>
-                <Button type={"submit"} onClick={renderTopArtists}>Get your spotify data</Button>
+                <Button  type={"submit"} variant="contained" sx={{ bgcolor: "black", margin:'16px' }} onClick={renderTopArtists}>Get your favourite artists</Button>
                 {renderTopArtists()}
               </form>
           </Box>
