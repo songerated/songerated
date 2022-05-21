@@ -21,6 +21,7 @@ export default function UserInfo()  {
     const [token, setToken] = useState("")
     
 
+    //This is the function that gets the token from the URL
     useEffect(() => {
       const hash = window.location.hash
       let token = window.localStorage.getItem("token")
@@ -33,25 +34,43 @@ export default function UserInfo()  {
   
       setToken(token)
   
-  }, [])
+    }, [])
 
-  const searchArtists = async (e) => {
-    e.preventDefault()
-    const {data} = await axios.get("https://api.spotify.com/v1/search", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
-        params: {
-            q: searchKey,
-            type: "artist"
+    const searchArtists = async (e) => {
+      e.preventDefault()
+        const {data} = await axios.get("https://api.spotify.com/v1/search", {
+          headers: {
+              Authorization: `Bearer ${token}`
+          },
+          params: {
+              q: searchKey,
+              type: "artist"
+          }
+      })
+
+      setArtists(data.artists.items)
+    }
+
+    const getTopArtists = async (e) => {
+      e.preventDefault()
+        const {data} = await axios.get("https://api.spotify.com/v1/me/top/artists", {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+          params: {
         }
-    })
 
-    setArtists(data.artists.items)
-}
+          
+      })
+
+      //setTopArtists(data.items)
+      renderTopArtists(data)
+
+    }
 
     const [searchKey, setSearchKey] = useState("")
     const [artists, setArtists] = useState([])
+    const [topArtists, setTopArtists] = useState([])
 
     const renderArtists = () => {
       return artists.map(artist => (
@@ -60,18 +79,24 @@ export default function UserInfo()  {
               {artist.name}
           </div>
       ))
-  }
+    }
 
-  return (
-    <div className={classes.root}>
-        <ResponsiveAppBar/>
-        <form onSubmit={searchArtists}>
-          <input type="text" onChange={e => setSearchKey(e.target.value)}/>
-          <button type={"submit"} onClick={renderArtists}>Search</button>
-          {renderArtists()}
+    const renderTopArtists = (data) => {
+        console.log(data)
+    }
 
-        </form>
-    </div>
-  )
+
+    return (
+      <div className={classes.root}>
+          <ResponsiveAppBar/>
+          <form onSubmit={searchArtists}>
+            <input type="text" onChange={e => setSearchKey(e.target.value)}/>
+            <button type={"submit"} onClick={renderArtists}>Search</button>
+            {renderArtists()}
+
+          </form>
+          <button onClick={getTopArtists}>Get Artist</button>
+      </div>
+    )
 }
 

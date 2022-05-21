@@ -11,11 +11,13 @@ import Link from '@mui/material/Link';
 
 export default function Spotifyhtml()  {
   const CLIENT_ID = "f9e6e2d07abd4cedaf792ba099e88c69"
-  const REDIRECT_URI = "https://songerated.vercel.app/userinfo"
+  const REDIRECT_URI = "http://localhost:3000/userinfo"
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
+  const SPACE_DELIMITER = "%20"
+  const SCOPES = ["user-top-read"]
+  const SCOMES_URL_PARAM = SCOPES.join(SPACE_DELIMITER)
 
-  
   return (
     <div>
       <Container className="d-flex align-items-center justify-content-center"
@@ -41,7 +43,7 @@ export default function Spotifyhtml()  {
                     
                     <Box sx={{margin:'8px'}}>
                       <center>
-                        <Link href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`} ><b>Authorize -></b></Link>
+                        <Link href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOMES_URL_PARAM}&response_type=${RESPONSE_TYPE}`} ><b>Authorize -></b></Link>
                       </center>
                     </Box>
 
