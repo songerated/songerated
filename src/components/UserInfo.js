@@ -9,6 +9,12 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,6 +35,27 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
+  
 export default function UserInfo()  {
     const classes = useStyles();
     const [token, setToken] = useState("")
@@ -66,60 +93,114 @@ export default function UserInfo()  {
 
     }
 
+    const getTopTracks = async (e) => {
+      e.preventDefault()
+        const {data} = await axios.get("https://api.spotify.com/v1/me/top/tracks", {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+          params: {
+        }
+
+          
+      })
+
+      setTopTracks(data.items)
+
+    }
+
     const [topArtists, setTopArtists] = useState([])
+    const [topTracks, setTopTracks] = useState([])
 
 
     const renderTopArtists = () => {
-        return topArtists.map(artist => (
-          <div key={artist.id}>
-            <Card style={{ width: '18rem', margin: '16px' }}>
-              <Card.Img variant="top" src={artist.images[0].url} />
-              <Card.Body>
-              <Card.Title>{artist.name}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Followers: {artist.followers.total}</Card.Subtitle>
-              <Card.Text>
-                <b>Genres:</b> {artist.genres.join(", ")}
-              </Card.Text>
-             
-            </Card.Body>
-            </Card>
-            
-            </div>
-        ))
-    }
+      return (
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Artist Name</StyledTableCell>
+                <StyledTableCell align="right">Genres</StyledTableCell>
+                <StyledTableCell align="right">Followers</StyledTableCell>
+                <StyledTableCell align="right">Popularity</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {topArtists.map((artist) => (
+                <StyledTableRow key={artist.id}>
+                  <StyledTableCell component="th" scope="row">
+                    {artist.name}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{
+                    artist.genres.join(", ")
+                  }</StyledTableCell>
+                  <StyledTableCell align="right">{artist.followers.total}</StyledTableCell>
+                  <StyledTableCell align="right">{artist.popularity}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+      </TableContainer>
+      )
+  }
 
 
-    return (
-      <div className={classes.root}>
-          <ResponsiveAppBar/>
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={9}>
-              <Grid item xs>
-                <Item>
-                <form onSubmit={getTopArtists}>
-                  <Button type={"submit"} onClick={renderTopArtists}>Get your spotify data</Button>
-                  {renderTopArtists()}
-                </form>
-                </Item>
-              </Grid>
-              <Grid item xs>
-                <Item>
-                <form onSubmit={getTopArtists}>
-                  <Button type={"submit"} onClick={renderTopArtists}>Get your spotify data</Button>
-                  {renderTopArtists()}
-                </form>
-                </Item>
-              </Grid>
-              <Grid item xs>
-                <Item>xs=4</Item>
-              </Grid>
-              
-            </Grid>
-        </Box>
-          <center>
-            
-          </center>
-      </div>
-    )
-}
+    
 
+    const renderTopTracks = () => {
+      return (
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Track Name</StyledTableCell>
+                <StyledTableCell align="right">Artists</StyledTableCell>
+                <StyledTableCell align="right">Album</StyledTableCell>
+                <StyledTableCell align="right">Popularity</StyledTableCell>
+                <StyledTableCell align="right">Explicit</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {topTracks.map((track) => (
+                <StyledTableRow key={track.id}>
+                  <StyledTableCell component="th" scope="row">
+                    {track.name}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{
+                    track.artists.map(artist => artist.name).join(", ")
+                  }</StyledTableCell>
+                  <StyledTableCell align="right">{track.album.name}</StyledTableCell>
+                  <StyledTableCell align="right">{track.popularity}</StyledTableCell>
+                  <StyledTableCell align="right">{track.explicit}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+      </TableContainer>
+      )
+  }
+
+
+  return (
+    <div className={classes.root}>
+        <ResponsiveAppBar/>
+        
+        <center>
+          <Box sx={{margin: '32px', width:"80%" }}>
+            <form onSubmit={getTopTracks}>
+                <Button type={"submit"} onClick={renderTopTracks}>Get your spotify data</Button>
+                {renderTopTracks()}
+              </form>
+          </Box>
+          <Box sx={{ margin: '32px', width:"80%" }}>
+
+              <form onSubmit={getTopArtists}>
+                <Button type={"submit"} onClick={renderTopArtists}>Get your spotify data</Button>
+                {renderTopArtists()}
+              </form>
+          </Box>
+
+        </center>
+    </div>
+  )
+  }
