@@ -1,5 +1,9 @@
-import firebase from "firebase/app"
-import "firebase/auth"
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+
+console.log(firebase.auth) // Undefined
+console.log(firebase.default.auth) // Function
+
 
 /* 
    1.Used npm i firebase and imported firebase
@@ -16,5 +20,5 @@ const app = firebase.initializeApp({
     appId: process.env.REACT_APP_FIREBASE_APP_ID
 })
 
-export const auth = app.auth()
+export const auth = app.default.auth()
 export default app

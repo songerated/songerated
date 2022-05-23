@@ -6,6 +6,7 @@ import { Container } from 'react-bootstrap';
 import Box from '@mui/material/Box';
 import {useNavigate} from 'react-router-dom';
 import ResponsiveAppBar from './ResponsiveAppBar';
+import { useAuth } from "../contexts/authContexts"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,6 +21,7 @@ export default function SignUp() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
+    const { signup } = useAuth()
     /* 
        Using the card and form feature in React Bootstrap, creating a form inside a card with 
       email and password with confirmation 
@@ -27,6 +29,12 @@ export default function SignUp() {
     const classes = useStyles();
     const navigate = useNavigate();
     const handleOnClick = () => navigate('/spotifylink', {replace: true});
+
+    async function handleSubmit(e){
+        e.preventDefault()
+
+        signup(emailRef.current.value, passwordRef.current.value)
+    }
       
   return (
     <div className={classes.root}>
