@@ -1,5 +1,5 @@
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
 console.log(firebase.auth) // Undefined
 console.log(firebase.default.auth) // Function
@@ -12,13 +12,13 @@ console.log(firebase.default.auth) // Function
 */ 
 
 const app = firebase.initializeApp({
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN ,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_KEY,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID
+    apiKey: "AIzaSyCXcagaVemfRJhP_lQUolZq1JP_c72_dFw",
+    authDomain: "auth-verse-dev.firebaseapp.com",
+    projectId: "auth-verse-dev",
+    storageBucket: "auth-verse-dev.appspot.com",
+    messagingSenderId: "1046723195012",
+    appId: "1:1046723195012:web:d95231e38f9bb38a3552d1"
 })
 
-export const auth = app.default.auth()
+export const auth = app.auth()
 export default app

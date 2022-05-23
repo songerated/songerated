@@ -26,11 +26,8 @@ export function AuthProvider({ children }) {
         signup
     }
   return (
-    <div>
         <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
-
-    </div>
   )
 }

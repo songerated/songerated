@@ -1,10 +1,10 @@
-import React, { useRef } from 'react'
-import {Form, Card} from 'react-bootstrap'
+import React, { useRef, useState } from 'react'
+import {Form, Card, Alert} from 'react-bootstrap'
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container } from 'react-bootstrap';
 import Box from '@mui/material/Box';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import { useAuth } from "../contexts/authContexts"
 
@@ -22,6 +22,9 @@ export default function SignUp() {
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
     const { signup } = useAuth()
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
+    
     /* 
        Using the card and form feature in React Bootstrap, creating a form inside a card with 
       email and password with confirmation 
@@ -32,8 +35,19 @@ export default function SignUp() {
 
     async function handleSubmit(e){
         e.preventDefault()
-
-        signup(emailRef.current.value, passwordRef.current.value)
+        
+        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+            return setError("Passwords do not match")
+        }
+        try {
+            setError("")
+            setLoading(true)
+            await signup(emailRef.current.value, passwordRef.current.value)
+            navigate.push("/")
+        } catch {
+            setError("Failed to create an account")
+        }
+        setLoading(false)
     }
       
   return (
@@ -45,21 +59,25 @@ export default function SignUp() {
         <Card>
                 <Card.Body>
                     <h2 className='text-center mb-4'>Sign Up</h2>
-                    <Form.Group id="email" style={{padding: '8px'}}>
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type = "email" ref={emailRef} required />
-                    </Form.Group>
-                    <Form.Group id="password" style={{padding: '8px'}}>
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type = "password" ref={passwordRef} required />
-                    </Form.Group>
-                    <Form.Group id="password-confirm" style={{padding: '8px'}}>
-                        <Form.Label>Password Confirmation</Form.Label>
-                        <Form.Control type = "email" ref={passwordConfirmRef} required />
-                    </Form.Group>
-                    <Box sx={{margin:'8px'}}>
-                        <Button className = "w-100" type = "submit" onClick={handleOnClick}>Sign Up</Button>
-                    </Box>
+                    {error && <Alert variant="danger">{error}</Alert>}
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group id="email" style={{padding: '8px'}}>
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type = "email" ref={emailRef} required />
+                        </Form.Group>
+                        <Form.Group id="password" style={{padding: '8px'}}>
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type = "password" ref={passwordRef} required />
+                        </Form.Group>
+                        <Form.Group id="password-confirm" style={{padding: '8px'}}>
+                            <Form.Label>Password Confirmation</Form.Label>
+                            <Form.Control type = "password" ref={passwordConfirmRef} required />
+                        </Form.Group>
+
+                        <Box sx={{margin:'8px'}}>
+                            <Button disabled={loading} className = "w-100" type = "submit" >Sign Up</Button>
+                        </Box>
+                    </Form>
                 </Card.Body>
             </Card>
             <div className="w-100 text-center-mt-2">
