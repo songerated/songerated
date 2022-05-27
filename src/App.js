@@ -6,7 +6,7 @@ import SpotifyLink from './SpotifyLink';
 import SignUp from './components/SignUp';
 import UserInfo from './components/UserInfo';
 import ConnectSpotify from './components/ConnectSpotify';
-
+import DatabaseHome from './components/databaseComponents/DatabaseHome';
 export default function App() {
 
   return (
@@ -18,6 +18,7 @@ export default function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/userinfo" element={<UserInfo />} />
         <Route path="/connectspotify" element={<ConnectSpotify />} />
+        <Route path="/database" element={<DatabaseHome />} />
 
       </Routes>
     </Router>
