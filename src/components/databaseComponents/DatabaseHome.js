@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import {useNavigate} from 'react-router-dom';
 import ResponsiveAppBar from '../ResponsiveAppBar';
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
       minHeight: '100vh',
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function DatabaseHome () {
+    
     
     
     const classes = useStyles();
