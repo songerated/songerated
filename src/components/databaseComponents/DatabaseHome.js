@@ -1,11 +1,8 @@
 import React, { useRef } from 'react'
 import {Form, Card} from 'react-bootstrap'
-import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container } from 'react-bootstrap';
-import Box from '@mui/material/Box';
-import {useNavigate} from 'react-router-dom';
 import ResponsiveAppBar from '../ResponsiveAppBar';
+import Axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,13 +16,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DatabaseHome () {
     
+
     
-    
-    const classes = useStyles();
+  const serverURL = "https://verse-server.herokuapp.com/"  
+  const classes = useStyles();
+  const getUserData = () => {
+    Axios.get(serverURL)
+    .then(res => {
+      console.log(res.data)
+    })
+  }
       
   return (
     <div className={classes.root}>
         <ResponsiveAppBar />
+        {getUserData()}
         
    </ div>
    
