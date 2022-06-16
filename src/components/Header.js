@@ -59,7 +59,7 @@ export default function Header() {
       <AppBar className={classes.appbar} elevation={0}>
         <Toolbar className={classes.appbarWrapper}>
           <h1 className={classes.appbarTitle}>
-            Song<span className={classes.colorText}>arated.</span>
+            Ver<span className={classes.colorText}>se.</span>
           </h1>
           <IconButton>
             <SortIcon className={classes.icon} />
@@ -78,7 +78,7 @@ export default function Header() {
         <div className={classes.container}>
           <h1 className={classes.title}>
             Welcome to <br />
-            Song<span className={classes.colorText}>arated.</span>
+            Ver<span className={classes.colorText}>se.</span>
           </h1>
           <Scroll to="place-to-visit" smooth={true}>
             <IconButton>
