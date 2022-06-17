@@ -28,6 +28,7 @@ export default function SignUp() {
     const navigate = useNavigate();
     const handleOnClick = () => navigate('/spotifylink', {replace: true});
       
+    /*hello*/
   return (
     <div className={classes.root}>
         <ResponsiveAppBar />
