@@ -8,6 +8,8 @@ import { AuthProvider } from './contexts/authContexts';
 import UserInfo from './components/UserInfo';
 import ConnectSpotify from './components/ConnectSpotify';
 import DatabaseHome from './components/databaseComponents/DatabaseHome';
+import SubmitData from './components/SubmitData';
+import ResponsiveAppBar from './components/ResponsiveAppBar';
 
 import Login from './components/Login'
 
@@ -28,6 +30,8 @@ export default function App() {
           <Route path="/userinfo" element={<UserInfo />} />
           <Route path="/connectspotify" element={<ConnectSpotify />} />
           <Route path="/database" element={<DatabaseHome />} />
+          <Route path="/submitdata" element={<SubmitData />} />
+
 
         </Routes>
       </Router>

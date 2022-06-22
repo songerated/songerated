@@ -43,7 +43,7 @@ export default function Login() {
             setError("")
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
-            navigate("/")
+            navigate("/connectspotify")
         } catch {
             setError("Failed to sign in")
         }
