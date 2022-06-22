@@ -84,7 +84,9 @@ export default function UserInfo()  {
               Authorization: `Bearer ${token}`,
           },
           params: {
-        }
+        }.then(res => {
+          console.log(res)
+        })
 
           
       })

@@ -26,7 +26,7 @@ export default function SignUp() {
     */
     const classes = useStyles();
     const navigate = useNavigate();
-    const handleOnClick = () => navigate('/spotifylink', {replace: true});
+    const handleOnClick = () => navigate('/spotifylink', {replace: false});
       
   return (
     <div className={classes.root}>
