@@ -1,9 +1,9 @@
-#Verse
+# Verse
 
-##How to deploy
+## How to deploy
 
-##Dependencies
+## Dependencies
 
-##Features
+## Features
 
-#How it looks
+# How it looks
