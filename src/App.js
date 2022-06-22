@@ -7,12 +7,17 @@ import SignUp from './components/SignUp';
 import { AuthProvider } from './contexts/authContexts';
 import UserInfo from './components/UserInfo';
 import ConnectSpotify from './components/ConnectSpotify';
+import DatabaseHome from './components/databaseComponents/DatabaseHome';
+
 import Login from './components/Login'
 
 export default function App() {
 
   return (
     <AuthProvider>
+
+
+        
 
       <Router>
         <Routes>
@@ -22,6 +27,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/userinfo" element={<UserInfo />} />
           <Route path="/connectspotify" element={<ConnectSpotify />} />
+          <Route path="/database" element={<DatabaseHome />} />
 
         </Routes>
       </Router>

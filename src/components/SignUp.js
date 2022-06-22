@@ -32,7 +32,8 @@ export default function SignUp() {
     */
     const classes = useStyles();
     const navigate = useNavigate();
-    const handleOnClick = () => navigate('/spotifylink', {replace: true});
+    const handleOnClick = () => navigate('/spotifylink', {replace: false});
+
 
     async function handleSubmit(e){
         e.preventDefault()
