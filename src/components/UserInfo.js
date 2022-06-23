@@ -15,6 +15,8 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import {Link, useNavigate} from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,13 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -59,6 +55,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function UserInfo() {
   const classes = useStyles();
   const [token, setToken] = useState("")
+  const navigate = useNavigate();
+
 
 
   //This is the function that gets the token from the URL
@@ -145,6 +143,9 @@ export default function UserInfo() {
     )
   }
 
+  function handleOnSubmit(){
+    navigate("/submitdata")
+  }
 
 
 
@@ -204,7 +205,7 @@ export default function UserInfo() {
         <Box sx={{ margin: '32px', width: "80%" }}>
 
           <form onSubmit={getTopArtists}>
-            <Button type={"submit"} variant="contained" sx={{ bgcolor: "black", margin: '16px' }} onClick={renderTopArtists}>Submit Data</Button>
+            <Button type={"submit"} variant="contained" sx={{ bgcolor: "black", margin: '16px' }} onClick={handleOnSubmit}>Submit Data</Button>
 
           </form>
         </Box>
