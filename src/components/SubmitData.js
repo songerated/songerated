@@ -28,7 +28,7 @@ export default function SubmitData() {
   let token = window.localStorage.getItem("token")
   
   useEffect(() => {
-    axios.post("https://1add-2405-201-d026-481b-d9a6-42e5-ca5-7ffe.in.ngrok.io/tracks" , topTracks)
+    axios.post("https://verse-server.herokuapp.com/tracks" , topTracks)
         .then(response => setDbResponse(response));
     console.log(topTracks)
   }, [topTracks])
