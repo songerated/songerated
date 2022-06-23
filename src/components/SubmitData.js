@@ -20,12 +20,18 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function SubmitData() {
-  const [topArtists, setTopArtists] = useState([])
-  const [topTracks, setTopTracks] = useState([])
+  const [topTracks, setTopTracks] = useState(null)
+  const [dbResponse, setDbResponse] = useState(null)
 
   const classes = useStyles()
   
   let token = window.localStorage.getItem("token")
+  
+  useEffect(() => {
+    axios.post("https://1add-2405-201-d026-481b-d9a6-42e5-ca5-7ffe.in.ngrok.io/tracks" , topTracks)
+        .then(response => setDbResponse(response));
+    console.log(topTracks)
+  }, [topTracks])
 
 
   const getUserData = async (e) => {
@@ -39,8 +45,8 @@ export default function SubmitData() {
 
 
     })
-    setTopTracks(data.items)
-    console.log(data)
+    setTopTracks(data)
+    console.log(data.items)
 
   }
 
