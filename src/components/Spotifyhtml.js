@@ -11,7 +11,7 @@ import Link from '@mui/material/Link';
 
 export default function Spotifyhtml()  {
   const CLIENT_ID = "f9e6e2d07abd4cedaf792ba099e88c69"
-  const REDIRECT_URI = "http://localhost:3000/userinfo"
+  const REDIRECT_URI = "https://songerated.vercel.app/userinfo"
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize"
   const RESPONSE_TYPE = "token"
   const SPACE_DELIMITER = "%20"
