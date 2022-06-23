@@ -32,7 +32,8 @@ export default function SignUp() {
     */
     const classes = useStyles();
     const navigate = useNavigate();
-    const handleOnClick = () => navigate('/spotifylink', {replace: true});
+    const handleOnClick = () => navigate('/spotifylink', {replace: false});
+
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -44,7 +45,7 @@ export default function SignUp() {
             setError("")
             setLoading(true)
             await signup(emailRef.current.value, passwordRef.current.value)
-            navigate("/")
+            navigate("/connectspotify")
         } catch {
             setError("Failed to create an account")
         }
