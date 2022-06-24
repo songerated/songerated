@@ -22,9 +22,13 @@ export default function SignUp() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { signup } = useAuth()
+    const { signup, currentUser } = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
+
+    const mail = currentUser.email
+    var emailSplit = mail.split('@')
+    var username = emailSplit[0]
     
     /* 
        Using the card and form feature in React Bootstrap, creating a form inside a card with 
@@ -61,6 +65,7 @@ export default function SignUp() {
         <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
                 <Card.Body>
+                    { username }
                     <h2 className='text-center mb-4'>Sign Up</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Form onSubmit={handleSubmit}>

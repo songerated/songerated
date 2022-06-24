@@ -10,6 +10,7 @@ import ConnectSpotify from './components/ConnectSpotify';
 import DatabaseHome from './components/databaseComponents/DatabaseHome';
 import SubmitData from './components/SubmitData';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
+import { Profile } from './components/Profile';
 
 import Login from './components/Login'
 
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/connectspotify" element={<ConnectSpotify />} />
           <Route path="/database" element={<DatabaseHome />} />
           <Route path="/submitdata" element={<SubmitData />} />
+          <Route path="/profile" element={<Profile />} />
 
 
         </Routes>
