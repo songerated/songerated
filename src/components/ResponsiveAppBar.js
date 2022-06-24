@@ -14,6 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import MusicVideoTwoToneIcon from '@mui/icons-material/MusicVideoTwoTone';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Router, Routes, Route, useNavigate } from 'react-router-dom';
+import  Home  from '../Home'
 
 
 const pages = ['Home', 'About', 'Team'];
@@ -28,9 +30,14 @@ const darkTheme = createTheme({
   },
 });
 
+
+
+
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -46,6 +53,18 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleHome = () => {
+    let path = `/`
+    navigate('/',{replace:false});
+  }
+  const handleAbout = () => {
+    navigate('/',{replace:false});
+  }
+  const handleTeam = () => {
+    navigate('/',{replace:false});
+  }
+
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -100,11 +119,12 @@ const ResponsiveAppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
+               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-              ))}
+              ))} 
+              
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -124,18 +144,32 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            VERSE
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={pages[0]}
+                onClick={event =>  window.location.href='/'}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {pages[0]}
               </Button>
-            ))}
+              <Button
+                key={pages[1]}
+                onClick={event =>  window.location.href='/'}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {pages[1]}
+              </Button>
+              <Button
+                key={pages[2]}
+                onClick={event =>  window.location.href='/'}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {pages[2]}
+              </Button>
+           
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -160,11 +194,22 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {/* {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
+              <MenuItem key={settings[0]} onClick={event =>  window.location.href='/profile'}>
+                  <Typography textAlign="center">{settings[0]}</Typography>
+              </MenuItem>
+
+              
+              
+              
+
+              <MenuItem key={settings[3]} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{settings[3]}</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
