@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import {Link, useNavigate} from 'react-router-dom';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import { useAuth } from "../contexts/authContexts"
-
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,14 +26,7 @@ export default function SignUp() {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
 
-    const mail = currentUser.email
-    var emailSplit = mail.split('@')
-    var username = emailSplit[0]
     
-    /* 
-       Using the card and form feature in React Bootstrap, creating a form inside a card with 
-      email and password with confirmation 
-    */
     const classes = useStyles();
     const navigate = useNavigate();
     const handleOnClick = () => navigate('/spotifylink', {replace: false});
@@ -48,7 +41,21 @@ export default function SignUp() {
         try {
             setError("")
             setLoading(true)
-            await signup(emailRef.current.value, passwordRef.current.value)
+            var user = await signup(emailRef.current.value, passwordRef.current.value)
+
+            const mail = emailRef.current.value
+            var emailSplit = mail.split('@')
+            var username = emailSplit[0]
+
+            const { data } = await axios.get("https://verse-server.herokuapp.com/usercreds", {
+                headers: {
+                },
+                params: {
+                    "name": username,
+                    "email": mail,
+                    "id": user.user.uid
+                }
+            })
             navigate("/connectspotify")
         } catch {
             setError("Failed to create an account")
@@ -65,7 +72,6 @@ export default function SignUp() {
         <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
                 <Card.Body>
-                    { username }
                     <h2 className='text-center mb-4'>Sign Up</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Form onSubmit={handleSubmit}>
