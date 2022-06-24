@@ -16,6 +16,9 @@ import MusicVideoTwoToneIcon from '@mui/icons-material/MusicVideoTwoTone';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Router, Routes, Route, useNavigate } from 'react-router-dom';
 import  Home  from '../Home'
+import { useAuth } from '../contexts/authContexts';
+import { useState } from 'react';
+
 
 
 const pages = ['Home', 'About', 'Team'];
@@ -37,6 +40,8 @@ const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
+  const {logout} = useAuth()
+  const [error, setError] = useState("")
 
 
   const handleOpenNavMenu = (event) => {
@@ -53,6 +58,17 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  async function handleLogout(){
+    setError('')
+
+    try{
+      await logout()
+      navigate("/login")
+    }catch{
+      setError('Failed to log out')
+    }
+  }
 
   const handleHome = () => {
     let path = `/`
@@ -207,7 +223,7 @@ const ResponsiveAppBar = () => {
               
               
 
-              <MenuItem key={settings[3]} onClick={handleCloseUserMenu}>
+              <MenuItem key={settings[3]} onClick={handleLogout}>
                   <Typography textAlign="center">{settings[3]}</Typography>
               </MenuItem>
             </Menu>
