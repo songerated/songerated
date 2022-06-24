@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import { useAuth } from "../contexts/authContexts"
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,16 +24,22 @@ const useStyles = makeStyles((theme) => ({
 export default function SubmitData() {
   const [topTracks, setTopTracks] = useState(null)
   const [dbResponse, setDbResponse] = useState(null)
+  const {currentUser} = useAuth() 
+  const id = currentUser.uid
+
 
   const classes = useStyles()
   
   let token = window.localStorage.getItem("token")
   
   useEffect(() => {
-    axios.post("https://verse-server.herokuapp.com/tracks" , topTracks)
+    axios.post("https://verse-server.herokuapp.com/tracks" , { topTracks: topTracks, uid: id })
         .then(response => setDbResponse(response));
+
     console.log(topTracks)
-  }, [topTracks])
+  }, [topTracks]);
+
+ 
 
 
   const getUserData = async (e) => {
