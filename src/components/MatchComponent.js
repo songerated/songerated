@@ -11,7 +11,7 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 
-function MatchComponent() {
+function MatchComponent(props) {
     const theme = useTheme();
 
   return (
@@ -27,7 +27,7 @@ function MatchComponent() {
         <center>
         <CardContent sx={{ flex: '1 0 auto', margin: '20px' }}>
           <Typography component="div" variant="h5">
-            aadityaguptaa
+            {props.name}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             Rank: 1

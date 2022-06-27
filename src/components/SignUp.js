@@ -30,7 +30,7 @@ export default function SignUp() {
     const classes = useStyles();
     const navigate = useNavigate();
     const handleOnClick = () => navigate('/spotifylink', {replace: false});
-
+    const server_base_url = process.env.REACT_APP_SERVER_URL
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -47,7 +47,7 @@ export default function SignUp() {
             var emailSplit = mail.split('@')
             var username = emailSplit[0]
 
-            const { data } = await axios.get("https://verse-server.herokuapp.com/usercreds", {
+            const { data } = await axios.get( server_base_url + "/usercreds", {
                 headers: {
                 },
                 params: {

@@ -56,6 +56,7 @@ export default function UserInfo() {
   const classes = useStyles();
   const [token, setToken] = useState("")
   const navigate = useNavigate();
+  const spotify_url = process.env.REACT_APP_SPOTIFY_BASE_URL
 
 
 
@@ -77,7 +78,7 @@ export default function UserInfo() {
 
   const getTopArtists = async (e) => {
     e.preventDefault()
-    const { data } = await axios.get("https://api.spotify.com/v1/me/top/artists", {
+    const { data } = await axios.get(spotify_url + "/me/top/artists", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -94,7 +95,7 @@ export default function UserInfo() {
 
   const getTopTracks = async (e) => {
     e.preventDefault()
-    const { data } = await axios.get("https://api.spotify.com/v1/me/top/tracks", {
+    const { data } = await axios.get(spotify_url + "/me/top/tracks", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

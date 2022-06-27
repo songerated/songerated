@@ -29,11 +29,13 @@ export default function SubmitData() {
 
 
   const classes = useStyles()
+  const server_base_url = process.env.REACT_APP_SERVER_URL
+  const spotify_url = process.env.REACT_APP_SPOTIFY_BASE_URL
   
   let token = window.localStorage.getItem("token")
   
   useEffect(() => {
-    axios.post("https://verse-server.herokuapp.com/tracks" , { topTracks: topTracks, uid: id })
+    axios.post(server_base_url + "/tracks" , { topTracks: topTracks, uid: id })
         .then(response => setDbResponse(response));
 
     console.log(topTracks)
@@ -44,7 +46,7 @@ export default function SubmitData() {
 
   const getUserData = async (e) => {
     e.preventDefault()
-    const { data } = await axios.get("https://api.spotify.com/v1/me/top/tracks", {
+    const { data } = await axios.get(spotify_url + "/me/top/tracks", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
