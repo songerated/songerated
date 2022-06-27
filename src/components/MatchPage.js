@@ -28,6 +28,7 @@ function MatchPage() {
          <MatchComponent/>
          <MatchComponent/>
          <MatchComponent/>
+         <MatchComponent/>
 
       </center>
 
