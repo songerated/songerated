@@ -16,7 +16,7 @@ function MatchComponent(props) {
 
   return (
     <center>
-      <Card sx={{ display: 'inline-block' }}>
+      <Card sx={{width:600, display: 'inline-block', margin: '16px' }}>
       <Box sx={{ display: 'flex', flexDirection: 'row' }}>
         <CardMedia
             component="img"
@@ -30,7 +30,10 @@ function MatchComponent(props) {
             {props.name}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
-            Rank: 1
+            {props.email}
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary" component="div">
+            {props.username}
           </Typography>
         </CardContent>
         

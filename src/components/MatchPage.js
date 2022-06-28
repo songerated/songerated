@@ -6,6 +6,24 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import MatchComponent from './MatchComponent';
 import { get } from 'react-scroll/modules/mixins/scroller';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import { Image } from 'react-bootstrap';
+import CardMedia from '@mui/material/CardMedia';
+import { useAuth } from "../contexts/authContexts"
+
+
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: 'transparent',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
+
 const useStyles = makeStyles((theme) => ({
     root: {
       minHeight: '100vh',
@@ -23,7 +41,9 @@ function MatchPage() {
   const classes = useStyles()
   const [users, setUsers] = useState([])
   const server_base_url = process.env.REACT_APP_SERVER_URL
+  const {currentUser} = useAuth() 
 
+  console.log(currentUser.uid)
  
 
   const getUserData = async (e) => {
@@ -37,10 +57,35 @@ function MatchPage() {
   }
 
   const renderUsers = () => {
+    
+    
+
+
     return <>
-      {users.map((user) => (
-        <MatchComponent name={user.name} />
-      ))}
+      <Grid container spacing={2} sx={{margin: '16px'}}>
+        <Grid item xs="auto">
+          <Item >
+          {users.map((user) => (
+            <MatchComponent name={user.name} email={user.email} username={user.username}  />
+          ))}
+          </Item>
+        </Grid>
+        
+        <Grid item xs="auto" >
+          <Item sx={{ position:'fixed' }}>
+            {
+              users.filter(function (user) {
+                return user.id === "zM5RjzWSkUMqmJup8FO1MWTrk2K2";
+              }).map(function (user) {
+                return <MatchComponent name={user.name} email={user.email} username={user.username}  />
+              })
+            }
+  
+
+          </Item>
+        </Grid>
+      </Grid>
+      
     </>
 
   }
