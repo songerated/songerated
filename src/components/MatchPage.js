@@ -41,6 +41,7 @@ function MatchPage() {
 
   const classes = useStyles()
   const [users, setUsers] = useState([])
+  const [songCount, setSongCount] = useState({})
   const server_base_url = process.env.REACT_APP_SERVER_URL
   const {currentUser} = useAuth() 
 
@@ -50,20 +51,27 @@ function MatchPage() {
   const getUserData = async (e) => {
     e.preventDefault()
     const { data } = await axios.get(server_base_url + "/users", {
-      params: {
-        uid: currentUser.uid
-      }
+      
     
     })
     setUsers(data)
     console.log(data)
 
+    const { data2 } = await axios.get(server_base_url + "/matchingusers", {
+      params: {
+        uid: currentUser.uid
+      }
+    }).then(response => {
+      setSongCount(response.data)
+      console.log(response.data)
+      console.log(songCount["114OmRvLspg13quCZopIfhyHfnE2"])
+    })
+    
+
   }
 
-  const renderUsers = () => {
-    
-    
 
+  const renderUsers = () => {
 
     return <>
       <Grid container spacing={2} sx={{margin: '16px'}}>
@@ -75,7 +83,7 @@ function MatchPage() {
               </Typography>
             </center>
             {users.map((user) => (
-              <MatchComponent name={user.name} email={user.email} username={user.username}  />
+              <MatchComponent name={user.name} email={user.email} song={songCount[user.id]}  />
             ))}
           </Item>
         </Grid>

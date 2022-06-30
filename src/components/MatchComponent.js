@@ -33,7 +33,7 @@ function MatchComponent(props) {
             {props.email}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
-            {props.username}
+            {props.song}
           </Typography>
         </CardContent>
         
