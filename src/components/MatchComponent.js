@@ -33,7 +33,7 @@ function MatchComponent(props) {
             {props.email}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
-            {props.song}
+            Matching Song Count: {props.song}
           </Typography>
         </CardContent>
         

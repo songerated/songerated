@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import { useAuth } from "../contexts/authContexts"
+import {Link, useNavigate} from 'react-router-dom';
 
 
 
@@ -26,6 +27,8 @@ export default function SubmitData() {
   const [dbResponse, setDbResponse] = useState(null)
   const {currentUser} = useAuth() 
   const id = currentUser.uid
+  const navigate = useNavigate();
+
 
 
   const classes = useStyles()
@@ -58,6 +61,7 @@ export default function SubmitData() {
     })
     setTopTracks(data)
     console.log(data.items)
+    navigate("/match")
 
   }
 
@@ -67,7 +71,7 @@ export default function SubmitData() {
   return (
     <div className={classes.root}>
       <ResponsiveAppBar/>
-      <Button type={"submit"} variant="contained" sx={{ bgcolor: "black", margin: '16px' }} onClick={getUserData}>Get your most listened songs</Button>
+      <Button type={"submit"} variant="contained" sx={{ bgcolor: "black", margin: '16px' }} onClick={getUserData}>Match Page</Button>
 
     </div>
   )
