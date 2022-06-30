@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {Form, Card, Alert} from 'react-bootstrap'
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,6 +31,8 @@ export default function SignUp() {
     const navigate = useNavigate();
     const handleOnClick = () => navigate('/spotifylink', {replace: false});
     const server_base_url = process.env.REACT_APP_SERVER_URL
+
+    
 
     async function handleSubmit(e){
         e.preventDefault()

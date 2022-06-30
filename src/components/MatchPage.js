@@ -13,6 +13,7 @@ import Grid from '@mui/material/Grid';
 import { Image } from 'react-bootstrap';
 import CardMedia from '@mui/material/CardMedia';
 import { useAuth } from "../contexts/authContexts"
+import Typography from '@mui/material/Typography';
 
 
 
@@ -65,14 +66,27 @@ function MatchPage() {
       <Grid container spacing={2} sx={{margin: '16px'}}>
         <Grid item xs="auto">
           <Item >
-          {users.map((user) => (
-            <MatchComponent name={user.name} email={user.email} username={user.username}  />
-          ))}
+            <center>
+              <Typography component="div" variant="h5">
+                  Matches
+              </Typography>
+            </center>
+            {users.map((user) => (
+              <MatchComponent name={user.name} email={user.email} username={user.username}  />
+            ))}
           </Item>
         </Grid>
         
         <Grid item xs="auto" >
+            
           <Item sx={{ position:'fixed' }}>
+
+          <center>
+              <Typography component="div" variant="h5">
+                  You!!
+              </Typography>
+            </center>
+
             {
               users.filter(function (user) {
                 return user.id === "zM5RjzWSkUMqmJup8FO1MWTrk2K2";
