@@ -45,6 +45,7 @@ export default function SignUp() {
             setLoading(true)
             var user = await signup(emailRef.current.value, passwordRef.current.value)
 
+            console.log(user)
             const mail = emailRef.current.value
             var emailSplit = mail.split('@')
             var username = emailSplit[0]

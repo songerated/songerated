@@ -50,6 +50,9 @@ function MatchPage() {
   const getUserData = async (e) => {
     e.preventDefault()
     const { data } = await axios.get(server_base_url + "/users", {
+      params: {
+        uid: currentUser.uid
+      }
     
     })
     setUsers(data)
@@ -89,7 +92,7 @@ function MatchPage() {
 
             {
               users.filter(function (user) {
-                return user.id === "zM5RjzWSkUMqmJup8FO1MWTrk2K2";
+                return user.id === currentUser.uid;
               }).map(function (user) {
                 return <MatchComponent name={user.name} email={user.email} username={user.username}  />
               })

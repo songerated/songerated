@@ -35,6 +35,7 @@ export default function SubmitData() {
   let token = window.localStorage.getItem("token")
   
   useEffect(() => {
+    console.log(id)
     axios.post(server_base_url + "/tracks" , { topTracks: topTracks, uid: id })
         .then(response => setDbResponse(response));
 
