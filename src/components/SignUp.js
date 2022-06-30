@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {Form, Card, Alert} from 'react-bootstrap'
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,7 +30,9 @@ export default function SignUp() {
     const classes = useStyles();
     const navigate = useNavigate();
     const handleOnClick = () => navigate('/spotifylink', {replace: false});
+    const server_base_url = process.env.REACT_APP_SERVER_URL
 
+    
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -43,11 +45,12 @@ export default function SignUp() {
             setLoading(true)
             var user = await signup(emailRef.current.value, passwordRef.current.value)
 
+            console.log(user)
             const mail = emailRef.current.value
             var emailSplit = mail.split('@')
             var username = emailSplit[0]
 
-            const { data } = await axios.get("https://verse-server.herokuapp.com/usercreds", {
+            const { data } = await axios.get( server_base_url + "/usercreds", {
                 headers: {
                 },
                 params: {

@@ -6,6 +6,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link as Scroll } from 'react-scroll';
 import Button from '@mui/material/Button';
 import {useNavigate} from 'react-router-dom';
+import {useAuth} from '../contexts/authContexts';
+import { auth } from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,16 +46,24 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '4rem',
   },
 }));
-export default function Header() {
+export default function Header(props) {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
+  const {currentUser} = useAuth();
   useEffect(() => {
     setChecked(true);
   }, []);
 
   const navigate = useNavigate();
-  const handleOnClick = () => navigate('/signup', {replace: true});
-
+  const handleOnClick = () => {
+    if(auth.currentUser!= null) {
+      auth.signOut().then(() => {
+        navigate('/', {replace: true});
+      })
+    }else{
+      navigate('/signup', {replace: true});
+    }
+  }
   return (
     <div className={classes.root} id="header">
       <AppBar className={classes.appbar} elevation={0}>
@@ -65,7 +75,7 @@ export default function Header() {
             <SortIcon className={classes.icon} />
           </IconButton>
           <Button variant="contained" onClick={handleOnClick}>
-            Sign Up
+            {props.name}
           </Button>
         </Toolbar>
       </AppBar>

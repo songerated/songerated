@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import Header from './components/Header';
 import PlaceToVisit from './components/PlaceToVisit';
+import { useAuth } from "./contexts/authContexts"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,11 +16,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
     const classes = useStyles();
+    const { currentUser } = useAuth()
+
+
+    function renderHeader() {
+      if(currentUser != null) {
+        return <Header name="Sign Out" />
+      }else{
+        return <Header name="Sign Up" />
+      }
+    }
 
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <Header />
+            {
+              renderHeader()
+            }
             <PlaceToVisit />
         </div>
     );
