@@ -8,6 +8,15 @@ import {Link, useNavigate} from 'react-router-dom';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import { useAuth } from "../contexts/authContexts"
 import axios from 'axios';
+import  {useAuthState} from 'react-firebase-hooks/auth';
+import {useCollectionData} from 'react-firebase-hooks/firestore';
+import firebase from 'firebase/compat/app';
+import { getFirestore } from "firebase/firestore";
+
+
+
+const auth =    firebase.auth();
+const firestore = getFirestore;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,6 +74,10 @@ export default function SignUp() {
         }
         setLoading(false)
     }
+
+    
+
+    const [user] = useAuthState(auth);
       
     /*hello*/
   return (
@@ -94,6 +107,7 @@ export default function SignUp() {
                         <Box sx={{margin:'8px'}}>
                             <Button disabled={loading} className = "w-100" type = "submit" >Sign Up</Button>
                         </Box>
+                        
                     </Form>
                 </Card.Body>
             </Card>
@@ -106,3 +120,8 @@ export default function SignUp() {
    
   )
 }
+
+
+
+
+
