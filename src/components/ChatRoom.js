@@ -7,6 +7,8 @@ import { getFirestore } from "firebase/firestore";
 import Button from '@mui/material/Button';
 import 'firebase/compat/firestore';
 import { useState } from 'react';
+import { useRef } from 'react';
+import './chatroom.css';
 
 
 const auth =    firebase.auth();
@@ -16,8 +18,16 @@ const ChatRoom = () => {
 
     const [user] = useAuthState(auth);
   return (
-    <div>
-      {user? <Chat /> : <SignIn />}
+    <div className="App">
+      <header>
+        <h1>⚛️🔥💬</h1>
+        <SignOut />
+      </header>
+
+      <section>
+        {user ? <Chat /> : <SignIn />}
+      </section>
+
     </div>
   )
 }
@@ -37,13 +47,14 @@ function Chat(){
             uid
         });
         setFormValue('');
+
     }
 
     return (
         <>
-            <div>
+            <main>
                 {messages && messages.map(message => ( <ChatMessage key={message.id} message={message}/>))}
-            </div>
+            </main>
 
             <form onSubmit={sendMessage}>
                 <input value={formValue} onChange={(e) => setFormValue(e.target.value)}/>
@@ -56,7 +67,7 @@ function Chat(){
 
 function ChatMessage(props){
     const {text, uid} = props.message;
-    const messageClass = uid === auth.currentUser.uid ? 'message-self' : 'message-other';
+    const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
 
     return (
         <>
@@ -78,14 +89,14 @@ function SignIn(){
     }
     return (
         
-        <Button onClick={signInWithGoogle}>Sign in with Google</Button>
+        <Button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</Button>
     )
 
 }
 
 function SignOut(){
     return auth.currentUser && (
-        <button onClick={() => auth.signOut()}>Sign out</button>
+        <button className="sign-out" onClick={() => auth.signOut()}>Sign out</button>
     )
 }
 
