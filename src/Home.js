@@ -23,7 +23,7 @@ export default function Home() {
       if(currentUser != null) {
         return <Header name="Sign Out" />
       }else{
-        return <Header name="Sign Up" />
+        return <Header name="Sign In" />
       }
     }
 

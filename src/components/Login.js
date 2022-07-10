@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {Form, Card, Alert} from 'react-bootstrap'
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,8 +7,17 @@ import Box from '@mui/material/Box';
 import {Link, useNavigate} from 'react-router-dom';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import { useAuth } from "../contexts/authContexts"
-
 import { link } from 'react-router-dom'
+import  {useAuthState} from 'react-firebase-hooks/auth';
+import {useCollectionData} from 'react-firebase-hooks/firestore';
+import firebase from 'firebase/compat/app';
+import { getFirestore } from "firebase/firestore";
+import 'firebase/compat/firestore';
+import '../App.css';
+import GoogleLogin from 'react-google-login';
+const auth =    firebase.auth();
+const firestore = firebase.firestore();
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,6 +43,16 @@ export default function Login() {
     const classes = useStyles();
     const navigate = useNavigate();
     const handleOnClick = () => navigate('/spotifylink', {replace: true});
+
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                navigate('/')
+            }
+        }
+        )
+    }
+    , [])
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -72,17 +91,35 @@ export default function Login() {
                         
 
                         <Box sx={{margin:'8px'}}>
-                            <Button disabled={loading} className = "w-100" type = "submit" >Login</Button>
+                            <Button disabled={loading} className = "w-100" type = "submit" >Sign in</Button>
                         </Box>
+                        <center>
+                            <SignIn/>
+                        </center>
                     </Form>
                 </Card.Body>
             </Card>
             <div className="w-100 text-center-mt-2">
                 Need an account? <Link to="/signup">Sign Up</Link>
             </div>
+            
         </div>
         </Container>
    </ div>
    
   )
+}
+
+function SignIn(){
+
+    const signInWithGoogle = () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider)
+        
+    }
+    return (
+        
+        <Button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</Button>
+    )
+
 }

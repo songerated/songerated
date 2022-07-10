@@ -61,7 +61,7 @@ export default function Header(props) {
         navigate('/', {replace: true});
       })
     }else{
-      navigate('/signup', {replace: true});
+      navigate('/login', {replace: true});
     }
   }
   return (
