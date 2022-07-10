@@ -19,6 +19,7 @@ function MatchComponent(props) {
 
 
     function handleOnclick() {
+      window.localStorage.setItem("chatid", props.userid)
       navigate('/chat');
         console.log(props.userid)
     }

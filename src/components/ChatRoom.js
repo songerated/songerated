@@ -9,13 +9,17 @@ import 'firebase/compat/firestore';
 import { useState } from 'react';
 import { useRef } from 'react';
 import '../App.css';
+import { PropaneSharp } from '@mui/icons-material';
 
 const auth =    firebase.auth();
 const firestore = firebase.firestore();
 
-const ChatRoom = () => {
+function ChatRoom(){
 
     const [user] = useAuthState(auth);
+    const recid = window.localStorage.getItem('chatid')
+
+
   return (
     <div className="Appm">
       <header>
