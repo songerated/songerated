@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { useRef } from 'react';
 import '../App.css';
 import { PropaneSharp } from '@mui/icons-material';
+import { LeakAddTwoTone } from '@material-ui/icons';
 
 const auth =    firebase.auth();
 const firestore = firebase.firestore();
@@ -76,8 +77,16 @@ function Chat(){
 
 function ChatMessage(props){
     const {text, uid, photoURL } = props.message;
-    const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
-
+    let messageClass = 'sent'
+    if(uid === auth.currentUser.uid){
+        messageClass = 'sent';
+    }else if(uid === window.localStorage.getItem('chatid')){
+        messageClass = 'received';
+    }else{
+        return(
+            <></>
+        )
+    }
     return (
         <>
             <div className={`message ${messageClass}`}>
