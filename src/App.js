@@ -20,10 +20,6 @@ export default function App() {
 
   return (
     <AuthProvider>
-
-
-        
-
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -37,9 +33,6 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/match" element={<MatchPage />} />
           <Route path="/chat" element={<ChatRoom />} />
-
-
-
         </Routes>
       </Router>
     </AuthProvider>

@@ -8,8 +8,7 @@ import Button from '@mui/material/Button';
 import 'firebase/compat/firestore';
 import { useState } from 'react';
 import { useRef } from 'react';
-import './chatroom.css';
-
+import '../App.css';
 
 const auth =    firebase.auth();
 const firestore = firebase.firestore();
@@ -18,7 +17,7 @@ const ChatRoom = () => {
 
     const [user] = useAuthState(auth);
   return (
-    <div className="App">
+    <div className="Appm">
       <header>
         <h1>⚛️🔥💬</h1>
         <SignOut />
@@ -41,11 +40,12 @@ function Chat(){
 
     const sendMessage = async(e) => {
         e.preventDefault();
-        const {uid} = auth.currentUser;
+        const { uid, photoURL } = auth.currentUser;
         await messageRef.add({
             text: formValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            uid
+            uid,
+            photoURL
         });
         setFormValue('');
 
@@ -61,9 +61,9 @@ function Chat(){
                 <div ref={dummy}></div>
             </main>
 
-            <form onSubmit={sendMessage}>
-                <input value={formValue} onChange={(e) => setFormValue(e.target.value)}/>
-                <button type='submit'>Send</button>
+            <form className="formm" onSubmit={sendMessage}>
+                <input className="inputm" value={formValue} onChange={(e) => setFormValue(e.target.value)}/>
+                <button type='submit'>🕊️</button>
 
             </form>
         </>
@@ -71,13 +71,14 @@ function Chat(){
 }
 
 function ChatMessage(props){
-    const {text, uid} = props.message;
+    const {text, uid, photoURL } = props.message;
     const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
 
     return (
         <>
             <div className={`message ${messageClass}`}>
-                <p>{text}</p>
+            <img className="imgm" src={photoURL || 'https://i.ibb.co/rt2D67C/pngwing-com.png'} />
+                <p className='pm'>{text}</p>
             </div>
 
             

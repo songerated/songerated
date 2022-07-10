@@ -70,6 +70,8 @@ function MatchPage() {
 
   }
 
+  
+
 
   const renderUsers = () => {
 
@@ -83,7 +85,7 @@ function MatchPage() {
               </Typography>
             </center>
             {users.map((user) => (
-              <MatchComponent name={user.name} email={user.email} song={songCount[user.id]}  />
+              <MatchComponent  name={user.name} email={user.email} song={songCount[user.id]}  />
             ))}
           </Item>
         </Grid>
