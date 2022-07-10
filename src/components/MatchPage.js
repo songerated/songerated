@@ -14,6 +14,7 @@ import { Image } from 'react-bootstrap';
 import CardMedia from '@mui/material/CardMedia';
 import { useAuth } from "../contexts/authContexts"
 import Typography from '@mui/material/Typography';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 
@@ -70,6 +71,8 @@ function MatchPage() {
 
   }
 
+  
+
 
   const renderUsers = () => {
 
@@ -83,7 +86,7 @@ function MatchPage() {
               </Typography>
             </center>
             {users.map((user) => (
-              <MatchComponent name={user.name} email={user.email} song={songCount[user.id]}  />
+              <MatchComponent  userid={user.id} name={user.name} email={user.email} song={songCount[user.id]}  />
             ))}
           </Item>
         </Grid>
