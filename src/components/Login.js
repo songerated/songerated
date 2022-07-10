@@ -47,7 +47,7 @@ export default function Login() {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
-                navigate('/')
+                navigate('/connectspotify')
             }
         }
         )

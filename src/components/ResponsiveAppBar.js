@@ -16,7 +16,7 @@ import MusicVideoTwoToneIcon from '@mui/icons-material/MusicVideoTwoTone';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Router, Routes, Route, useNavigate } from 'react-router-dom';
 import  Home  from '../Home'
-
+import {auth} from '../firebase';
 
 const pages = ['Home', 'About', 'Team'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -38,6 +38,11 @@ const ResponsiveAppBar = (props) => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
 
+  let photo = null;
+  if(auth.currentUser !== null){
+    let { uid, photoURL } = auth.currentUser;
+    photo = photoURL;
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -63,6 +68,11 @@ const ResponsiveAppBar = (props) => {
   }
   const handleTeam = () => {
     navigate('/',{replace:false});
+  }
+  const handleSignout = () => {
+    auth.signOut().then(() => {
+      navigate('/', {replace: true});
+    })
   }
 
 
@@ -175,7 +185,7 @@ const ResponsiveAppBar = (props) => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <img className="imgm" src={photo || 'https://i.ibb.co/rt2D67C/pngwing-com.png'} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -207,7 +217,7 @@ const ResponsiveAppBar = (props) => {
               
               
 
-              <MenuItem key={settings[3]} onClick={handleCloseUserMenu}>
+              <MenuItem key={settings[3]} onClick={handleSignout}>
                   <Typography textAlign="center">{settings[3]}</Typography>
               </MenuItem>
             </Menu>
