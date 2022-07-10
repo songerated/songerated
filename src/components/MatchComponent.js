@@ -10,9 +10,18 @@ import Typography from '@mui/material/Typography';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
+import {Link, useNavigate} from 'react-router-dom';
+
 
 function MatchComponent(props) {
     const theme = useTheme();
+    const navigate = useNavigate();
+
+
+    function handleOnclick() {
+      navigate('/chat');
+        console.log(props.userid)
+    }
 
   return (
     <center>
@@ -42,7 +51,7 @@ function MatchComponent(props) {
             {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
           </IconButton>
           <IconButton aria-label="play/pause">
-            <PlayArrowIcon sx={{ height: 38, width: 38 }} />
+            <PlayArrowIcon onClick={handleOnclick} sx={{ height: 38, width: 38 }} />
           </IconButton>
           <IconButton aria-label="next">
             {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
