@@ -145,7 +145,7 @@ export default function UserInfo() {
   }
 
   function handleOnSubmit(){
-    navigate("/submitdata")
+    navigate("/match")
   }
 
 

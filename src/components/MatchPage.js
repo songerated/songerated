@@ -15,7 +15,7 @@ import CardMedia from '@mui/material/CardMedia';
 import { useAuth } from "../contexts/authContexts"
 import Typography from '@mui/material/Typography';
 import {Link, useNavigate} from 'react-router-dom';
-
+import {auth} from '../firebase'
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -77,42 +77,12 @@ function MatchPage() {
   const renderUsers = () => {
 
     return <>
-      <Grid container spacing={2} sx={{margin: '16px'}}>
-        <Grid item xs="auto">
-          <Item >
-            <center>
-              <Typography component="div" variant="h5">
-                  Matches
-              </Typography>
-            </center>
+      
+            
             {users.map((user) => (
               <MatchComponent  userid={user.id} name={user.name} email={user.email} song={songCount[user.id]}  />
             ))}
-          </Item>
-        </Grid>
-        
-        <Grid item xs="auto" >
-            
-          <Item sx={{ position:'fixed' }}>
-
-          <center>
-              <Typography component="div" variant="h5">
-                  You!!
-              </Typography>
-            </center>
-
-            {
-              users.filter(function (user) {
-                return user.id === currentUser.uid;
-              }).map(function (user) {
-                return <MatchComponent name={user.name} email={user.email} username={user.username}  />
-              })
-            }
-  
-
-          </Item>
-        </Grid>
-      </Grid>
+         
       
     </>
 
