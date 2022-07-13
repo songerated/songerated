@@ -51,7 +51,13 @@ function MatchPage() {
   useEffect(() => {
     if(users.length === 0){
 
-      for (const [key, value] of Object.entries(songCount)) {
+      var items = Object.keys(songCount).map(function(key) {
+        return [key, songCount[key]];
+      });
+      items.sort((a, b) => b[1] - a[1]);
+      console.log(items)
+
+      for (const [key, value] of items) {
         console.log(key, value);
         const data3 = axios.get(server_base_url + "/userinfo", {
           params: {
