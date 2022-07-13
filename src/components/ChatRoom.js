@@ -93,8 +93,6 @@ function ChatMessage(props){
             <img className="imgm" src={photoURL || 'https://i.ibb.co/rt2D67C/pngwing-com.png'} />
                 <p className='pm'>{text}</p>
             </div>
-
-            
         </>
     )
 }

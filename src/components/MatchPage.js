@@ -45,18 +45,39 @@ function MatchPage() {
   const [songCount, setSongCount] = useState({})
   const server_base_url = process.env.REACT_APP_SERVER_URL
   const {currentUser} = useAuth() 
-
+ 
   console.log(currentUser.uid)
+
+  useEffect(() => {
+    if(users.length === 0){
+
+      var items = Object.keys(songCount).map(function(key) {
+        return [key, songCount[key]];
+      });
+      items.sort((a, b) => b[1] - a[1]);
+      console.log(items)
+
+      for (const [key, value] of items) {
+        console.log(key, value);
+        const data3 = axios.get(server_base_url + "/userinfo", {
+          params: {
+            uid: key
+          }
+        })
+        .then(response => {
+          console.log(response.data)
+          setUsers(users => [...users, response.data])
+        })
+      
+      }
+    }
+
+      
+  }, [songCount])
  
 
   const getUserData = async (e) => {
     e.preventDefault()
-    const { data } = await axios.get(server_base_url + "/users", {
-      
-    
-    })
-    setUsers(data)
-    console.log(data)
 
     const { data2 } = await axios.get(server_base_url + "/matchingusers", {
       params: {
@@ -64,6 +85,7 @@ function MatchPage() {
       }
     }).then(response => {
       setSongCount(response.data)
+    
       console.log(response.data)
       console.log(songCount["114OmRvLspg13quCZopIfhyHfnE2"])
     })
@@ -80,7 +102,7 @@ function MatchPage() {
       
             
             {users.map((user) => (
-              <MatchComponent  userid={user.id} name={user.name} email={user.email} song={songCount[user.id]}  />
+              <MatchComponent  userid={user[0].id} name={user[0].name} email={user[0].email} song={songCount[user[0].id]}  />
             ))}
          
       
