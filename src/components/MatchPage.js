@@ -49,32 +49,29 @@ function MatchPage() {
   console.log(currentUser.uid)
 
   useEffect(() => {
+    if(users.length === 0){
 
-    for (const [key, value] of Object.entries(songCount)) {
-      console.log(key, value);
-      const data3 = axios.get(server_base_url + "/userinfo", {
-        params: {
-          uid: key
-        }
-      })
-      .then(response => {
-        console.log(response.data)
-        setUsers(users => [...users, response.data])
-      })
-    
-    }        
+      for (const [key, value] of Object.entries(songCount)) {
+        console.log(key, value);
+        const data3 = axios.get(server_base_url + "/userinfo", {
+          params: {
+            uid: key
+          }
+        })
+        .then(response => {
+          console.log(response.data)
+          setUsers(users => [...users, response.data])
+        })
+      
+      }
+    }
+
       
   }, [songCount])
  
 
   const getUserData = async (e) => {
     e.preventDefault()
-    // const { data } = await axios.get(server_base_url + "/users", {
-      
-    
-    // })
-    // setUsers(data)
-    // console.log(data)
 
     const { data2 } = await axios.get(server_base_url + "/matchingusers", {
       params: {
