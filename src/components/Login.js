@@ -15,8 +15,12 @@ import { getFirestore } from "firebase/firestore";
 import 'firebase/compat/firestore';
 import '../App.css';
 import GoogleLogin from 'react-google-login';
+import axios from 'axios';
+
+
 const auth =    firebase.auth();
 const firestore = firebase.firestore();
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +39,8 @@ export default function Login() {
     const { login } = useAuth()
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
-    
+    const server_base_url = process.env.REACT_APP_SERVER_URL
+
     /* 
        Using the card and form feature in React Bootstrap, creating a form inside a card with 
       email and password with confirmation 
@@ -47,8 +52,24 @@ export default function Login() {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
-                navigate('/connectspotify')
+                const { data } = axios.get( server_base_url + "/usercreds", {
+                    headers: {
+                    },
+                    params: {
+                        "name": user.displayName,
+                        "email": user.email,
+                        "id": user.uid
+                    }
+                }).then(res => {
+                    navigate('/connectspotify')
+                    console.log(user.uid)
+                }) 
+                
+                console.log(user.displayName)
+                console.log(user.email)
+                console.log("user" + user.uid)
             }
+
         }
         )
     }

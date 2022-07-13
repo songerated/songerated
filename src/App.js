@@ -12,7 +12,7 @@ import ResponsiveAppBar from './components/ResponsiveAppBar';
 import { Profile } from './components/Profile';
 import MatchPage from './components/MatchPage';
 import ChatRoom from './components/ChatRoom';
-
+import Submit from './components/SubmitData';
 import Login from './components/Login'
 
 export default function App() {
@@ -30,6 +30,8 @@ export default function App() {
           <Route path="/database" element={<DatabaseHome />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/match" element={<MatchPage />} />
+          <Route path="/submit" element={<Submit />} />
+
           <Route path="/chat" element={<ChatRoom />} />
         </Routes>
       </Router>
