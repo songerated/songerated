@@ -55,7 +55,11 @@ function MatchPage() {
       var items = Object.keys(songCount).map(function(key) {
         return [key, songCount[key]];
       });
+      console.log("before")
+      console.log(items)
+      console.log("after")
       items.sort((a, b) => b[1] - a[1]);
+      console.log(items)
       for (const [key, value] of items) {
         const data3 = axios.get(server_base_url + "/userinfo", {
           params: {
