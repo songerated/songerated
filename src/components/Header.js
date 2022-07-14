@@ -58,10 +58,10 @@ export default function Header(props) {
   const handleOnClick = () => {
     if(auth.currentUser!= null) {
       auth.signOut().then(() => {
-        navigate('/', {replace: true});
+        navigate('/', {replace: false});
       })
     }else{
-      navigate('/login', {replace: true});
+      navigate('/login', {replace: false});
     }
   }
   return (

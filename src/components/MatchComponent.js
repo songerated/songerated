@@ -24,6 +24,9 @@ function MatchComponent(props) {
         console.log(props.userid)
     }
 
+    let num = Math.floor(Math.random() * 100);
+    num = num % 2;
+
   return (
     <center>
       <Card sx={{width:600, display: 'inline-block', margin: '16px' }}>
@@ -31,7 +34,7 @@ function MatchComponent(props) {
         <CardMedia
             component="img"
             sx={{ width: 151, borderRadius:"50%", margin: '32px' }}
-            image=  "../../assets/adityap.jpg"
+            image=  {"../../assets/" + num + ".png"}
             alt="Live from space album cover"
         />
         <center>
@@ -44,6 +47,9 @@ function MatchComponent(props) {
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             Matching Song Count: {props.song}
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary" component="div">
+            Matching Artist Count: {props.artist}
           </Typography>
         </CardContent>
         

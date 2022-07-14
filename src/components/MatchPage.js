@@ -43,6 +43,7 @@ function MatchPage() {
   const classes = useStyles()
   const [users, setUsers] = useState([])
   const [songCount, setSongCount] = useState({})
+  const [artistCount, setArtistCount] = useState({})
   const server_base_url = process.env.REACT_APP_SERVER_URL
   const {currentUser} = useAuth() 
  
@@ -55,10 +56,7 @@ function MatchPage() {
         return [key, songCount[key]];
       });
       items.sort((a, b) => b[1] - a[1]);
-      console.log(items)
-
       for (const [key, value] of items) {
-        console.log(key, value);
         const data3 = axios.get(server_base_url + "/userinfo", {
           params: {
             uid: key
@@ -84,10 +82,18 @@ function MatchPage() {
         uid: currentUser.uid
       }
     }).then(response => {
-      setSongCount(response.data)
-    
+      console.log("Song Data:")
       console.log(response.data)
-      console.log(songCount["114OmRvLspg13quCZopIfhyHfnE2"])
+      setSongCount(response.data)
+      axios.get(server_base_url + "/matchingusers2", {
+        params: {
+          uid: currentUser.uid
+        }
+      }).then(response2 => {
+        console.log("Artist Data:")
+        console.log(response2.data)
+        setArtistCount(response2.data)
+      })
     })
     
 
@@ -102,7 +108,7 @@ function MatchPage() {
       
             
             {users.map((user) => (
-              <MatchComponent  userid={user[0].id} name={user[0].name} email={user[0].email} song={songCount[user[0].id]}  />
+              <MatchComponent  userid={user[0].id} name={user[0].name} email={user[0].email} song={songCount[user[0].id]} artist={artistCount[user[0].id]}  />
             ))}
          
       

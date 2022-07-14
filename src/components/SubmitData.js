@@ -7,8 +7,6 @@ import Button from '@mui/material/Button';
 import { useAuth } from "../contexts/authContexts"
 import {Link, useNavigate} from 'react-router-dom';
 
-//something-2
-
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
@@ -24,13 +22,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SubmitData() {
   const [topTracks, setTopTracks] = useState(null)
-  const [dbResponse, setDbResponse] = useState(null)
+  const [topArtists, setTopArtists] = useState(null)
   const {currentUser} = useAuth() 
   const id = currentUser.uid
   const navigate = useNavigate();
-
-
-
   const classes = useStyles()
   const server_base_url = process.env.REACT_APP_SERVER_URL
   const spotify_url = process.env.REACT_APP_SPOTIFY_BASE_URL
@@ -38,14 +33,24 @@ export default function SubmitData() {
   let token = window.localStorage.getItem("token")
   
   useEffect(() => {
-    console.log(id)
-    axios.post(server_base_url + "/tracks" , { topTracks: topTracks, uid: id })
-        .then(response => setDbResponse(response));
+    axios.get(server_base_url + "/verifyuser", {
 
-    console.log(topTracks)
-  }, [topTracks]);
+      params: {
+        id: id
+      }
+    }).then(res => {
+      if(res.data.length === 0){
+        axios.post(server_base_url + "/tracks" , { topTracks: topTracks, uid: id })
+        .then(response =>     navigate("/match")
+        );
 
- 
+      }else{
+        navigate("/match")
+      }
+
+    
+    })
+  }, [topTracks])
 
 
   const getUserData = async (e) => {
@@ -61,10 +66,10 @@ export default function SubmitData() {
     })
     setTopTracks(data)
     console.log(data.items)
-    navigate("/match")
 
   }
 
+ 
 
 
   
