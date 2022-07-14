@@ -1,8 +1,23 @@
 import React from 'react'
+import { Router, Routes, Route, useNavigate } from 'react-router-dom';
+
 
 export default function TeamMember(props) {
+
+    const navigate = useNavigate();
+
+    const handleOnClick = () => {
+        switch(props.github) {
+            case 'aadityaguptaa': window.location.replace(`https://www.github.com/${props.github}`); break;
+            case 'aprameya-l': window.location.replace(`https://www.github.com/${props.github}`); break;
+            case 'Achaiah-CD' : window.location.replace(`https://www.github.com/${props.github}`); break;
+            case 'deepthi-nanjunda' : window.location.replace(`https://www.github.com/${props.github}`); break;
+            default: break;
+        }
+    }
+
   return (
-    <div>
+    <div onClick={handleOnClick}>
         <center>
         <div className="col-md-4 animated fadeIn" key="1">
               <div className="card">
