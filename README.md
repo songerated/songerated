@@ -29,3 +29,7 @@ Launches the test runner in the interactive watch mode. See the section about [r
 Builds the app for production to the `build` folder.
 
 It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
+
+# Verse
+A web application to form social connections with people based on your music taste.
+Get matched and connect to people based on your Spotify music playlist.
