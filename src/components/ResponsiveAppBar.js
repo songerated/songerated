@@ -18,7 +18,7 @@ import { Router, Routes, Route, useNavigate } from 'react-router-dom';
 import  Home  from '../Home'
 import {auth} from '../firebase';
 
-const pages = ['Home', 'About', 'Team'];
+const pages = ['Home',  'Match',  'Team'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const darkTheme = createTheme({
@@ -70,23 +70,6 @@ const ResponsiveAppBar = (props) => {
     })
   }
 
-  function handlePages(page)  {
-    console.log(page);
-
-    switch(page){
-      case 'Home':
-        navigate('/',{replace:false});
-        break;
-      case 'About':
-        handleAbout();
-        break;
-      case 'Team':
-        navigate('/team',{replace:false});
-        break;
-      default:
-        break;
-    }
-  }
 
 
   return (
@@ -143,7 +126,7 @@ const ResponsiveAppBar = (props) => {
               }}
             >
                {pages.map((page) => (
-                <MenuItem key={page} onClick={handlePages(page)}>
+                <MenuItem key={page} onClick={handleOpenNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))} 
@@ -180,11 +163,12 @@ const ResponsiveAppBar = (props) => {
               </Button>
               <Button
                 key={pages[1]}
-                onClick={event =>  window.location.href='/'}
+                onClick={event =>  window.location.href='/match'}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {pages[1]}
               </Button>
+              
               <Button
                 key={pages[2]}
                 onClick={event =>  window.location.href='/team'}
