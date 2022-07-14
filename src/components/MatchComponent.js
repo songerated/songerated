@@ -26,8 +26,6 @@ function MatchComponent(props) {
 
     let num = Math.floor(Math.random() * 100);
     num = num % 2;
-    console.log(num)
-    console.log("../../assets/" + num + ".png")
 
   return (
     <center>
@@ -49,6 +47,9 @@ function MatchComponent(props) {
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             Matching Song Count: {props.song}
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary" component="div">
+            Matching Artist Count: {props.artist}
           </Typography>
         </CardContent>
         
