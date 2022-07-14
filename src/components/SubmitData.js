@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SubmitData() {
   const [topTracks, setTopTracks] = useState(null)
-  const [dbResponse, setDbResponse] = useState(null)
   const {currentUser} = useAuth() 
   const id = currentUser.uid
   const navigate = useNavigate();
@@ -39,11 +38,26 @@ export default function SubmitData() {
   
   useEffect(() => {
     console.log(id)
-    axios.post(server_base_url + "/tracks" , { topTracks: topTracks, uid: id })
-        .then(response => setDbResponse(response));
+    axios.get(server_base_url + "/verifyuser", {
 
-    console.log(topTracks)
+      params: {
+        id: id
+      }
+    }).then(res => {
+      if(res.data.length === 0){
+        axios.post(server_base_url + "/tracks" , { topTracks: topTracks, uid: id })
+        .then(response =>     navigate("/match")
+        );
+
+        console.log(topTracks)
+      }else{
+        console.log("already exists")
+        navigate("/match")
+      }
+
+    
   }, [topTracks]);
+})
 
  
 
@@ -61,7 +75,6 @@ export default function SubmitData() {
     })
     setTopTracks(data)
     console.log(data.items)
-    navigate("/match")
 
   }
 
