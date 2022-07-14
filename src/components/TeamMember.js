@@ -25,7 +25,7 @@ export default function TeamMember(props) {
                     <center>
                   <div className="avatar">
                     <img
-                      src="../../assets/0.png"
+                      src={props.dp}
                       className="card-img-top"
                       alt=""
                     />

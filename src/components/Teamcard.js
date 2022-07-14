@@ -44,10 +44,10 @@ class Teamcard extends Component {
     return (
       <div className="clearfix">
         <div className="row">
-          <TeamMember name="Aditya Gupta" bio="Hi, I'm Aditya, an Android Developer, who loves exploring different stuff. Currently I'm a 3rd year ISE student @NIE. I am a potterhead and greek mythology enthusiast who mainly programs in Kotlin. I am also trying out ML to see what all the fuss is about and might actually ❤ it." github="aadityaguptaa"/>
-          <TeamMember name="Aprameya L" bio="To pursue my career in a growing organization where i can get the opportunity to prove my abilities by accepting challenges, fulfilling the organization goal and climb the career ladder through continuous learning and commitment. Looking for an opportunity to enhance my skills as well as personal growth with better career prospects" github="aprameya-l"/>
-          <TeamMember name="Deepthi Nanjunda" bio="something something" github="deepthi-nanjunda"/>
-          <TeamMember name="Achaiah CD" bio="Spends his free time playing football, reading novels and acquiring queer pieces of knowledge. Has an affinity for fantasy and epic novels. Loves watching football, good cinema and tinkering around with computers. Also tries his hand in cardistry and sleight of hand. Interested in cyber security and investing." github="Achaiah-CD"/>
+          <TeamMember name="Aditya Gupta" bio="Hi, I'm Aditya, an Android Developer, who loves exploring different stuff. Currently I'm a 3rd year ISE student @NIE. I am a potterhead and greek mythology enthusiast who mainly programs in Kotlin. I am also trying out ML to see what all the fuss is about and might actually ❤ it." github="aadityaguptaa" dp="https://i.ibb.co/0C3kt1x/me.jpg"/>
+          <TeamMember name="Aprameya L" bio="To pursue my career in a growing organization where i can get the opportunity to prove my abilities by accepting challenges, fulfilling the organization goal and climb the career ladder through continuous learning and commitment. Looking for an opportunity to enhance my skills as well as personal growth with better career prospects" github="aprameya-l" dp="https://i.ibb.co/D8zRJvh/ap.jpg"/>
+          <TeamMember name="Deepthi Nanjunda" bio="something something" github="deepthi-nanjunda" dp="https://i.ibb.co/LCwrvbn/dt.jpg"/>
+          <TeamMember name="Achaiah CD" bio="Spends his free time playing football, reading novels and acquiring queer pieces of knowledge. Has an affinity for fantasy and epic novels. Loves watching football, good cinema and tinkering around with computers. Also tries his hand in cardistry and sleight of hand. Interested in cyber security and investing." github="Achaiah-CD" dp="https://i.ibb.co/FXpvvFd/ac.jpg"/>
         </div>
       </div>
     );
