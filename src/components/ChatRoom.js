@@ -1,21 +1,33 @@
-import React from 'react'
-
 import  {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
 import firebase from 'firebase/compat/app';
 import { getFirestore } from "firebase/firestore";
 import Button from '@mui/material/Button';
 import 'firebase/compat/firestore';
-import { useState } from 'react';
-import { useRef } from 'react';
 import '../App.css';
 import { PropaneSharp } from '@mui/icons-material';
 import { LeakAddTwoTone } from '@material-ui/icons';
+import ResponsiveAppBar from './ResponsiveAppBar'
+import React, { useEffect, useRef, useState } from 'react'
+import MatchComponent from './MatchComponent'
+import { makeStyles } from '@material-ui/core/styles';
+import { Query } from 'firebase/firestore';
+import { where } from 'firebase/firestore';
+const useStyles = makeStyles((theme) => ({
+    root: {
+      minHeight: '100vh',
+      backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/music_setup_blur.jpg'})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+    },
+  }));
 
 const auth =    firebase.auth();
 const firestore = firebase.firestore();
 
 function ChatRoom(){
+    const classes = useStyles();
+
 
     const [user] = useAuthState(auth);
     const recid = window.localStorage.getItem('chatid')
@@ -23,6 +35,7 @@ function ChatRoom(){
 
   return (
     <div className="Appm">
+        <ResponsiveAppBar />
       <header>
         <h1>⚛️🔥💬</h1>
         <SignOut />
@@ -39,10 +52,23 @@ function ChatRoom(){
 function Chat(){
     const dummy = useRef();
     const messageRef = firestore.collection('messages');
-    const query = messageRef.orderBy('createdAt').limit(50);
-    const [messages] = useCollectionData(query, {idField: 'id'});
-    const [formValue, setFormValue] = useState('');
+    const recid = window.localStorage.getItem('chatid')
+    const sender = messageRef.where('uid', '==', auth.currentUser.uid).where('recid', '==', recid).limit(50);
+    const receiver = messageRef.where('recid', '==', auth.currentUser.uid).where('uid', '==', recid).limit(50);
+    // const q = Query(messageRef, where('recid', "==", recid), where('uid', "==", auth.currentUser.uid));
+    // const query = messageRef.orderBy('createdAt').limit(50);
+    const [senderMessages] = useCollectionData(sender, {idField: 'id'});
+    const [receiverMessages] = useCollectionData(receiver, {idField: 'id'});
+    
+    useEffect(() => {
+        if(senderMessages){
+        senderMessages.sort((a, b) => a.createdAt - b.createdAt);
 
+        }
+    }, [senderMessages]);
+    // let finalMessages = {...senderMessages, ...receiverMessages}
+
+    const [formValue, setFormValue] = useState('');
     const sendMessage = async(e) => {
         e.preventDefault();
         const { uid, photoURL } = auth.currentUser;
@@ -50,7 +76,8 @@ function Chat(){
             text: formValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             uid,
-            photoURL
+            photoURL,
+            recid
         });
         setFormValue('');
 
@@ -61,7 +88,8 @@ function Chat(){
     return (
         <>
             <main>
-                {messages && messages.map(message => ( <ChatMessage key={message.id} message={message}/>))}
+                {senderMessages && senderMessages.map(message => ( <ChatMessage key={message.id} message={message}/>))}
+                {receiverMessages && receiverMessages.map(message => ( <ChatMessage key={message.id} message={message}/>))}
 
                 <div ref={dummy}></div>
             </main>
@@ -76,11 +104,11 @@ function Chat(){
 }
 
 function ChatMessage(props){
-    const {text, uid, photoURL } = props.message;
+    const {text, uid, photoURL, recid} = props.message;
     let messageClass = 'sent'
     if(uid === auth.currentUser.uid){
         messageClass = 'sent';
-    }else if(uid === window.localStorage.getItem('chatid')){
+    }else if(uid === window.localStorage.getItem('chatid') ){
         messageClass = 'received';
     }else{
         return(
