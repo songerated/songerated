@@ -15,6 +15,7 @@ import ChatRoom from './components/ChatRoom';
 import Submit from './components/SubmitData';
 import Login from './components/Login'
 import Team from './components/Team';
+import ChatPage from './pages/ChatPage';
 
 export default function App() {
 
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="/submit" element={<Submit />} />
           <Route path="/team" element={<Team />} />
           <Route path="/chat" element={<ChatRoom />} />
+          <Route path="/chatpage" element={<ChatPage />} />
         </Routes>
       </Router>
     </AuthProvider>
