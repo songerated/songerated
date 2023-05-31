@@ -212,8 +212,13 @@ main::-webkit-scrollbar-thumb {
 
 .addMoviesSearch{
   margin: 64px;
-}
+  margin-bottom: 0px;
+  overflow: hidden;
 
+}
+.movieCard{
+  margin: 32px;
+}
 
 @keyframes App-logo-spin {
   from {

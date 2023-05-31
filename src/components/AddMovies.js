@@ -4,28 +4,190 @@ import ResponsiveAppBar from "./ResponsiveAppBar";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import { useEffect, useState } from "react";
+import { List } from "@mui/material";
+import { ListItem } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { Box } from "@mui/material";
+import { makeStyles } from "@material-ui/core/styles";
+import { alpha } from '@mui/material/styles';
 
-const AddMovies = () => {
+const fetch = require("node-fetch");
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: "100vh",
+    backgroundImage: `url('https://pixabay.com/get/gf2e9d23c2691c22036b218e22c5107310fbf59071fc4d5135e46ddb390cd80df22e9d4ef89a127c2280a6786b8111931.jpg')`,
+    backgroundSize: "cover",
+  },
+}));
+
+
+
+const CustomTextField = styled((props) => (
+  <TextField InputProps={{ disableUnderline: true }} {...props} />
+))(({ theme }) => ({
+  '& .MuiFilledInput-root': {
+    overflow: 'hidden',
+    borderRadius: 4,
+    backgroundColor: theme.palette.mode === 'light' ? 'rgba(200, 200, 200, 0.25)' : '#1A2027',
+    border: '1px solid',
+    borderColor: theme.palette.mode === 'light' ? '#000000' : '#2D3843',
+    transition: theme.transitions.create([
+      'border-color',
+      'background-color',
+      'box-shadow',
+    ]),
+    color: '#ffffff',
+    '&:hover': {
+      backgroundColor: 'rgba(200, 200, 200, 0.75)',
+    },
+    '&.Mui-focused': {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
+      borderColor: theme.palette.primary.main,
+      color: '#ffffff'
+    },
+  },
+}));
+
+
+export default function AddMovies() {
+  const [movies, setMovies] = useState({});
+  const [selected, setSelected] = useState([]);
+  const classes = useStyles();
+
+  const loadMovies = () => {
+    const url =
+      "https://api.themoviedb.org/3/search/movie?query=" +
+      selected +
+      "&include_adult=false&language=en-US&page=1";
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlODFjZGMyMGYxNTY3YzQyYjdmY2ViMGRjMDU3YTFiOSIsInN1YiI6IjY0Nzc0YjU5MjU1ZGJhMDEyOWNlNDUwNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZauR3is7yezF6WsiV35JPVrP0Zj_TRYfyaDASSoFRt0",
+      },
+    };
+    console.log(selected);
+
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((json) => {
+        setMovies(json);
+      })
+      .catch((err) => console.error("error:" + err));
+  };
+
+  useEffect(() => {
+    console.log(movies.results);
+  }, [movies]);
+
   return (
-    <div>
+    <div className={classes.root}>
       <ResponsiveAppBar />
       <div className="addMoviesSearch">
-          <Stack direction="row" spacing={2} justifyContent="center">
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={top100Films}
-              sx={{ width: 300 }}
-              renderInput={(params) => <TextField {...params} label="Movie" />}
-            />
-            <Button variant="contained" size="large"   >
-              Add Movie
-            </Button>
-          </Stack>
+      <center>
+
+        <Stack sx={{padding:'8px'}}direction="row" spacing={2} justifyContent="center">
+          <Autocomplete
+            onChange={(event, value) => setSelected(value)}
+            freeSolo
+            id="combo-box-demo"
+            variant="filled"
+            options={top100Films.map((option) => option.label)}
+            sx={{ width: 300, }}
+            renderInput={(params) => (
+              <CustomTextField
+              variant="filled"
+                onChange={(event, value) => setSelected(event.target.value)}
+                {...params}
+                label="Movie Name"
+              />
+             
+            )}
+          />
+          <Button variant="contained" size="large" onClick={loadMovies}>
+            Search
+          </Button>
+        </Stack>
+        </center>
+
+        <div style={{ marginBottom: "32px" }}>
+          {movies.results?.map((i) => (
+            <Card className="movieCard">
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <CardContent>
+                    <Typography component="div" variant="h5">
+                      {i.original_title}
+                    </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                      component="div"
+                    >
+                      Release Date: {i.release_date}
+                    </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                      component="div"
+                    >
+                      Popularity: {i.popularity}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      component="div"
+                      sx={{ marginTop: "8px" }}
+                    >
+                      {i.overview}
+                    </Typography>
+
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                      component="div"
+                      sx={{ marginTop: "8px" }}
+                    >
+                      Average Rating: {i.vote_average}
+                    </Typography>
+                  </CardContent>
+                </Box>
+
+                <CardMedia
+                  component="img"
+                  sx={{ width: 151, margin: "16px" }}
+                  image={"https://image.tmdb.org/t/p/original" + i.poster_path}
+                  alt="Live from space album cover"
+                />
+              </Stack>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
-};
+}
 
 const top100Films = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -154,5 +316,3 @@ const top100Films = [
   { label: "3 Idiots", year: 2009 },
   { label: "Monty Python and the Holy Grail", year: 1975 },
 ];
-
-export default AddMovies;
