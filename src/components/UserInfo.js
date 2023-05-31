@@ -104,6 +104,7 @@ export default function UserInfo() {
 
 
     })
+    console.log(data)
 
     setTopTracks(data.items)
 
