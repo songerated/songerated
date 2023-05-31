@@ -210,6 +210,10 @@ main::-webkit-scrollbar-thumb {
   border-color: rgb(99, 204, 131);
 }
 
+.addMoviesSearch{
+  margin: 64px;
+}
+
 
 @keyframes App-logo-spin {
   from {
