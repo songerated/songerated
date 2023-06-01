@@ -26,6 +26,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { alpha } from "@mui/material/styles";
 import Popover from "@mui/material/Popover";
 import { CardActionArea } from "@mui/material";
+import axios from "axios";
+import { useAuth } from "../contexts/authContexts"
+
 
 const fetch = require("node-fetch");
 
@@ -53,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(4),
     padding: theme.spacing(0.8),
     borderRadius: theme.spacing(0),
-    
   },
 }));
 
@@ -109,6 +111,12 @@ export default function AddMovies() {
   const [selected, setSelected] = useState([]);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const {currentUser} = useAuth() 
+
+  const server_base_url = process.env.REACT_APP_SERVER_URL;
+  const spotify_url = process.env.REACT_APP_SERVER_URL;
+
+  let token = window.localStorage.getItem("token");
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -202,9 +210,15 @@ export default function AddMovies() {
                 <CardActionArea
                   onClick={(evt) => {
                     console.log(i.id);
-                    selectedMovies.push(i)
-                    console.log(selectedMovies)
-                    handleClose()
+                    selectedMovies.push(i);
+                    console.log(selectedMovies);
+                    axios
+                      .post(server_base_url + "/addmovie", {
+                        movie: i,
+                        uid: currentUser.uid,
+                      })
+                      .then((response) => handleClose());
+                    
                   }}
                 >
                   <Stack
@@ -267,65 +281,62 @@ export default function AddMovies() {
         </Popover>
 
         <div>
-            {selectedMovies?.map((i) => (
-              <Card key={i.id} className={classes.cardMain} >
-                
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                      <CardContent>
-                        <Typography component="div" variant="h5">
-                          {i.original_title}
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          color="text.secondary"
-                          component="div"
-                        >
-                          Release Date: {i.release_date}
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          color="text.secondary"
-                          component="div"
-                        >
-                          Popularity: {i.popularity}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          color="text.secondary"
-                          component="div"
-                          sx={{ marginTop: "8px" }}
-                        >
-                          {i.overview}
-                        </Typography>
+          {selectedMovies?.map((i) => (
+            <Card key={i.id} className={classes.cardMain}>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <CardContent>
+                    <Typography component="div" variant="h5">
+                      {i.original_title}
+                    </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                      component="div"
+                    >
+                      Release Date: {i.release_date}
+                    </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                      component="div"
+                    >
+                      Popularity: {i.popularity}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      component="div"
+                      sx={{ marginTop: "8px" }}
+                    >
+                      {i.overview}
+                    </Typography>
 
-                        <Typography
-                          variant="subtitle2"
-                          color="text.secondary"
-                          component="div"
-                          sx={{ marginTop: "8px" }}
-                        >
-                          Average Rating: {i.vote_average}
-                        </Typography>
-                      </CardContent>
-                    </Box>
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                      component="div"
+                      sx={{ marginTop: "8px" }}
+                    >
+                      Average Rating: {i.vote_average}
+                    </Typography>
+                  </CardContent>
+                </Box>
 
-                    <CardMedia
-                      component="img"
-                      sx={{ width: 151, margin: "16px" }}
-                      image={
-                        "https://image.tmdb.org/t/p/original" + i.poster_path
-                      }
-                      alt="Live from space album cover"
-                    />
-                  </Stack>
-              </Card>
-            ))}
-          </div>
+                <CardMedia
+                  component="img"
+                  sx={{ width: 151, margin: "16px" }}
+                  image={"https://image.tmdb.org/t/p/original" + i.poster_path}
+                  alt="Live from space album cover"
+                />
+              </Stack>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
