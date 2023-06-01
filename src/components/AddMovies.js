@@ -23,7 +23,9 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-import { alpha } from '@mui/material/styles';
+import { alpha } from "@mui/material/styles";
+import Popover from "@mui/material/Popover";
+import { CardActionArea } from "@mui/material";
 
 const fetch = require("node-fetch");
 
@@ -33,44 +35,90 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url('https://pixabay.com/get/gf2e9d23c2691c22036b218e22c5107310fbf59071fc4d5135e46ddb390cd80df22e9d4ef89a127c2280a6786b8111931.jpg')`,
     backgroundSize: "cover",
   },
+  popoverRoot: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.2)",
+  },
+  card: {
+    margin: theme.spacing(4),
+    padding: theme.spacing(0.8),
+    borderRadius: theme.spacing(0),
+    "&:hover": {
+      backgroundColor: "rgba(0,0,0,0.1)",
+    },
+  },
+  cardMain: {
+    margin: theme.spacing(4),
+    padding: theme.spacing(0.8),
+    borderRadius: theme.spacing(0),
+    
+  },
 }));
 
+const CustomPopUp = styled((props) => <Popover />)(({ theme }) => ({
+  "&.MuiPopover-root": {
+    backgroundColor:
+      theme.palette.mode === "light" ? "rgba(200, 200, 200, 0.25)" : "#1A2027",
 
+    color: "#ffffff",
+  },
+}));
 
 const CustomTextField = styled((props) => (
   <TextField InputProps={{ disableUnderline: true }} {...props} />
 ))(({ theme }) => ({
-  '& .MuiFilledInput-root': {
-    overflow: 'hidden',
+  "& .MuiFilledInput-root": {
+    overflow: "hidden",
     borderRadius: 4,
-    backgroundColor: theme.palette.mode === 'light' ? 'rgba(200, 200, 200, 0.25)' : '#1A2027',
-    border: '1px solid',
-    borderColor: theme.palette.mode === 'light' ? '#000000' : '#2D3843',
+    backgroundColor:
+      theme.palette.mode === "light" ? "rgba(200, 200, 200, 0.25)" : "#1A2027",
+    border: "1px solid",
+    borderColor: theme.palette.mode === "light" ? "#000000" : "#2D3843",
     transition: theme.transitions.create([
-      'border-color',
-      'background-color',
-      'box-shadow',
+      "border-color",
+      "background-color",
+      "box-shadow",
     ]),
-    color: '#ffffff',
-    '&:hover': {
-      backgroundColor: 'rgba(200, 200, 200, 0.75)',
+    color: "#ffffff",
+    "&:hover": {
+      backgroundColor: "rgba(200, 200, 200, 0.75)",
     },
-    '&.Mui-focused': {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    "&.Mui-focused": {
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
       boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
       borderColor: theme.palette.primary.main,
-      color: '#ffffff'
+      color: "#ffffff",
     },
   },
 }));
 
+const CustomPopover = styled(Popover)`
+  popover: {
+    "&.muipopover-root": {
+      //whatever you want
+    }
+  }
+`;
 
 export default function AddMovies() {
   const [movies, setMovies] = useState({});
+  const [selectedMovies, setSelectedMovies] = useState([]);
+
   const [selected, setSelected] = useState([]);
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const loadMovies = () => {
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+  const loadMovies = (event) => {
+    setAnchorEl(event.currentTarget);
+
     const url =
       "https://api.themoviedb.org/3/search/movie?query=" +
       selected +
@@ -101,89 +149,183 @@ export default function AddMovies() {
     <div className={classes.root}>
       <ResponsiveAppBar />
       <div className="addMoviesSearch">
-      <center>
-
-        <Stack sx={{padding:'8px'}}direction="row" spacing={2} justifyContent="center">
-          <Autocomplete
-            onChange={(event, value) => setSelected(value)}
-            freeSolo
-            id="combo-box-demo"
-            variant="filled"
-            options={top100Films.map((option) => option.label)}
-            sx={{ width: 300, }}
-            renderInput={(params) => (
-              <CustomTextField
+        <center>
+          <Stack
+            sx={{ padding: "8px" }}
+            direction="row"
+            spacing={2}
+            justifyContent="center"
+          >
+            <Autocomplete
+              onChange={(event, value) => setSelected(value)}
+              freeSolo
+              id="combo-box-demo"
               variant="filled"
-                onChange={(event, value) => setSelected(event.target.value)}
-                {...params}
-                label="Movie Name"
-              />
-             
-            )}
-          />
-          <Button variant="contained" size="large" onClick={loadMovies}>
-            Search
-          </Button>
-        </Stack>
-        </center>
-
-        <div style={{ marginBottom: "32px" }}>
-          {movies.results?.map((i) => (
-            <Card className="movieCard">
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  <CardContent>
-                    <Typography component="div" variant="h5">
-                      {i.original_title}
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      color="text.secondary"
-                      component="div"
-                    >
-                      Release Date: {i.release_date}
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      color="text.secondary"
-                      component="div"
-                    >
-                      Popularity: {i.popularity}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      component="div"
-                      sx={{ marginTop: "8px" }}
-                    >
-                      {i.overview}
-                    </Typography>
-
-                    <Typography
-                      variant="subtitle2"
-                      color="text.secondary"
-                      component="div"
-                      sx={{ marginTop: "8px" }}
-                    >
-                      Average Rating: {i.vote_average}
-                    </Typography>
-                  </CardContent>
-                </Box>
-
-                <CardMedia
-                  component="img"
-                  sx={{ width: 151, margin: "16px" }}
-                  image={"https://image.tmdb.org/t/p/original" + i.poster_path}
-                  alt="Live from space album cover"
+              options={top100Films.map((option) => option.label)}
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <CustomTextField
+                  variant="filled"
+                  onChange={(event, value) => setSelected(event.target.value)}
+                  {...params}
+                  label="Movie Name"
                 />
-              </Stack>
-            </Card>
-          ))}
-        </div>
+              )}
+            />
+            <Button variant="contained" size="large" onClick={loadMovies}>
+              Search
+            </Button>
+          </Stack>
+        </center>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorReference="anchorPosition"
+          anchorPosition={{ top: 200, left: 200 }}
+          anchorOrigin={{
+            vertical: "center",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "center",
+            horizontal: "center",
+          }}
+          classes={{
+            root: classes.popoverRoot,
+          }}
+        >
+          <div>
+            {movies.results?.map((i) => (
+              <Card key={i.id} className={classes.card}>
+                <CardActionArea
+                  onClick={(evt) => {
+                    console.log(i.id);
+                    selectedMovies.push(i)
+                    console.log(selectedMovies)
+                    handleClose()
+                  }}
+                >
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <CardContent>
+                        <Typography component="div" variant="h5">
+                          {i.original_title}
+                        </Typography>
+                        <Typography
+                          variant="subtitle2"
+                          color="text.secondary"
+                          component="div"
+                        >
+                          Release Date: {i.release_date}
+                        </Typography>
+                        <Typography
+                          variant="subtitle2"
+                          color="text.secondary"
+                          component="div"
+                        >
+                          Popularity: {i.popularity}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          color="text.secondary"
+                          component="div"
+                          sx={{ marginTop: "8px" }}
+                        >
+                          {i.overview}
+                        </Typography>
+
+                        <Typography
+                          variant="subtitle2"
+                          color="text.secondary"
+                          component="div"
+                          sx={{ marginTop: "8px" }}
+                        >
+                          Average Rating: {i.vote_average}
+                        </Typography>
+                      </CardContent>
+                    </Box>
+
+                    <CardMedia
+                      component="img"
+                      sx={{ width: 151, margin: "16px" }}
+                      image={
+                        "https://image.tmdb.org/t/p/original" + i.poster_path
+                      }
+                      alt="Live from space album cover"
+                    />
+                  </Stack>
+                </CardActionArea>
+              </Card>
+            ))}
+          </div>
+        </Popover>
+
+        <div>
+            {selectedMovies?.map((i) => (
+              <Card key={i.id} className={classes.cardMain} >
+                
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <CardContent>
+                        <Typography component="div" variant="h5">
+                          {i.original_title}
+                        </Typography>
+                        <Typography
+                          variant="subtitle2"
+                          color="text.secondary"
+                          component="div"
+                        >
+                          Release Date: {i.release_date}
+                        </Typography>
+                        <Typography
+                          variant="subtitle2"
+                          color="text.secondary"
+                          component="div"
+                        >
+                          Popularity: {i.popularity}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          color="text.secondary"
+                          component="div"
+                          sx={{ marginTop: "8px" }}
+                        >
+                          {i.overview}
+                        </Typography>
+
+                        <Typography
+                          variant="subtitle2"
+                          color="text.secondary"
+                          component="div"
+                          sx={{ marginTop: "8px" }}
+                        >
+                          Average Rating: {i.vote_average}
+                        </Typography>
+                      </CardContent>
+                    </Box>
+
+                    <CardMedia
+                      component="img"
+                      sx={{ width: 151, margin: "16px" }}
+                      image={
+                        "https://image.tmdb.org/t/p/original" + i.poster_path
+                      }
+                      alt="Live from space album cover"
+                    />
+                  </Stack>
+              </Card>
+            ))}
+          </div>
       </div>
     </div>
   );

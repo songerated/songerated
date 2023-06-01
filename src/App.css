@@ -218,7 +218,10 @@ main::-webkit-scrollbar-thumb {
 }
 .movieCard{
   margin: 32px;
+  overflow: hidden;
 }
+
+
 
 @keyframes App-logo-spin {
   from {
