@@ -27,15 +27,15 @@ import { alpha } from "@mui/material/styles";
 import Popover from "@mui/material/Popover";
 import { CardActionArea } from "@mui/material";
 import axios from "axios";
-import { useAuth } from "../contexts/authContexts"
-
+import { useAuth } from "../contexts/authContexts";
+import StepperComponent from "./StepperComponent";
 
 const fetch = require("node-fetch");
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/spaceship.jpg'})`,
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/spaceship.jpg"})`,
     backgroundSize: "cover",
   },
   popoverRoot: {
@@ -111,7 +111,7 @@ export default function AddMovies() {
   const [selected, setSelected] = useState([]);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const {currentUser} = useAuth() 
+  const { currentUser } = useAuth();
 
   const server_base_url = process.env.REACT_APP_SERVER_URL;
   const spotify_url = process.env.REACT_APP_SERVER_URL;
@@ -155,8 +155,34 @@ export default function AddMovies() {
 
   return (
     <div className={classes.root}>
-      <ResponsiveAppBar />
-      <div className="addMoviesSearch">
+      <div style={{padding:'32px'}}>
+      <StepperComponent activeStep={2}></StepperComponent>
+      </div>
+      <div className="addMoviesSearch" >
+        <center>
+          <Card
+            variant="outlined"
+            sx={{
+              maxWidth: "100vw",
+              backgroundColor: "rgba(255,255,255,0.5)",
+              padding: "16px",
+              marginBottom: "16px",
+            }}
+            alignContent="center"
+          >
+            <Typography
+              variant="body1"
+              gutterBottom
+              sx={{ color: "rgba(0,0,0)" }}
+              justifyContent="left"
+              alignContent="left"
+            >
+              The last step is to tell us about your favourite movies.
+              <br></br> No.of movies you add ∝ No. of matches we find for you
+            </Typography>
+          </Card>
+        </center>
+
         <center>
           <Stack
             sx={{ padding: "8px" }}
@@ -218,7 +244,6 @@ export default function AddMovies() {
                         uid: currentUser.uid,
                       })
                       .then((response) => handleClose());
-                    
                   }}
                 >
                   <Stack
