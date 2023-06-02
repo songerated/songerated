@@ -17,6 +17,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Link, useNavigate } from "react-router-dom";
 import StepperComponent from "./StepperComponent";
+import { useAuth } from "../contexts/authContexts"
 
 const useStyles = makeStyles((theme) => ({
   root: {
