@@ -153,7 +153,7 @@ export default function UserInfo() {
     }).then(res => {
       if(res.data.length === 0){
         axios.post(server_base_url + "/tracks" , { topTracks: topTracks, uid: id })
-        .then(response =>     navigate("/match")
+        .then(response =>     navigate("/addmovies")
         );
 
       }else{

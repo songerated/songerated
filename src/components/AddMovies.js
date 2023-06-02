@@ -29,6 +29,9 @@ import { CardActionArea } from "@mui/material";
 import axios from "axios";
 import { useAuth } from "../contexts/authContexts";
 import StepperComponent from "./StepperComponent";
+import { grey } from '@mui/material/colors';
+import {Link, useNavigate} from 'react-router-dom';
+
 
 const fetch = require("node-fetch");
 
@@ -104,6 +107,13 @@ const CustomPopover = styled(Popover)`
   }
 `;
 
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: "white",
+  backgroundColor: 'rgba(0,0,0)',
+  '&:hover': {
+    backgroundColor: grey[700],
+  },
+}));
 export default function AddMovies() {
   const [movies, setMovies] = useState({});
   const [selectedMovies, setSelectedMovies] = useState([]);
@@ -115,6 +125,7 @@ export default function AddMovies() {
 
   const server_base_url = process.env.REACT_APP_SERVER_URL;
   const spotify_url = process.env.REACT_APP_SERVER_URL;
+  const navigate = useNavigate();
 
   let token = window.localStorage.getItem("token");
 
@@ -148,6 +159,10 @@ export default function AddMovies() {
       })
       .catch((err) => console.error("error:" + err));
   };
+
+  const handleSubmit= ()=>{
+      navigate("/match")
+  }
 
   useEffect(() => {
     console.log(movies.results);
@@ -209,6 +224,9 @@ export default function AddMovies() {
             <Button variant="contained" size="large" onClick={loadMovies}>
               Search
             </Button>
+            <ColorButton variant="contained"  size="large" onClick={handleSubmit}>
+              Submit
+            </ColorButton>
           </Stack>
         </center>
         <Popover

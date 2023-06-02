@@ -173,7 +173,11 @@ export default function StepperComponent(props) {
       <Stepper alternativeLabel activeStep={props.activeStep} connector={<ColorlibConnector />}>
         {steps.map((label) => (
           <Step key={label} >
-            <StepLabel  StepIconComponent={ColorlibStepIcon} >{label}</StepLabel>
+            <StepLabel  StepIconComponent={ColorlibStepIcon} sx={{
+                '& MuiStepLabel-label.Mui-active': {
+                    color:'white'
+                }
+            }} >{label}</StepLabel>
           </Step>
         ))}
       </Stepper>
