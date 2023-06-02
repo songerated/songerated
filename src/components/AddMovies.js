@@ -35,7 +35,7 @@ const fetch = require("node-fetch");
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundImage: `url('https://pixabay.com/get/gf2e9d23c2691c22036b218e22c5107310fbf59071fc4d5135e46ddb390cd80df22e9d4ef89a127c2280a6786b8111931.jpg')`,
+    backgroundImage: `url(${process.env.PUBLIC_URL + 'spaceship.jpg'})`,
     backgroundSize: "cover",
   },
   popoverRoot: {
