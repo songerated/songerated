@@ -156,7 +156,7 @@ export default function UserInfo() {
         );
 
       }else{
-        navigate("/match")
+        navigate("/addmovies")
       }
 
     
