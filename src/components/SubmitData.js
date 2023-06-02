@@ -32,25 +32,7 @@ export default function SubmitData() {
   
   let token = window.localStorage.getItem("token")
   
-  useEffect(() => {
-    axios.get(server_base_url + "/verifyuser", {
-
-      params: {
-        id: id
-      }
-    }).then(res => {
-      if(res.data.length === 0){
-        axios.post(server_base_url + "/tracks" , { topTracks: topTracks, uid: id })
-        .then(response =>     navigate("/match")
-        );
-
-      }else{
-        navigate("/match")
-      }
-
-    
-    })
-  }, [topTracks])
+  
 
 
   const getUserData = async (e) => {

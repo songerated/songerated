@@ -53,10 +53,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function UserInfo() {
-  const classes = useStyles();
   const [token, setToken] = useState("");
-  const navigate = useNavigate();
   const spotify_url = process.env.REACT_APP_SPOTIFY_BASE_URL;
+  const {currentUser} = useAuth() 
+  const id = currentUser.uid
+  const navigate = useNavigate();
+  const classes = useStyles()
+  const server_base_url = process.env.REACT_APP_SERVER_URL
 
   //This is the function that gets the token from the URL
   useEffect(() => {
@@ -74,6 +77,7 @@ export default function UserInfo() {
 
     setToken(token);
   }, []);
+
 
   const getTopArtists = async (e) => {
     e.preventDefault();
@@ -140,7 +144,23 @@ export default function UserInfo() {
   };
 
   function handleOnSubmit() {
-    navigate("/submit");
+    axios.get(server_base_url + "/verifyuser", {
+
+      params: {
+        id: id
+      }
+    }).then(res => {
+      if(res.data.length === 0){
+        axios.post(server_base_url + "/tracks" , { topTracks: topTracks, uid: id })
+        .then(response =>     navigate("/match")
+        );
+
+      }else{
+        navigate("/match")
+      }
+
+    
+    })
   }
 
   const renderTopTracks = () => {
