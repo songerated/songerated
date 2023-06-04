@@ -19,7 +19,8 @@ import axios from "axios";
 import { Carousel } from "3d-react-carousal";
 import Stack from "@mui/material/Stack";
 import { Divider } from "@mui/material";
-import {SvgIcon} from "@mui/material";
+import {Typography} from "@mui/material";
+import { SvgIcon } from "@mui/material";
 
 const style = {
   width: 297,
@@ -35,7 +36,7 @@ let slides = [
   <img src="https://i.ibb.co/D8wx8r7/pngwing-com.png" alt="2" />,
   <img src="https://i.ibb.co/qDvvv9R/pngwing-com-10.png" alt="3" />,
   <img src="https://i.ibb.co/G02S2Bg/pngwing-com-3.png" alt="4" />,
-  <img src="https://i.ibb.co/cFwVG5G/pngwing-com-9.png"  alt="5" />,
+  <img src="https://i.ibb.co/cFwVG5G/pngwing-com-9.png" alt="5" />,
   <img src="https://i.ibb.co/bdtHbTR/pngwing-com-11.png" alt="1" />,
 ];
 
@@ -140,6 +141,9 @@ export default function Login() {
           </div>
 
           <Stack direction="column">
+            <Typography variant="h4" color="rgba(5,5,5)" gutterBottom>
+              WELCOME BACK
+            </Typography>
             <Card
               style={{
                 width: "400px",
@@ -170,7 +174,6 @@ export default function Login() {
                       <SignIn />
                     </center>
                   </Box>
-                  
                 </Form>
               </Card.Body>
             </Card>
