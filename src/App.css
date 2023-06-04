@@ -230,8 +230,43 @@ main::-webkit-scrollbar-thumb {
   font-weight: 500;
 }
 
+.react-3d-carousel .slider-container .slider-right div{
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  margin-top: -20px;
+  color: #181717 !important;
+  transform: translateY(-50%);
+  padding: 10px 10px;
+  border-top: 2px solid #181717 !important;
+  border-right: 2px solid #181717 !important;
+  border-bottom: 2px solid #181717 !important;
+  border-left: 2px solid #181717 !important;
+}
 
+.react-3d-carousel .slider-container .slider-left div{
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  margin-top: -20px;
+  color: #181717 !important;
+  transform: translateY(-50%);
+  padding: 10px 10px;
+  border-top: 2px solid #181717 !important;
+  border-right: 2px solid #181717 !important;
+  border-bottom: 2px solid #181717 !important;
+  border-left: 2px solid #181717 !important;
+}
 
+.react-3d-carousel {
+position: relative;
+width: 500px;
+height: 315px !important;
+}
+
+.react-3d-carousel .slider-container{
+  height: "350px" !important;
+}
 
 @keyframes App-logo-spin {
   from {
