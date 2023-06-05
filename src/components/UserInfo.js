@@ -19,8 +19,7 @@ import { Link, useNavigate } from "react-router-dom";
 import StepperComponent from "./StepperComponent";
 import { useAuth } from "../contexts/authContexts";
 import { TokenOutlined } from "@mui/icons-material";
-import Skeleton from '@mui/material/Skeleton';
-
+import Skeleton from "@mui/material/Skeleton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,32 +76,20 @@ export default function UserInfo() {
       .split("=")[1];
 
     window.location.hash = "";
-    window.localStorage.setItem("token", tokent)
+    window.localStorage.setItem("token", tokent);
     setToken(tokent);
     console.log(tokent);
-    
-    
-
-  },[]);
+  }, []);
 
   useEffect(() => {
-    if (token === "")
-      return;
+    if (token === "") return;
     loadTracks();
     console.log(token);
     loadArtists();
-
-
-  }, [token])
-
-  
-
-
-
- 
+  }, [token]);
 
   const loadTracks = async (e) => {
-    console.log(token)
+    console.log(token);
     axios
       .get(spotify_url + "/me/top/tracks", {
         headers: {
@@ -112,13 +99,13 @@ export default function UserInfo() {
       })
       .then((response) => {
         setTopTracks(response.data.items);
-        setIsTopTracks(true)
+        setIsTopTracks(true);
         console.log(response.data.items);
       });
-  }
+  };
 
   const loadArtists = async (e) => {
-    console.log(token)
+    console.log(token);
     axios
       .get(spotify_url + "/me/top/artists", {
         headers: {
@@ -128,10 +115,10 @@ export default function UserInfo() {
       })
       .then((response) => {
         setTopArtists(response.data.items);
-        setIsTopArtists(true)
+        setIsTopArtists(true);
         console.log(response.data.items);
       });
-  }
+  };
 
   const getTopArtists = async (e) => {
     e.preventDefault();
@@ -146,14 +133,10 @@ export default function UserInfo() {
     setTopArtists(data.items);
   };
 
-  
-
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
   const [isTopTracks, setIsTopTracks] = useState(false);
   const [isTopArtists, setIsTopArtists] = useState(false);
-
-
 
   const renderTopArtists = () => {
     return (
@@ -191,8 +174,15 @@ export default function UserInfo() {
   };
 
   function handleOnSubmit() {
-    window.localStorage.setItem("topArtists", [topArtists[0].id, topArtists[1].id, topArtists[2].id])
-    window.localStorage.setItem("topTracks", [topTracks[0].id, topTracks[1].id])
+    window.localStorage.setItem("topArtists", [
+      topArtists[0].id,
+      topArtists[1].id,
+      topArtists[2].id,
+    ]);
+    window.localStorage.setItem("topTracks", [
+      topTracks[0].id,
+      topTracks[1].id,
+    ]);
 
     axios
       .get(server_base_url + "/verifyuser", {
@@ -221,32 +211,31 @@ export default function UserInfo() {
       </div>
       <center>
         <Box sx={{ margin: "32px", width: "80%" }}>
-          {
-            !isTopTracks && <Grid container spacing={8}>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-                          <Skeleton width="100%"/>
-
-          </Grid>
-          }
-            {
-              isTopTracks && <TableContainer component={Paper}>
+          {!isTopTracks && (
+            <Grid container spacing={8}>
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+              <Skeleton width="100%" />
+            </Grid>
+          )}
+          {isTopTracks && (
+            <TableContainer component={Paper}>
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
@@ -280,13 +269,11 @@ export default function UserInfo() {
                 </TableBody>
               </Table>
             </TableContainer>
-            }
-          
+          )}
 
           {/* </form> */}
         </Box>
         <Box sx={{ margin: "32px", width: "80%" }}>
-          
           {isTopArtists && renderTopArtists()}
         </Box>
 
