@@ -46,9 +46,35 @@ function MatchPage() {
   const [artistCount, setArtistCount] = useState({})
   const server_base_url = process.env.REACT_APP_SERVER_URL
   const {currentUser} = useAuth() 
- 
-  console.log(currentUser.uid)
+  const spotify_url = process.env.REACT_APP_SPOTIFY_BASE_URL;
 
+  const token = window.localStorage.getItem("token");
+
+  const topArtists = window.localStorage.getItem("topArtists");
+  const topTracks = window.localStorage.getItem("topTracks");
+
+  const topArtistsArray = topArtists.split(',')
+  const topTracksArray = topTracks.split(',')
+
+  console.log(topArtists)
+  console.log(topTracks)
+
+  const getRecommendedSongs = async (e) => {
+    const { data } = await axios.get(spotify_url + "/recommendations", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        seed_artists: `${topArtists}`,
+        seed_tracks: `${topTracks}`
+      },
+    });
+    console.log(data);
+
+  };
+
+  getRecommendedSongs()
+  
   useEffect(() => {
     if(users.length === 0){
 

@@ -91,7 +91,13 @@ export default function UserInfo() {
     loadTracks();
     console.log(token);
     loadArtists();
+
+
   }, [token])
+
+  
+
+
 
  
 
@@ -140,10 +146,14 @@ export default function UserInfo() {
     setTopArtists(data.items);
   };
 
+  
+
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
   const [isTopTracks, setIsTopTracks] = useState(false);
   const [isTopArtists, setIsTopArtists] = useState(false);
+
+
 
   const renderTopArtists = () => {
     return (
@@ -181,6 +191,9 @@ export default function UserInfo() {
   };
 
   function handleOnSubmit() {
+    window.localStorage.setItem("topArtists", [topArtists[0].id, topArtists[1].id, topArtists[2].id])
+    window.localStorage.setItem("topTracks", [topTracks[0].id, topTracks[1].id])
+
     axios
       .get(server_base_url + "/verifyuser", {
         params: {
