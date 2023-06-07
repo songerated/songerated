@@ -12,6 +12,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
+import { Button } from "@mui/material";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const server_base_url = process.env.REACT_APP_SERVER_URL;
 
@@ -43,6 +45,7 @@ const UHSongList = (props) => {
       sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'hidden', }}
     >
       <TableContainer component={Paper} sx={{padding:'16px', overflow:`${props.overflow}`}}>
+      <Typography sx={{ textAlign:"center"}} variant="h6">Your most listened songs</Typography>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -65,7 +68,10 @@ const UHSongList = (props) => {
             ))}
           </TableBody>
         </Table>
+
       </TableContainer>
+      <Button sx={{  backgroundColor: '#000000',}} variant="contained" endIcon={<ArrowDropDownIcon />}>Show complete list</Button>
+
     </Box>
   );
 };

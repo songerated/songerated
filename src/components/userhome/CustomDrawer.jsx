@@ -16,15 +16,22 @@ import Drawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
+import { useState } from 'react';
 
 var iconList = [<DashboardIcon/>, <MovieFilterIcon/>, <LibraryMusicIcon/>, <ConnectWithoutContactIcon/> ]
 const drawerWidth = 300;
 let photo = null;
 
-const CustomDrawer = () => {
-  
+const CustomDrawer = (props) => {
+
   const { currentUser } = useAuth();
   const mail = currentUser.email;
+  const [selectedButton, setSelectedButton] = useState(0)
+
+  const handleDrawerItemClick = (index) => {
+    props.change(index)
+    setSelectedButton(index)
+  }
 
   if (auth.currentUser !== null) {
     let { uid, photoURL } = auth.currentUser;
@@ -58,8 +65,8 @@ const CustomDrawer = () => {
             <List>
               {["Dashboard", "Movies", "Music", "Your Profile"].map(
                 (text, index) => (
-                  <ListItem key={text} disablePadding>
-                    <ListItemButton>
+                  <ListItem   key={text} disablePadding>
+                    <ListItemButton selected={selectedButton == index} onClick={e => handleDrawerItemClick(index)} key={index} >
                       <ListItemIcon>
                         {iconList[index]}
                       </ListItemIcon>

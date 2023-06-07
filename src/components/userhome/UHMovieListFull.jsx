@@ -34,16 +34,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const UHMovieList = (props) => {
+const UHMovieListFull = (props) => {
   console.log(props.uid);
   
 
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh",     overflowY: 'auto' }}
+      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh",  width:'100hw', height:'100vh',   overflowY: 'auto' }}
     >
-      <TableContainer component={Paper} sx={{padding:'16px', overflow:`${props.overflow}`}}>
+      <TableContainer component={Paper} sx={{padding:'16px',}}>
       <Typography sx={{ textAlign:"center"}} variant="h6">Your Favourite movies</Typography>
 
         <Table aria-label="customized table">
@@ -66,11 +66,10 @@ const UHMovieList = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button sx={{  backgroundColor: '#000000',}} variant="contained" endIcon={<ArrowDropDownIcon />}>Show complete list</Button>
 
     </Box>
     
   );
 };
 
-export default UHMovieList;
+export default UHMovieListFull;

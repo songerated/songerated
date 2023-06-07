@@ -12,6 +12,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import UHMovieListFull from "./UHMovieListFull";
+import UHSongListFull from "./UHSongListFull";
+
 
 const server_base_url = process.env.REACT_APP_SERVER_URL;
 
@@ -35,6 +38,7 @@ const UserHomePage = () => {
 
   var [userMovieList, setUserMovieList] = useState([]);
   var [userSongList, setUserSongList] = useState([]);
+  var [activeDrawerItem, setActiveDrawerItem] = useState(0);
 
   const id = currentUser.uid;
 
@@ -44,6 +48,11 @@ const UserHomePage = () => {
   };
   const handleBackdropOpen = () => {
     setBackdropOpen(true);
+  };
+
+  const DrawerItemClicked = (index) => {
+    setActiveDrawerItem(index);
+    console.log(activeDrawerItem);
   };
 
   useEffect(() => {
@@ -77,7 +86,8 @@ const UserHomePage = () => {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <ResponsiveAppBar />
-        <CustomDrawer />
+        <CustomDrawer change={DrawerItemClicked} />
+        
         {backdropOpen ? (
           <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -87,10 +97,24 @@ const UserHomePage = () => {
           </Backdrop>
         ) : (
           <>
-            <UHSongList uid={id} overflow="hidden" tabledata={userSongList} />
-            <UHMovieList uid={id} overflow="hidden" tabledata={userMovieList} />
+            {
+              activeDrawerItem===0
+              && <><UHSongList uid={id} overflow="hidden" tabledata={userSongList} />
+              <UHMovieList uid={id} overflow="hidden" tabledata={userMovieList} /></>
+
+              || activeDrawerItem===1 
+              && <UHSongListFull uid={id} tabledata={userSongList} />
+    
+              || activeDrawerItem===2 
+              && <UHMovieListFull uid={id} tabledata={userMovieList} />
+    
+              || activeDrawerItem===3
+              && <p>3</p>
+            }
+            
           </>
         )}
+        
       </Box>
     </div>
   );

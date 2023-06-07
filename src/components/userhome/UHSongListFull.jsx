@@ -2,7 +2,8 @@ import React from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,6 +14,8 @@ import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
+const server_base_url = process.env.REACT_APP_SERVER_URL;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,43 +37,42 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const UHMovieList = (props) => {
-  console.log(props.uid);
-  
+const UHSongListFull = (props) => {
 
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh",     overflowY: 'auto' }}
+      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'hidden',marginTop:'16px', width:'100hw', height:'100vh',}}
     >
-      <TableContainer component={Paper} sx={{padding:'16px', overflow:`${props.overflow}`}}>
-      <Typography sx={{ textAlign:"center"}} variant="h6">Your Favourite movies</Typography>
-
+      <TableContainer component={Paper} sx={{padding:'16px', }}>
+      <Typography sx={{ textAlign:"center"}} variant="h6">Your most listened songs</Typography>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Id</StyledTableCell>
-              <StyledTableCell align="right">Movie Name</StyledTableCell>
+              <StyledTableCell>Song Name</StyledTableCell>
+              <StyledTableCell>Album</StyledTableCell>
+              <StyledTableCell>Artist</StyledTableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.tabledata?.map((movie) => (
-              <StyledTableRow key={movie.id}>
-
+            {props.tabledata?.map((Song) => (
+              <StyledTableRow key={Song.id}>
                 <StyledTableCell component="th" scope="row">
-                  {movie.id}
+                  {Song.song_name}
                 </StyledTableCell>
-                <StyledTableCell>{movie.Name}</StyledTableCell>
+                <StyledTableCell>{Song.album_name}</StyledTableCell>
+                <StyledTableCell>{Song.artist_name}</StyledTableCell>
+
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
+
       </TableContainer>
-      <Button sx={{  backgroundColor: '#000000',}} variant="contained" endIcon={<ArrowDropDownIcon />}>Show complete list</Button>
 
     </Box>
-    
   );
 };
 
-export default UHMovieList;
+export default UHSongListFull;
