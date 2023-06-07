@@ -18,7 +18,7 @@ import { Router, Routes, Route, useNavigate } from 'react-router-dom';
 import  Home  from '../Home'
 import {auth} from '../firebase';
 
-const pages = ['Home',  'Match',  'Team', 'Songs', 'Movies'];
+const pages = ['Home',  'Match',  'Team', 'MyHomepage', ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const darkTheme = createTheme({
@@ -176,18 +176,12 @@ const ResponsiveAppBar = (props) => {
               </Button>
               <Button
                 key={pages[3]}
-                onClick={event =>  window.location.href='/userinfo'}
+                onClick={event =>  window.location.href='/userhomepage'}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {pages[3]}
               </Button>
-              <Button
-                key={pages[4]}
-                onClick={event =>  window.location.href='/addmovies'}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {pages[4]}
-              </Button>
+              
            
           </Box>
 
