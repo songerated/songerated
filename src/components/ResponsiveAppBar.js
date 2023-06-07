@@ -74,14 +74,13 @@ const ResponsiveAppBar = (props) => {
 
   return (
     <ThemeProvider theme={darkTheme}>
-    <AppBar position="static" sx={{ bgcolor: "transparent" }} enableColorOnDark>
+    <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, bgcolor: "#000000"  }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <MusicVideoTwoToneIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
+          <Typography component="div"
             variant="h6"
             noWrap
-            component="a"
             href="/"
             sx={{
               mr: 2,
@@ -194,9 +193,8 @@ const ResponsiveAppBar = (props) => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <img className="imgm" src={photo || 'https://i.ibb.co/rt2D67C/pngwing-com.png'} />
-              </IconButton>
+            <Avatar src={photo || 'https://i.ibb.co/rt2D67C/pngwing-com.png'} />
+              
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}

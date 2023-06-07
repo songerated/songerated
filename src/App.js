@@ -16,6 +16,7 @@ import Submit from './components/SubmitData';
 import Login from './components/Login'
 import Team from './components/Team';
 import AddMovies from './components/AddMovies';
+import UserHomePage from './components/UserHomePage';
 
 export default function App() {
 
@@ -36,6 +37,8 @@ export default function App() {
           <Route path="/team" element={<Team />} />
           <Route path="/chat" element={<ChatRoom />} />
           <Route path="/addmovies" element={<AddMovies />} />
+          <Route path="/userhomepage" element={<UserHomePage />} />
+
         </Routes>
       </Router>
     </AuthProvider>
