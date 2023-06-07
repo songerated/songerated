@@ -16,7 +16,7 @@ import Submit from './components/SubmitData';
 import Login from './components/Login'
 import Team from './components/Team';
 import AddMovies from './components/AddMovies';
-import UserHomePage from './components/UserHomePage';
+import UserHomePage from './components/userhome/UserHomePage';
 
 export default function App() {
 
