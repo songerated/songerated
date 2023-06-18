@@ -7,6 +7,7 @@ import ChannelCard from "./ChannelCard";
 import { makeStyles } from "@material-ui/core/styles";
 import StepperComponent from ".././StepperComponent";
 import YoutubeAccess from "./YoutubeAccess";
+import {Link, useNavigate} from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Addchannels = () => {
+  const navigate = useNavigate();
   const server_base_url = process.env.REACT_APP_SERVER_URL;
 
   const classes = useStyles();
@@ -81,6 +83,10 @@ const Addchannels = () => {
       });
   }, [accessToken]);
 
+  const handleSubmit = () => {
+    navigate("/match")
+  }
+
   const handlOnCliCk = () => {
     axios
       .get(server_base_url + "/getgoogleapiauthuri")
@@ -117,7 +123,7 @@ const Addchannels = () => {
 
       {isAccessGranted && (
         <center>
-        <Button>Submit</Button>
+        <Button onClick={handleSubmit}>Submit</Button>
         </center>
       )}
     </div>

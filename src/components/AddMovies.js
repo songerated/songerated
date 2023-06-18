@@ -62,14 +62,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomPopUp = styled((props) => <Popover />)(({ theme }) => ({
-  "&.MuiPopover-root": {
-    backgroundColor:
-      theme.palette.mode === "light" ? "rgba(200, 200, 200, 0.25)" : "#1A2027",
-
-    color: "#ffffff",
-  },
-}));
 
 const CustomTextField = styled((props) => (
   <TextField InputProps={{ disableUnderline: true }} {...props} />
@@ -99,13 +91,7 @@ const CustomTextField = styled((props) => (
   },
 }));
 
-const CustomPopover = styled(Popover)`
-  popover: {
-    "&.muipopover-root": {
-      //whatever you want
-    }
-  }
-`;
+
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: "white",
@@ -161,7 +147,7 @@ export default function AddMovies() {
   };
 
   const handleSubmit= ()=>{
-      navigate("/match")
+      navigate("/addyoutubechannels")
   }
 
   useEffect(() => {
@@ -171,7 +157,7 @@ export default function AddMovies() {
   return (
     <div className={classes.root}>
       <div style={{padding:'32px'}}>
-      <StepperComponent activeStep={3}></StepperComponent>
+      <StepperComponent activeStep={2}></StepperComponent>
       </div>
       <div className="addMoviesSearch" >
         <center>
