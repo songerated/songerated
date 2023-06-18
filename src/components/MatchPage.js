@@ -190,7 +190,7 @@ function MatchPage() {
   return (
     <div className={classes.root}>
       <ResponsiveAppBar />
-      <Accordion sx={{ margin: "32px" }}>
+      <Accordion sx={{ margin: "68px", }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"

@@ -95,7 +95,7 @@ export default function Login() {
                 if (res.data.length === 0) {
                   navigate("/connectspotify");
                 } else {
-                  navigate("/match");
+                  navigate("/userhomepage");
                 }
                 console.log(user.uid);
               });
