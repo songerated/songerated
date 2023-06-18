@@ -49,7 +49,7 @@ function MatchComponent(props) {
             Matching Song Count: {props.song}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
-            Matching Movie Count: 3
+            Matching Movie Count: {props.movie}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             Matching Artist Count: {props.artist}

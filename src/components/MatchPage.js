@@ -76,6 +76,7 @@ function MatchPage() {
   const [anchorEl, setAnchorEl] = React.useState(true);
   const [songCount, setSongCount] = useState({});
   const [artistCount, setArtistCount] = useState({});
+  const [movieCount, setMovieCount] = useState({});
   const server_base_url = process.env.REACT_APP_SERVER_URL;
   const { currentUser } = useAuth();
   const spotify_url = process.env.REACT_APP_SPOTIFY_BASE_URL;
@@ -120,6 +121,9 @@ function MatchPage() {
   }, []);
 
   useEffect(() => {
+    console.log(songCount)
+              console.log(artistCount)
+              console.log(movieCount)
     if (users.length === 0) {
       var items = Object.keys(songCount).map(function (key) {
         return [key, songCount[key]];
@@ -142,7 +146,7 @@ function MatchPage() {
           });
       }
     }
-  }, [songCount]);
+  }, [movieCount]);
 
   const getUserData = async (e) => {
     e.preventDefault();
@@ -167,6 +171,17 @@ function MatchPage() {
             console.log("Artist Data:");
             console.log(response2.data);
             setArtistCount(response2.data);
+            axios.get(server_base_url + "/matchingmovies", {
+              params: {
+                uid: currentUser.uid,
+              },
+            }).then((response3) => {
+              
+
+              setMovieCount(response3.data)
+              
+
+            });
           });
       });
   };
@@ -181,6 +196,7 @@ function MatchPage() {
             email={user[0].email}
             song={songCount[user[0].id]}
             artist={artistCount[user[0].id]}
+            movie={movieCount[user[0].id]}
           />
         ))}
       </>
@@ -190,7 +206,7 @@ function MatchPage() {
   return (
     <div className={classes.root}>
       <ResponsiveAppBar />
-      <Accordion sx={{ margin: "68px", }}>
+      <Accordion sx={{ margin: "68px" }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -254,50 +270,54 @@ function MatchPage() {
         }}
       >
         {isRecommendationExecuted && (
-        <center>
-          <Box sx={{ margin: "32px", width: "80%" }}>
-            <Typography variant="h6" gutterBottom>
-              Our AI Model generated some songs based on your top Artists and
-              top Songs <br />
-            </Typography>
-          </Box>
-          <Box sx={{ margin: "32px", width: "80%" }}>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell>Track Name</StyledTableCell>
-                    <StyledTableCell align="right">Artists</StyledTableCell>
-                    <StyledTableCell align="right">Album</StyledTableCell>
-                    <StyledTableCell align="right">Popularity</StyledTableCell>
-                    <StyledTableCell align="right">Explicit</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {recommendedSongs?.map((track) => (
-                    <StyledTableRow key={track.id}>
-                      <StyledTableCell component="th" scope="row">
-                        {track.name}
-                      </StyledTableCell>
+          <center>
+            <Box sx={{ margin: "32px", width: "80%" }}>
+              <Typography variant="h6" gutterBottom>
+                Our AI Model generated some songs based on your top Artists and
+                top Songs <br />
+              </Typography>
+            </Box>
+            <Box sx={{ margin: "32px", width: "80%" }}>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>Track Name</StyledTableCell>
+                      <StyledTableCell align="right">Artists</StyledTableCell>
+                      <StyledTableCell align="right">Album</StyledTableCell>
                       <StyledTableCell align="right">
-                        {track.artists.map((artist) => artist.name).join(", ")}
+                        Popularity
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {track.album.name}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {track.popularity}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {track.explicit.toString()}
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-        </center>
+                      <StyledTableCell align="right">Explicit</StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {recommendedSongs?.map((track) => (
+                      <StyledTableRow key={track.id}>
+                        <StyledTableCell component="th" scope="row">
+                          {track.name}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {track.artists
+                            .map((artist) => artist.name)
+                            .join(", ")}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {track.album.name}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {track.popularity}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {track.explicit.toString()}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+          </center>
         )}
       </Popover>
 
