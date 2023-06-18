@@ -113,27 +113,30 @@ const UserHomePage = () => {
           <>
             {(activeDrawerItem === 0 && (
               <>
-                <Stack direction="column" spacing={2} sx={{ margin: "8px" }}>
-                  <Stack direction="row" spacing={2}>
-                    <UHSongList
-                      uid={id}
-                      overflow="hidden"
-                      tabledata={userSongList}
-                      change={DrawerItemClicked}
-                    />
-                    <UHMovieList
-                      uid={id}
-                      overflow="hidden"
-                      tabledata={userMovieList}
-                      change={DrawerItemClicked}
-                    />
-                  </Stack>
+                <Stack
+                  direction="column"
+                  spacing={2}
+                  sx={{ margin: "8px" }}
+                  style={{ width: "100%" }}
+                >
+                  <UHSongList
+                    uid={id}
+                    overflow="hidden"
+                    tabledata={userSongList}
+                    change={DrawerItemClicked}
+                  />
+                  <UHMovieList
+                    uid={id}
+                    overflow="hidden"
+                    tabledata={userMovieList}
+                    change={DrawerItemClicked}
+                  />
                   <UHYoutubeList
-                      uid={id}
-                      overflow="hidden"
-                      tabledata={userChannelList}
-                      change={DrawerItemClicked}
-                    />
+                    uid={id}
+                    overflow="hidden"
+                    tabledata={userChannelList}
+                    change={DrawerItemClicked}
+                  />
                 </Stack>
               </>
             )) ||

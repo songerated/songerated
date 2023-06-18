@@ -44,7 +44,7 @@ const UHYoutubeList = (props) => {
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'auto'  }}
+      sx={{ bgcolor: "transparent", overflowY: 'auto'  }}
     >
       <TableContainer component={Paper} sx={{padding:'16px', overflow:`${props.overflow}`}}>
       <Typography sx={{ textAlign:"center"}} variant="h6">Your Favourite channels</Typography>
@@ -52,18 +52,18 @@ const UHYoutubeList = (props) => {
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Id</StyledTableCell>
-              <StyledTableCell align="right">Channel Name</StyledTableCell>
+              <StyledTableCell align="center">Id</StyledTableCell>
+              <StyledTableCell align="center" >Channel Name</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {props.tabledata?.map((channel) => (
               <StyledTableRow key={channel.id}>
 
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell align="center" component="th" scope="row">
                   {channel.id}
                 </StyledTableCell>
-                <StyledTableCell>{channel.channel_title}</StyledTableCell>
+                <StyledTableCell align="center">{channel.channel_title}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

@@ -42,27 +42,27 @@ const UHSongList = (props) => {
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'auto', }}
+      sx={{ bgcolor: "transparent", paddingTop: "10%", overflowY: 'auto', }}
     >
       <TableContainer component={Paper} sx={{padding:'16px', overflow:`${props.overflow}`}}>
       <Typography sx={{ textAlign:"center"}} variant="h6">Your most listened songs</Typography>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Song Name</StyledTableCell>
-              <StyledTableCell>Album</StyledTableCell>
-              <StyledTableCell>Artist</StyledTableCell>
+              <StyledTableCell align="center">Song Name</StyledTableCell>
+              <StyledTableCell align="center">Album</StyledTableCell>
+              <StyledTableCell align="center" >Artist</StyledTableCell>
 
             </TableRow>
           </TableHead>
           <TableBody>
             {props.tabledata?.map((Song) => (
               <StyledTableRow key={Song.id}>
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell align="center" component="th" scope="row">
                   {Song.song_name}
                 </StyledTableCell>
-                <StyledTableCell>{Song.album_name}</StyledTableCell>
-                <StyledTableCell>{Song.artist_name}</StyledTableCell>
+                <StyledTableCell align="center">{Song.album_name}</StyledTableCell>
+                <StyledTableCell align="center">{Song.artist_name}</StyledTableCell>
 
               </StyledTableRow>
             ))}

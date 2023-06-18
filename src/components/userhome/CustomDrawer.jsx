@@ -7,6 +7,7 @@ import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MovieFilterIcon from '@mui/icons-material/MovieFilter';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import YouTubeIcon from "@mui/icons-material/YouTube";
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
@@ -18,7 +19,7 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import { useState } from 'react';
 
-var iconList = [<DashboardIcon/>, <MovieFilterIcon/>, <LibraryMusicIcon/>, <ConnectWithoutContactIcon/> ]
+var iconList = [<DashboardIcon/>, <MovieFilterIcon/>, <LibraryMusicIcon/>, <YouTubeIcon/>, <ConnectWithoutContactIcon/> ]
 const drawerWidth = 300;
 let photo = null;
 

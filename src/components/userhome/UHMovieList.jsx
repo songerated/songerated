@@ -44,7 +44,7 @@ const UHMovieList = (props) => {
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'auto'  }}
+      sx={{ bgcolor: "transparent", overflowY: 'auto'  }}
     >
       <TableContainer component={Paper} sx={{padding:'16px', overflow:`${props.overflow}`}}>
       <Typography sx={{ textAlign:"center"}} variant="h6">Your Favourite movies</Typography>
@@ -52,18 +52,18 @@ const UHMovieList = (props) => {
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Id</StyledTableCell>
-              <StyledTableCell align="right">Movie Name</StyledTableCell>
+              <StyledTableCell align="center">Id</StyledTableCell>
+              <StyledTableCell align="center">Movie Name</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {props.tabledata?.map((movie) => (
               <StyledTableRow key={movie.id}>
 
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell component="th" scope="row" align="center">
                   {movie.id}
                 </StyledTableCell>
-                <StyledTableCell>{movie.Name}</StyledTableCell>
+                <StyledTableCell align="center">{movie.Name}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
