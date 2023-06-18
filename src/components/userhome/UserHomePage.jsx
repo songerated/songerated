@@ -14,8 +14,9 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import UHMovieListFull from "./UHMovieListFull";
 import UHSongListFull from "./UHSongListFull";
-
-
+import Stack from "@mui/material/Stack";
+import UHSocialMedia from "./UHSocialMedia";
+import UHMatches from "./UHMatches";
 const server_base_url = process.env.REACT_APP_SERVER_URL;
 
 const useStyles = makeStyles((theme) => ({
@@ -87,7 +88,7 @@ const UserHomePage = () => {
         <CssBaseline />
         <ResponsiveAppBar />
         <CustomDrawer change={DrawerItemClicked} />
-        
+
         {backdropOpen ? (
           <Backdrop
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -97,24 +98,36 @@ const UserHomePage = () => {
           </Backdrop>
         ) : (
           <>
-            {
-              activeDrawerItem===0
-              && <><UHSongList uid={id} overflow="hidden" tabledata={userSongList} />
-              <UHMovieList uid={id} overflow="hidden" tabledata={userMovieList} /></>
-
-              || activeDrawerItem===1 
-              && <UHSongListFull uid={id} tabledata={userSongList} />
-    
-              || activeDrawerItem===2 
-              && <UHMovieListFull uid={id} tabledata={userMovieList} />
-    
-              || activeDrawerItem===3
-              && <p>3</p>
-            }
-            
+            {(activeDrawerItem === 0 && (
+              <>
+                <Stack direction="column" spacing={2} sx={{ margin: "8px" }}>
+                  <Stack direction="row" spacing={2}>
+                    <UHSongList
+                      uid={id}
+                      overflow="hidden"
+                      tabledata={userSongList}
+                      change={DrawerItemClicked}
+                    />
+                    <UHMovieList
+                      uid={id}
+                      overflow="hidden"
+                      tabledata={userMovieList}
+                      change={DrawerItemClicked}
+                    />
+                  </Stack>
+                
+                </Stack>
+              </>
+            )) ||
+              (activeDrawerItem === 1 && (
+                <UHSongListFull uid={id} tabledata={userSongList} />
+              )) ||
+              (activeDrawerItem === 2 && (
+                <UHMovieListFull uid={id} tabledata={userMovieList} />
+              )) ||
+              (activeDrawerItem === 3 && <UHSocialMedia />)}
           </>
         )}
-        
       </Box>
     </div>
   );

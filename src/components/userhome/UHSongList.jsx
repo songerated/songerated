@@ -42,7 +42,7 @@ const UHSongList = (props) => {
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'hidden', }}
+      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'auto', }}
     >
       <TableContainer component={Paper} sx={{padding:'16px', overflow:`${props.overflow}`}}>
       <Typography sx={{ textAlign:"center"}} variant="h6">Your most listened songs</Typography>

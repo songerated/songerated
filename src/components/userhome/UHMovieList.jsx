@@ -37,11 +37,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const UHMovieList = (props) => {
   console.log(props.uid);
   
+  const handleButtonClick = (index) => {
+    props.change(index)
+  }
 
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh",     overflowY: 'auto' }}
+      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'auto'  }}
     >
       <TableContainer component={Paper} sx={{padding:'16px', overflow:`${props.overflow}`}}>
       <Typography sx={{ textAlign:"center"}} variant="h6">Your Favourite movies</Typography>
@@ -66,7 +69,7 @@ const UHMovieList = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button sx={{  backgroundColor: '#000000',}} variant="contained" endIcon={<ArrowDropDownIcon />}>Show complete list</Button>
+      <Button  sx={{  backgroundColor: '#000000',}} variant="contained" endIcon={<ArrowDropDownIcon />}>Show complete list</Button>
 
     </Box>
     

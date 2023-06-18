@@ -17,6 +17,7 @@ import Login from './components/Login'
 import Team from './components/Team';
 import AddMovies from './components/AddMovies';
 import UserHomePage from './components/userhome/UserHomePage';
+import Addchannels from './components/Youtube/Addchannels';
 
 export default function App() {
 
@@ -38,7 +39,7 @@ export default function App() {
           <Route path="/chat" element={<ChatRoom />} />
           <Route path="/addmovies" element={<AddMovies />} />
           <Route path="/userhomepage" element={<UserHomePage />} />
-
+          <Route path="/addyoutubechannels" element={<Addchannels />} />
         </Routes>
       </Router>
     </AuthProvider>
