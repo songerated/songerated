@@ -171,7 +171,7 @@ export default function AddMovies() {
   return (
     <div className={classes.root}>
       <div style={{padding:'32px'}}>
-      <StepperComponent activeStep={2}></StepperComponent>
+      <StepperComponent activeStep={3}></StepperComponent>
       </div>
       <div className="addMoviesSearch" >
         <center>

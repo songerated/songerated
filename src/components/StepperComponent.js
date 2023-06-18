@@ -12,6 +12,7 @@ import LockPersonIcon from '@mui/icons-material/LockPerson';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import MovieFilterIcon from '@mui/icons-material/MovieFilter';
 import Card from "@mui/material/Card";
+import YouTubeIcon from '@mui/icons-material/YouTube';
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -138,6 +139,7 @@ function ColorlibStepIcon(props) {
     1: <LockPersonIcon />,
     2: <LibraryMusicIcon />,
     3: <MovieFilterIcon />,
+    4: <YouTubeIcon/>
   };
 
   return (
@@ -165,7 +167,7 @@ ColorlibStepIcon.propTypes = {
   icon: PropTypes.node,
 };
 
-const steps = ['Authorize Spotify API', 'Add Songs', 'Add Movies'];
+const steps = ['Authorize Spotify API', 'Add Songs', 'Add Movies', 'Add Youtube Subscriptions'];
 
 export default function StepperComponent(props) {
   return (
