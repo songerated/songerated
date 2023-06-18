@@ -17,7 +17,7 @@ const Team = () => {
     const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{marginTop:'48px'}}>
         <ResponsiveAppBar />
         <Teamcard />
     </div>

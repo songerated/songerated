@@ -7,14 +7,15 @@ import ChannelCard from "./ChannelCard";
 import { makeStyles } from "@material-ui/core/styles";
 import StepperComponent from ".././StepperComponent";
 import YoutubeAccess from "./YoutubeAccess";
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/authContexts";
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/temp3.png'})`,
-    
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/temp3.png"})`,
+
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },
@@ -27,12 +28,13 @@ const Addchannels = () => {
   const server_base_url = process.env.REACT_APP_SERVER_URL;
 
   const classes = useStyles();
-
+  const { currentUser } = useAuth();
+  const id = currentUser.uid;
   const [token, setToken] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [channelList, setChannelList] = useState([]);
   const [isChannels, setIsChannels] = useState(false);
-  const [isAccessGranted, setIsAccessGranted] = useState(false)
+  const [isAccessGranted, setIsAccessGranted] = useState(false);
 
   useEffect(() => {
     const hash = window.location.href;
@@ -43,24 +45,23 @@ const Addchannels = () => {
     tokent = tokent?.find((elem) => elem.startsWith("code"));
     tokent = tokent?.split("=")[1];
 
-    if(tokent){
-        setIsAccessGranted(true)
-        axios
-      .get(server_base_url + "/getgoogletoken", {
-        params: {
-          code: `${tokent}`,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        setAccessToken(response.data.access_token);
-      });
+    if (tokent) {
+      setIsAccessGranted(true);
+      axios
+        .get(server_base_url + "/getgoogletoken", {
+          params: {
+            code: `${tokent}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          setAccessToken(response.data.access_token);
+        });
     }
     console.log(tokent);
-  }, [])
+  }, []);
 
-
-  useEffect( () => {
+  useEffect(() => {
     console.log("sdfsdsasfds");
     axios
       .get(
@@ -83,26 +84,29 @@ const Addchannels = () => {
   }, [accessToken]);
 
   const handleSubmit = () => {
-    navigate("/match")
-  }
+    axios
+      .post(server_base_url + "/addchannels", {
+        channels: channelList,
+        uid: id,
+      })
+      .then((response) => navigate("/addmovies"));
+    navigate("/match");
+  };
 
   const handlOnCliCk = () => {
     axios
       .get(server_base_url + "/getgoogleapiauthuri")
       .then((response) => (window.location.href = response.data));
-
   };
 
   return (
-    <div className={classes.root} style={{padding:'64px'}}>
-      
-
-      <div style={{margin:'32px'}}>
+    <div className={classes.root} style={{ padding: "64px" }}>
+      <div style={{ margin: "32px" }}>
         <StepperComponent activeStep={3}></StepperComponent>
       </div>
       {!isAccessGranted && (
         <center>
-          <YoutubeAccess  handleOnClick={handlOnCliCk} />
+          <YoutubeAccess handleOnClick={handlOnCliCk} />
         </center>
       )}
 
@@ -122,7 +126,7 @@ const Addchannels = () => {
 
       {isAccessGranted && (
         <center>
-        <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </center>
       )}
     </div>

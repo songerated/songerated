@@ -63,7 +63,7 @@ const CustomDrawer = (props) => {
             </center>
 
             <List>
-              {["Dashboard", "Movies", "Music", "Your Profile"].map(
+              {["Dashboard", "Movies", "Music", "Youtube","Your Profile"].map(
                 (text, index) => (
                   <ListItem   key={text} disablePadding>
                     <ListItemButton selected={selectedButton == index} onClick={e => handleDrawerItemClick(index)} key={index} >

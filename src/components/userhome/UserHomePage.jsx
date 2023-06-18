@@ -17,12 +17,13 @@ import UHSongListFull from "./UHSongListFull";
 import Stack from "@mui/material/Stack";
 import UHSocialMedia from "./UHSocialMedia";
 import UHMatches from "./UHMatches";
+import UHYoutubeList from "./UHYoutubeList";
 const server_base_url = process.env.REACT_APP_SERVER_URL;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/temp3.png'})`,
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/temp3.png"})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },
@@ -37,6 +38,8 @@ const UserHomePage = () => {
 
   var [userMovieList, setUserMovieList] = useState([]);
   var [userSongList, setUserSongList] = useState([]);
+  var [userChannelList, setUserChannelList] = useState([]);
+
   var [activeDrawerItem, setActiveDrawerItem] = useState(0);
 
   const id = currentUser.uid;
@@ -78,6 +81,18 @@ const UserHomePage = () => {
         setBackdropOpen(false);
         console.log(res);
       });
+
+    axios
+      .get(server_base_url + "/userchannelslist", {
+        params: {
+          uid: `${id}`,
+        },
+      })
+      .then((res) => {
+        setUserChannelList(res.data);
+        setBackdropOpen(false);
+        console.log(res);
+      });
   }, []);
 
   return (
@@ -113,14 +128,19 @@ const UserHomePage = () => {
                       change={DrawerItemClicked}
                     />
                   </Stack>
-                
+                  <UHYoutubeList
+                      uid={id}
+                      overflow="hidden"
+                      tabledata={userChannelList}
+                      change={DrawerItemClicked}
+                    />
                 </Stack>
               </>
             )) ||
-              (activeDrawerItem === 1 && (
+              (activeDrawerItem === 2 && (
                 <UHSongListFull uid={id} tabledata={userSongList} />
               )) ||
-              (activeDrawerItem === 2 && (
+              (activeDrawerItem === 1 && (
                 <UHMovieListFull uid={id} tabledata={userMovieList} />
               )) ||
               (activeDrawerItem === 3 && <UHSocialMedia />)}

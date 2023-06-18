@@ -18,7 +18,7 @@ import { Router, Routes, Route, useNavigate } from 'react-router-dom';
 import  Home  from '../Home'
 import {auth} from '../firebase';
 
-const pages = ['Home',  'Match',  'Team', 'MyHomepage', ];
+const pages = ['Home',  'Match',  'Team', 'My Data', ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const darkTheme = createTheme({
