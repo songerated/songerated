@@ -19,7 +19,7 @@ import axios from "axios";
 import { Carousel } from "3d-react-carousal";
 import Stack from "@mui/material/Stack";
 import { Divider } from "@mui/material";
-import {Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 import { SvgIcon } from "@mui/material";
 
 const style = {
@@ -85,8 +85,20 @@ export default function Login() {
             },
           })
           .then((res) => {
-            navigate("/connectspotify");
-            console.log(user.uid);
+            axios
+              .get(server_base_url + "/verifyuser", {
+                params: {
+                  id: user.uid,
+                },
+              })
+              .then((res) => {
+                if (res.data.length === 0) {
+                  navigate("/connectspotify");
+                } else {
+                  navigate("/match");
+                }
+                console.log(user.uid);
+              });
           });
 
         console.log(user.displayName);
@@ -103,6 +115,7 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
+
       navigate("/connectspotify");
     } catch {
       setError("Failed to sign in");
