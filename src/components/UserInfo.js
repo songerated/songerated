@@ -24,9 +24,8 @@ import Skeleton from "@mui/material/Skeleton";
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundImage: `url(${
-      process.env.PUBLIC_URL + "/assets/music_setup_blur.jpg"
-    })`,
+    backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/temp3.png'})`,
+
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },

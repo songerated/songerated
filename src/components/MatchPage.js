@@ -28,14 +28,6 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Popover from "@mui/material/Popover";
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "transparent",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -59,9 +51,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundImage: `url(${
-      process.env.PUBLIC_URL + "/assets/music_setup_blur.jpg"
-    })`,
+    backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/temp3.png'})`,
+
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },

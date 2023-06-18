@@ -187,7 +187,7 @@ const ResponsiveAppBar = (props) => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-            <Avatar src={photo || 'https://i.ibb.co/rt2D67C/pngwing-com.png'} />
+            <Avatar src={photo || 'https://i.ibb.co/rt2D67C/pngwing-com.png'} onClick={handleOpenUserMenu} />
               
             </Tooltip>
             <Menu
@@ -211,8 +211,8 @@ const ResponsiveAppBar = (props) => {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))} */}
-              <MenuItem key={settings[0]} onClick={event =>  window.location.href='/profile'}>
-                  <Typography textAlign="center">{settings[0]}</Typography>
+              <MenuItem  onClick={event =>  window.location.href='/profile'}>
+                  <Typography textAlign="center">Profile</Typography>
               </MenuItem>
 
               

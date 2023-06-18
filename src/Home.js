@@ -4,11 +4,12 @@ import { CssBaseline } from '@material-ui/core';
 import Header from './components/Header';
 import PlaceToVisit from './components/PlaceToVisit';
 import { useAuth } from "./contexts/authContexts"
+import ResponsiveAppBar from './components/ResponsiveAppBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
-    backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/music_setup.jpg'})`,
+    backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/temp3.png'})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   },

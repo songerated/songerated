@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import {useNavigate} from 'react-router-dom';
 import {useAuth} from '../contexts/authContexts';
 import { auth } from '../firebase';
+import ResponsiveAppBar from './ResponsiveAppBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,24 +26,25 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto',
   },
   appbarTitle: {
+    color:'#000000',
     flexGrow: '1',
   },
   icon: {
-    color: '#fff',
+    color: '#000000',
     fontSize: '2rem',
   },
   colorText: {
-    color: '#5AFF3D',
+    color: '#0d224d',
   },
   container: {
     textAlign: 'center',
   },
   title: {
-    color: '#fff',
+    color: '#000000',
     fontSize: '4.5rem',
   },
   goDown: {
-    color: '#5AFF3D',
+    color: '#0d224d',
     fontSize: '4rem',
   },
 }));
@@ -65,7 +67,11 @@ export default function Header(props) {
     }
   }
   return (
+
     <div className={classes.root} id="header">
+      {props.name == 'Sign Out' && (
+        <ResponsiveAppBar/>
+      )}
       <AppBar className={classes.appbar} elevation={0}>
         <Toolbar className={classes.appbarWrapper}>
           <h1 className={classes.appbarTitle}>
