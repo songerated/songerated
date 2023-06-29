@@ -56,6 +56,7 @@ const Addchannels = () => {
         .then((response) => {
           console.log(response.data);
           setAccessToken(response.data.access_token);
+          window.localStorage.setItem("youtubeAccessToken", response.data.access_token)
         });
     }
     console.log(tokent);
@@ -63,12 +64,13 @@ const Addchannels = () => {
 
   useEffect(() => {
     console.log("sdfsdsasfds");
+    console.log(window.localStorage.getItem("youtubeAccessToken"));
     axios
       .get(
         "https://youtube.googleapis.com/youtube/v3/subscriptions?maxResults=50&part=snippet%2CcontentDetails&mine=true&key=AIzaSyBeKd2iinxLIEFceasDvpubSug-qQbn4Y8",
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${window.localStorage.getItem("youtubeAccessToken")}`,
           },
         }
       )
