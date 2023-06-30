@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router, Routes, Route, useNavigate } from 'react-router-dom';
-
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 export default function TeamMember(props) {
 
@@ -19,8 +19,8 @@ export default function TeamMember(props) {
   return (
     <div onClick={handleOnClick}>
         <center>
-        <div className="col-md-4 animated fadeIn" key="1">
-              <div className="card">
+        <div className="col-md-4 animated fadeIn" key="1" style={{width:'75%', backgroundColor: "rgba(230,    224, 227, 0.21)"}}>
+              <div className="card" style={{backgroundColor: "rgba(230,    224, 227, 0.21)"}}>
                 <div className="card-body">
                     <center>
                   <div className="avatar">
@@ -38,7 +38,7 @@ export default function TeamMember(props) {
                     {props.bio}
                     <br />
                     <br />
-                    <span className="phone"><b>github: {props.github}</b></span>
+                    <GitHubIcon><b>github: {props.github}</b></GitHubIcon>
                   </p>
                   </center>
                 </div>

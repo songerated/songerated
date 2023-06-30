@@ -13,7 +13,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const server_base_url = process.env.REACT_APP_SERVER_URL;
 
@@ -38,40 +38,53 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const UHSongListFull = (props) => {
-
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'auto', width:'100%', height:'100vh',}}
+      sx={{
+        bgcolor: "transparent",
+        margin: "auto",
+        paddingTop: "10vh",
+        overflowY: "auto",
+        width: "100%",
+        height: "100vh",
+      }}
     >
-      <TableContainer sx={{padding:'16px', }}       style={{backgroundColor:'#0000'}}
->
-      <Typography sx={{ textAlign:"center"}} variant="h6" paddingBottom='16px'>Your most listened songs</Typography>
+      <TableContainer
+        sx={{ padding: "16px" }}
+        style={{ backgroundColor: "#0000" }}
+      >
+        <Typography
+          sx={{ textAlign: "center" }}
+          variant="h6"
+          paddingBottom="16px"
+        >
+          Your most listened songs
+        </Typography>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Song Name</StyledTableCell>
               <StyledTableCell>Album</StyledTableCell>
               <StyledTableCell>Artist</StyledTableCell>
-
             </TableRow>
           </TableHead>
           <TableBody>
             {props.tabledata?.map((Song) => (
-              <StyledTableRow key={Song.id} style={{backgroundColor:'rgba(230, 224, 227, 0.51)'}}  >
+              <StyledTableRow
+                key={Song.id}
+                style={{ backgroundColor: "rgba(230, 224, 227, 0.51)" }}
+              >
                 <StyledTableCell component="th" scope="row">
                   {Song.song_name}
                 </StyledTableCell>
                 <StyledTableCell>{Song.album_name}</StyledTableCell>
                 <StyledTableCell>{Song.artist_name}</StyledTableCell>
-
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
-
       </TableContainer>
-
     </Box>
   );
 };

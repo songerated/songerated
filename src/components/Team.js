@@ -4,6 +4,7 @@ import ResponsiveAppBar from './ResponsiveAppBar'
 import React, { useEffect, useRef, useState } from 'react'
 import MatchComponent from './MatchComponent'
 import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@mui/material'
 const useStyles = makeStyles((theme) => ({
     root: {
       minHeight: '100vh',
@@ -19,6 +20,14 @@ const Team = () => {
   return (
     <div className={classes.root} style={{marginTop:'48px'}}>
         <ResponsiveAppBar />
+        <Typography
+          sx={{ textAlign: "center" }}
+          variant="h4"
+          paddingBottom="24px"
+          style={{paddingTop:'8vh'}}
+        >
+          Behind The Scenes
+        </Typography>
         <Teamcard />
     </div>
   )

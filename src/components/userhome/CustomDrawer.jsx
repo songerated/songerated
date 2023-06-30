@@ -19,7 +19,7 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import { useState } from 'react';
 
-var iconList = [<DashboardIcon/>, <MovieFilterIcon/>, <LibraryMusicIcon/>, <YouTubeIcon/>, <ConnectWithoutContactIcon/> ]
+var iconList = [ <MovieFilterIcon/>, <LibraryMusicIcon/>, <YouTubeIcon/>, <ConnectWithoutContactIcon/> ]
 const drawerWidth = 300;
 let photo = null;
 
