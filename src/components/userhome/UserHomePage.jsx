@@ -7,7 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import CustomDrawer from "./CustomDrawer";
 import UHMovieList from "./UHMovieList";
 import UHSongList from "./UHSongList";
-import { Card } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Backdrop from "@mui/material/Backdrop";
@@ -111,42 +111,14 @@ const UserHomePage = () => {
           </Backdrop>
         ) : (
           <>
-            {(activeDrawerItem === 0 && (
-              <>
-                <Stack
-                  direction="column"
-                  spacing={2}
-                  sx={{ margin: "8px" }}
-                  style={{ width: "100%" }}
-                >
-                  <UHSongList
-                    uid={id}
-                    overflow="hidden"
-                    tabledata={userSongList}
-                    change={DrawerItemClicked}
-                  />
-                  <UHMovieList
-                    uid={id}
-                    overflow="hidden"
-                    tabledata={userMovieList}
-                    change={DrawerItemClicked}
-                  />
-                  <UHYoutubeList
-                    uid={id}
-                    overflow="hidden"
-                    tabledata={userChannelList}
-                    change={DrawerItemClicked}
-                  />
-                </Stack>
-              </>
-            )) ||
-              (activeDrawerItem === 2 && (
+            {
+              (activeDrawerItem === 1 && (
                 <UHSongListFull uid={id} tabledata={userSongList} />
               )) ||
-              (activeDrawerItem === 1 && (
+              (activeDrawerItem === 0 && (
                 <UHMovieListFull uid={id} tabledata={userMovieList} />
               )) ||
-              (activeDrawerItem === 3 && <UHSocialMedia />)}
+              (activeDrawerItem === 2 && <UHSocialMedia />)}
           </>
         )}
       </Box>

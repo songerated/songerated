@@ -28,12 +28,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
+  "&:nth-of-type()": {
     backgroundColor: theme.palette.action.hover,
   },
   // hide last border
   "&:last-child td, &:last-child th": {
-    border: 0,
+    backgroundColor: theme.palette.action.hover,
   },
 }));
 
@@ -42,10 +42,11 @@ const UHSongListFull = (props) => {
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'hidden',marginTop:'16px', width:'100hw', height:'100vh',}}
+      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh", overflowY: 'auto', width:'100%', height:'100vh',}}
     >
-      <TableContainer component={Paper} sx={{padding:'16px', }}>
-      <Typography sx={{ textAlign:"center"}} variant="h6">Your most listened songs</Typography>
+      <TableContainer sx={{padding:'16px', }}       style={{backgroundColor:'#0000'}}
+>
+      <Typography sx={{ textAlign:"center"}} variant="h6" paddingBottom='16px'>Your most listened songs</Typography>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -57,7 +58,7 @@ const UHSongListFull = (props) => {
           </TableHead>
           <TableBody>
             {props.tabledata?.map((Song) => (
-              <StyledTableRow key={Song.id}>
+              <StyledTableRow key={Song.id} style={{backgroundColor:'rgba(230, 224, 227, 0.51)'}}  >
                 <StyledTableCell component="th" scope="row">
                   {Song.song_name}
                 </StyledTableCell>

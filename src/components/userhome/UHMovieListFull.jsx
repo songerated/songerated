@@ -12,7 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,27 +36,43 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const UHMovieListFull = (props) => {
   console.log(props.uid);
-  
 
   return (
     <Box
       component="main"
-      sx={{ bgcolor: "transparent", margin: "auto", paddingTop: "10vh",  width:'100hw', height:'100vh',   overflowY: 'auto' }}
+      sx={{
+        margin: "auto",
+        paddingTop: "10vh",
+        width: "100%",
+        height: "100vh",
+        overflowY: "auto",
+      }}
     >
-      <TableContainer component={Paper} sx={{padding:'16px',}}>
-      <Typography sx={{ textAlign:"center"}} variant="h6">Your Favourite movies</Typography>
+      <TableContainer
+        sx={{ padding: "16px" }}
+        style={{ backgroundColor: "#0000" }}
+      >
+        <Typography
+          sx={{ textAlign: "center" }}
+          variant="h6"
+          paddingBottom="16px"
+        >
+          Your Favourite movies
+        </Typography>
 
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Id</StyledTableCell>
-              <StyledTableCell align="right">Movie Name</StyledTableCell>
+              <StyledTableCell>Movie Name</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {props.tabledata?.map((movie) => (
-              <StyledTableRow key={movie.id}>
-
+              <StyledTableRow
+                key={movie.id}
+                style={{ backgroundColor: "rgba(230,    224, 227, 0.51)" }}
+              >
                 <StyledTableCell component="th" scope="row">
                   {movie.id}
                 </StyledTableCell>
@@ -66,9 +82,7 @@ const UHMovieListFull = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-
     </Box>
-    
   );
 };
 

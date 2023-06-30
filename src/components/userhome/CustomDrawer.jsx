@@ -49,22 +49,26 @@ const CustomDrawer = (props) => {
             [`& .MuiDrawer-paper`]: {
               width: drawerWidth,
               boxSizing: "border-box",
+              backgroundColor: '#0000'
+
             },
-          }}
-        >
+          }}>
+
           <Toolbar />
-          <Box sx={{ overflow: "auto" }}>
+          <Box sx={{ overflow: "auto" }} >
             <center>
               <Avatar
                 sx={{ width: 100, height: 100, margin: "32px" }}
                 src={photo || "https://i.ibb.co/rt2D67C/pngwing-com.png"}
               />
+              <Typography variant="h5"></Typography>
+
               <Typography variant="h5">{auth.currentUser.displayName}</Typography>
               <Typography >{mail}</Typography>
             </center>
 
             <List>
-              {["Dashboard", "Movies", "Music", "Youtube","Your Profile"].map(
+              {["Movies", "Music", "Youtube","Your Profile"].map(
                 (text, index) => (
                   <ListItem   key={text} disablePadding>
                     <ListItemButton selected={selectedButton == index} onClick={e => handleDrawerItemClick(index)} key={index} >
