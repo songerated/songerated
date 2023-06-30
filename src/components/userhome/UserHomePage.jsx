@@ -118,7 +118,7 @@ const UserHomePage = () => {
               (activeDrawerItem === 0 && (
                 <UHMovieListFull uid={id} tabledata={userMovieList} />
               )) ||
-              (activeDrawerItem === 2 && <UHSocialMedia />)}
+              (activeDrawerItem === 2 && <UHYoutubeList uid={id} tabledata={userChannelList} />)}
           </>
         )}
       </Box>
