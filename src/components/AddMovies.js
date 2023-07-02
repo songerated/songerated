@@ -35,10 +35,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Search } from "@mui/icons-material";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
-import BackupIcon from '@mui/icons-material/Backup';
-import  { autocompleteClasses } from '@mui/material/Autocomplete';
-import Popper from '@mui/material/Popper';
-
+import BackupIcon from "@mui/icons-material/Backup";
+import { autocompleteClasses } from "@mui/material/Autocomplete";
+import Popper from "@mui/material/Popper";
+import Rating from "@mui/material/Rating";
 
 const fetch = require("node-fetch");
 
@@ -52,19 +52,19 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.2)",
-  },
-  card: {
-    margin: theme.spacing(4),
-    padding: theme.spacing(0.8),
-    borderRadius: theme.spacing(0),
-    "&:hover": {
-      backgroundColor: "rgba(0,0,0,0.1)",
+    "&.MuiPopover-paper": {
+      background: "transparent",
     },
   },
+  card: {
+    borderRadius: 5,
+    margin:'8px',
+    "&:hover": {
+      backgroundColor: "#fff",
+    },
+    background: "rgba(255,255,255,1)",
+  },
   cardMain: {
-    margin: theme.spacing(4),
-    padding: theme.spacing(0.8),
     borderRadius: theme.spacing(0),
   },
 }));
@@ -119,7 +119,6 @@ const customTheme = (outerTheme) =>
               borderBottom:
                 "2px solid var(--TextField-brandBorderFocusedColor)",
             },
-
           },
         },
       },
@@ -138,11 +137,10 @@ const SearchButton = styled(Button)(({ theme }) => ({
 const SubmitButton = styled(Button)(({ theme }) => ({
   color: "#000",
   backgroundColor: "#3fab4c",
-  
-  borderRadius: 100,
-  borderColor:'#000'
-}));
 
+  borderRadius: 100,
+  borderColor: "#000",
+}));
 
 export default function AddMovies() {
   const [movies, setMovies] = useState({});
@@ -213,8 +211,7 @@ export default function AddMovies() {
               padding: "16px",
               marginBottom: "16px",
             }}
-            style={{width:'75%',            
-          }}
+            style={{ width: "75%" }}
             alignContent="center"
           >
             <Typography
@@ -240,9 +237,19 @@ export default function AddMovies() {
                   freeSolo
                   id="combo-box-demo"
                   options={top100Films.map((option) => option.label)}
-                  sx={{ width: '45%' }}
+                  sx={{ width: "45%" }}
                   PaperComponent={({ children }) => (
-                    <Paper style={{ background: "rgba(255,255,255,0.8)", padding:'8px', fontSize:'1.10em', borderRadius:'100', color:'#000' }}>{children}</Paper>
+                    <Paper
+                      style={{
+                        background: "rgba(255,255,255,0.8)",
+                        padding: "8px",
+                        fontSize: "1.10em",
+                        borderRadius: "100",
+                        color: "#000",
+                      }}
+                    >
+                      {children}
+                    </Paper>
                   )}
                   renderInput={(params) => (
                     <ThemeProvider theme={customTheme(outerTheme)}>
@@ -267,12 +274,12 @@ export default function AddMovies() {
                                 variant="contained"
                                 onClick={loadMovies}
                                 color="primary"
-                                style={{backgroundColor:'#000'}}
+                                style={{ backgroundColor: "#000" }}
                                 sx={{
                                   position: "absolute",
                                   right: 15,
                                 }}
-                                endIcon={<SearchIcon/>}
+                                endIcon={<SearchIcon />}
                               >
                                 Search
                               </SearchButton>
@@ -283,16 +290,15 @@ export default function AddMovies() {
                     </ThemeProvider>
                   )}
                 />
-                
               </Stack>
               <SubmitButton
-                  variant="contained"
-                  onClick={handleSubmit}
-                  size="large"
-                  endIcon={<BackupIcon/>}
-                >
-                  Submit
-                </SubmitButton>
+                variant="contained"
+                onClick={handleSubmit}
+                size="large"
+                endIcon={<BackupIcon />}
+              >
+                Submit
+              </SubmitButton>
             </center>
           </Card>
         </center>
@@ -300,95 +306,104 @@ export default function AddMovies() {
         <Popover
           id={id}
           open={open}
-          anchorEl={anchorEl}
+          onClick={handleClose}
           onClose={handleClose}
-          anchorReference="anchorPosition"
-          anchorPosition={{ top: 200, left: 200 }}
-          anchorOrigin={{
-            vertical: "center",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "center",
-            horizontal: "center",
-          }}
+          anchorReference="none"
           classes={{
             root: classes.popoverRoot,
           }}
+          sx={{
+            ".MuiPopover-paper": {
+              background: "transparent",
+              boxShadow: "none",
+            },
+          }}
+          style={{ width: "100%" }}
         >
-          <div>
-            {movies.results?.map((i) => (
-              <Card key={i.id} className={classes.card}>
-                <CardActionArea
-                  onClick={(evt) => {
-                    console.log(i.id);
-                    selectedMovies.push(i);
-                    console.log(selectedMovies);
-                    axios
-                      .post(server_base_url + "/addmovie", {
-                        movie: i,
-                        uid: currentUser.uid,
-                      })
-                      .then((response) => handleClose());
-                  }}
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
+          <center>
+            <div style={{ width: "75%", padding:'16px', margin:'16px' }}>
+              {movies.results?.map((i) => (
+                <div key={i.id} className={classes.card}  
+          >
+                  <CardActionArea
+                    onClick={(evt) => {
+                      console.log(i.id);
+                      selectedMovies.push(i);
+                      console.log(selectedMovies);
+                      axios
+                        .post(server_base_url + "/addmovie", {
+                          movie: i,
+                          uid: currentUser.uid,
+                        })
+                        .then((response) => handleClose());
+                    }}
                   >
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                      <CardContent>
-                        <Typography component="div" variant="h5">
-                          {i.original_title}
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          color="text.secondary"
-                          component="div"
-                        >
-                          Release Date: {i.release_date}
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          color="text.secondary"
-                          component="div"
-                        >
-                          Popularity: {i.popularity}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          color="text.secondary"
-                          component="div"
-                          sx={{ marginTop: "8px" }}
-                        >
-                          {i.overview}
-                        </Typography>
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <CardContent>
+                          <Typography
+                            component="div"
+                            variant="h5"
+                            style={{ textAlign: "left" }}
+                          >
+                            {i.original_title}
+                          </Typography>
+                          <Stack direction="row" justifyContent="space-between">
+                          <Typography
+                            variant="subtitle2"
+                            color="text.primary"
+                            component="div"
+                            style={{ textAlign: "left", paddingTop:'8px' }}
 
-                        <Typography
-                          variant="subtitle2"
-                          color="text.secondary"
-                          component="div"
-                          sx={{ marginTop: "8px" }}
-                        >
-                          Average Rating: {i.vote_average}
-                        </Typography>
-                      </CardContent>
-                    </Box>
+                          >
+                             {i.release_date}
+                          </Typography>
+                          <Rating name="read-only" value={i.vote_average} max={10} style={{paddingTop:'8px', paddingBottom:'8px'}} />
 
-                    <CardMedia
-                      component="img"
-                      sx={{ width: 151, margin: "16px" }}
-                      image={
-                        "https://image.tmdb.org/t/p/original" + i.poster_path
-                      }
-                      alt="Live from space album cover"
-                    />
-                  </Stack>
-                </CardActionArea>
-              </Card>
-            ))}
-          </div>
+                          </Stack>
+                          
+                          
+                          <Typography
+                            variant="body1"
+                            color="text.primary"
+                            component="div"
+                            sx={{ marginTop: "8px" }}
+                            style={{
+                              textOverflow: "ellipsis",
+                              wordWrap: "break-word",
+                              overflow: "hidden",
+                              maxHeight: "9.6em",
+                              lineHeight: "1.8em",
+                              textAlign:'left'
+                            }}
+                          >
+                            {i.overview}
+                          </Typography>
+
+
+                          
+                        </CardContent>
+                      </Box>
+
+                      <CardMedia
+                        component="img"
+                        sx={{width:'20%'}}
+                        image={
+                          "https://image.tmdb.org/t/p/original" + i.poster_path
+                        }
+                        alt="Live from space album cover"
+                      />
+                      
+                    </Stack>
+                  </CardActionArea>
+                </div>
+              ))}
+            </div>
+          </center>
         </Popover>
 
         <div>
