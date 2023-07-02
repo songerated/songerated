@@ -29,16 +29,20 @@ import { CardActionArea } from "@mui/material";
 import axios from "axios";
 import { useAuth } from "../contexts/authContexts";
 import StepperComponent from "./StepperComponent";
-import { grey } from '@mui/material/colors';
-import {Link, useNavigate} from 'react-router-dom';
-
+import { grey } from "@mui/material/colors";
+import { Link, useNavigate } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+import { Search } from "@mui/icons-material";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+import { outlinedInputClasses } from "@mui/material/OutlinedInput";
+import BackupIcon from '@mui/icons-material/Backup';
 
 const fetch = require("node-fetch");
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/temp3.png'})`,
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/temp3.png"})`,
     backgroundSize: "cover",
   },
   popoverRoot: {
@@ -62,47 +66,83 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-const CustomTextField = styled((props) => (
-  <TextField InputProps={{ disableUnderline: true }} {...props} />
-))(({ theme }) => ({
-  "& .MuiFilledInput-root": {
-    overflow: "hidden",
-    borderRadius: 4,
-    backgroundColor:
-      theme.palette.mode === "light" ? "rgba(200, 200, 200, 0.25)" : "#1A2027",
-    border: "1px solid",
-    borderColor: theme.palette.mode === "light" ? "#000000" : "#2D3843",
-    transition: theme.transitions.create([
-      "border-color",
-      "background-color",
-      "box-shadow",
-    ]),
-    color: "#000",
-    "&:hover": {
-      backgroundColor: "rgba(200, 200, 200, 0.75)",
+const customTheme = (outerTheme) =>
+  createTheme({
+    palette: {
+      mode: outerTheme.palette.mode,
     },
-    "&.Mui-focused": {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
-      borderColor: theme.palette.primary.main,
-      color: "#0000",
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            "--TextField-brandBorderColor": "#6F7E8C",
+            "--TextField-brandBorderHoverColor": "#24272b",
+            "--TextField-brandBorderFocusedColor": "#000",
+            "& label.Mui-focused": {
+              color: "var(--TextField-brandBorderFocusedColor)",
+            },
+            [`& fieldset`]: {
+              borderRadius: 100,
+            },
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          notchedOutline: {
+            borderColor: "var(--TextField-brandBorderColor)",
+          },
+          root: {
+            [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
+              borderColor: "var(--TextField-brandBorderHoverColor)",
+            },
+            [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
+              borderColor: "var(--TextField-brandBorderFocusedColor)",
+            },
+          },
+        },
+      },
+
+      MuiInput: {
+        styleOverrides: {
+          root: {
+            "&:before": {
+              borderBottom: "2px solid var(--TextField-brandBorderColor)",
+            },
+            "&:hover:not(.Mui-disabled, .Mui-error):before": {
+              borderBottom: "2px solid var(--TextField-brandBorderHoverColor)",
+            },
+            "&.Mui-focused:after": {
+              borderBottom:
+                "2px solid var(--TextField-brandBorderFocusedColor)",
+            },
+
+          },
+        },
+      },
     },
-  },
-}));
+  });
 
-
-
-const ColorButton = styled(Button)(({ theme }) => ({
+const SearchButton = styled(Button)(({ theme }) => ({
   color: "white",
-  backgroundColor: 'rgba(0,0,0)',
-  '&:hover': {
+  backgroundColor: "rgba(0,0,0)",
+  "&:hover": {
     backgroundColor: grey[700],
   },
+  borderRadius: 100,
+}));
+
+const SubmitButton = styled(Button)(({ theme }) => ({
+  color: "#000",
+  backgroundColor: "#3fab4c",
+  
+  borderRadius: 100,
+  borderColor:'#000'
 }));
 export default function AddMovies() {
   const [movies, setMovies] = useState({});
   const [selectedMovies, setSelectedMovies] = useState([]);
+  const outerTheme = useTheme();
 
   const [selected, setSelected] = useState([]);
   const classes = useStyles();
@@ -146,9 +186,9 @@ export default function AddMovies() {
       .catch((err) => console.error("error:" + err));
   };
 
-  const handleSubmit= ()=>{
-      navigate("/addyoutubechannels")
-  }
+  const handleSubmit = () => {
+    navigate("/addyoutubechannels");
+  };
 
   useEffect(() => {
     console.log(movies.results);
@@ -156,15 +196,14 @@ export default function AddMovies() {
 
   return (
     <div className={classes.root}>
-      <div style={{padding:'32px'}}>
-      <StepperComponent activeStep={2}></StepperComponent>
+      <div style={{ padding: "32px" }}>
+        <StepperComponent activeStep={2}></StepperComponent>
       </div>
-      <div className="addMoviesSearch" >
+      <div className="addMoviesSearch">
         <center>
           <Card
             variant="outlined"
             sx={{
-              maxWidth: "100vw",
               backgroundColor: "rgba(255,255,255,0.5)",
               padding: "16px",
               marginBottom: "16px",
@@ -181,40 +220,73 @@ export default function AddMovies() {
               The next step is to tell us about your favourite movies.
               <br></br> No.of movies you add ∝ No. of matches we find for you
             </Typography>
+
+            <center>
+              <Stack
+                sx={{ padding: "8px" }}
+                direction="row"
+                spacing={2}
+                justifyContent="center"
+              >
+                <Autocomplete
+                  onChange={(event, value) => setSelected(value)}
+                  freeSolo
+                  id="combo-box-demo"
+                  options={top100Films.map((option) => option.label)}
+                  sx={{ width: 300 }}
+                  renderInput={(params) => (
+                    <ThemeProvider theme={customTheme(outerTheme)}>
+                      <TextField
+                        style={{ borderColor: "#000" }}
+                        onChange={(event, value) =>
+                          setSelected(event.target.value)
+                        }
+                        {...params}
+                        label="Movie Name"
+                        InputProps={{
+                          ...params.InputProps,
+                          sx: {
+                            // this is necessary if you don't want to input value to be
+                            // placed under the icon at the end
+                            "&&&": { pr: "70px" },
+                          },
+                          endAdornment: (
+                            <React.Fragment>
+                              {params.InputProps.endAdornment}
+                              <SearchButton
+                                variant="contained"
+                                onClick={loadMovies}
+                                color="primary"
+                                style={{backgroundColor:'#000'}}
+                                sx={{
+                                  position: "absolute",
+                                  right: 20,
+                                }}
+                                endIcon={<SearchIcon/>}
+                              >
+                                Search
+                              </SearchButton>
+                            </React.Fragment>
+                          ),
+                        }}
+                      />
+                    </ThemeProvider>
+                  )}
+                />
+                
+              </Stack>
+              <SubmitButton
+                  variant="contained"
+                  onClick={handleSubmit}
+                  size="large"
+                  endIcon={<BackupIcon/>}
+                >
+                  Submit
+                </SubmitButton>
+            </center>
           </Card>
         </center>
 
-        <center>
-          <Stack
-            sx={{ padding: "8px" }}
-            direction="row"
-            spacing={2}
-            justifyContent="center"
-          >
-            <Autocomplete
-              onChange={(event, value) => setSelected(value)}
-              freeSolo
-              id="combo-box-demo"
-              variant="filled"
-              options={top100Films.map((option) => option.label)}
-              sx={{ width: 300 }}
-              renderInput={(params) => (
-                <CustomTextField
-                  variant="filled"
-                  onChange={(event, value) => setSelected(event.target.value)}
-                  {...params}
-                  label="Movie Name"
-                />
-              )}
-            />
-            <Button variant="contained" size="large" onClick={loadMovies}>
-              Search
-            </Button>
-            <ColorButton variant="contained"  size="large" onClick={handleSubmit}>
-              Submit
-            </ColorButton>
-          </Stack>
-        </center>
         <Popover
           id={id}
           open={open}

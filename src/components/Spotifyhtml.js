@@ -71,7 +71,7 @@ export default function Spotifyhtml() {
                   <Link
                     href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOMES_URL_PARAM}&response_type=${RESPONSE_TYPE}`}
                   >
-                    <b>Authorize -></b>
+                    <b>Authorize </b>
                   </Link>
                 </center>
               </Box>
