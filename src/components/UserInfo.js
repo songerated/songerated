@@ -15,11 +15,13 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import StepperComponent from "./StepperComponent";
 import { useAuth } from "../contexts/authContexts";
 import { TokenOutlined } from "@mui/icons-material";
 import Skeleton from "@mui/material/Skeleton";
+import Link from '@mui/material/Link';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,9 +47,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
+  
   // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
@@ -139,7 +139,7 @@ export default function UserInfo() {
 
   const renderTopArtists = () => {
     return (
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -151,9 +151,9 @@ export default function UserInfo() {
           </TableHead>
           <TableBody>
             {topArtists?.map((artist) => (
-              <StyledTableRow key={artist.id}>
+              <StyledTableRow key={artist.id} style={{ backgroundColor: "rgba(230,    224, 227, 0.51)" }}>
                 <StyledTableCell component="th" scope="row">
-                  {artist.name}
+                  {<Link href={artist.external_urls.spotify} underline="hover" style={{color:'#000'}}>{artist.name}</Link> }
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   {artist.genres.join(", ")}
@@ -234,10 +234,10 @@ export default function UserInfo() {
             </Grid>
           )}
           {isTopTracks && (
-            <TableContainer component={Paper}>
+            <TableContainer >
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
-                  <TableRow>
+                  <TableRow >
                     <StyledTableCell>Track Name</StyledTableCell>
                     <StyledTableCell align="right">Artists</StyledTableCell>
                     <StyledTableCell align="right">Album</StyledTableCell>
@@ -247,15 +247,15 @@ export default function UserInfo() {
                 </TableHead>
                 <TableBody>
                   {topTracks?.map((track) => (
-                    <StyledTableRow key={track.id}>
+                    <StyledTableRow key={track.id} style={{ backgroundColor: "rgba(230,    224, 227, 0.51)" }}>
                       <StyledTableCell component="th" scope="row">
-                        {track.name}
+                        {<Link href={track.external_urls.spotify} underline="hover" style={{color:'#000'}}>{track.name}</Link> }
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {track.artists.map((artist) => artist.name).join(", ")}
+                        {<Link href={track.artists[0].external_urls.spotify} underline="hover" style={{color:'#000'}}> {track.artists.map((artist) => artist.name).join(", ")}</Link>}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {track.album.name}
+                        {<Link href={track.album.external_urls.spotify} underline="hover" style={{color:'#000'}}>{track.album.name}</Link>}
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         {track.popularity}
@@ -276,7 +276,7 @@ export default function UserInfo() {
           {isTopArtists && renderTopArtists()}
         </Box>
 
-        <Box sx={{ margin: "32px", width: "80%" }}>
+        <Box sx={{  width: "80%" }}>
           <form onSubmit={getTopArtists}>
             <Button
               type={"submit"}

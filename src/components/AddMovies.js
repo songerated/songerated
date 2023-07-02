@@ -78,7 +78,7 @@ const CustomTextField = styled((props) => (
       "background-color",
       "box-shadow",
     ]),
-    color: "#ffffff",
+    color: "#000",
     "&:hover": {
       backgroundColor: "rgba(200, 200, 200, 0.75)",
     },
@@ -86,7 +86,7 @@ const CustomTextField = styled((props) => (
       backgroundColor: "rgba(0, 0, 0, 0.5)",
       boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
       borderColor: theme.palette.primary.main,
-      color: "#ffffff",
+      color: "#0000",
     },
   },
 }));
@@ -178,7 +178,7 @@ export default function AddMovies() {
               justifyContent="left"
               alignContent="left"
             >
-              The last step is to tell us about your favourite movies.
+              The next step is to tell us about your favourite movies.
               <br></br> No.of movies you add ∝ No. of matches we find for you
             </Typography>
           </Card>
