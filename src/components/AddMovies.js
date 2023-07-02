@@ -36,6 +36,9 @@ import { Search } from "@mui/icons-material";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import BackupIcon from '@mui/icons-material/Backup';
+import  { autocompleteClasses } from '@mui/material/Autocomplete';
+import Popper from '@mui/material/Popper';
+
 
 const fetch = require("node-fetch");
 
@@ -139,6 +142,8 @@ const SubmitButton = styled(Button)(({ theme }) => ({
   borderRadius: 100,
   borderColor:'#000'
 }));
+
+
 export default function AddMovies() {
   const [movies, setMovies] = useState({});
   const [selectedMovies, setSelectedMovies] = useState([]);
@@ -208,10 +213,12 @@ export default function AddMovies() {
               padding: "16px",
               marginBottom: "16px",
             }}
+            style={{width:'75%',            
+          }}
             alignContent="center"
           >
             <Typography
-              variant="body1"
+              variant="h6"
               gutterBottom
               sx={{ color: "rgba(0,0,0)" }}
               justifyContent="left"
@@ -233,7 +240,10 @@ export default function AddMovies() {
                   freeSolo
                   id="combo-box-demo"
                   options={top100Films.map((option) => option.label)}
-                  sx={{ width: 300 }}
+                  sx={{ width: '45%' }}
+                  PaperComponent={({ children }) => (
+                    <Paper style={{ background: "rgba(255,255,255,0.8)", padding:'8px', fontSize:'1.10em', borderRadius:'100', color:'#000' }}>{children}</Paper>
+                  )}
                   renderInput={(params) => (
                     <ThemeProvider theme={customTheme(outerTheme)}>
                       <TextField
@@ -260,7 +270,7 @@ export default function AddMovies() {
                                 style={{backgroundColor:'#000'}}
                                 sx={{
                                   position: "absolute",
-                                  right: 20,
+                                  right: 15,
                                 }}
                                 endIcon={<SearchIcon/>}
                               >
