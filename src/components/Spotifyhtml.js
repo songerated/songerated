@@ -44,6 +44,7 @@ export default function Spotifyhtml() {
               <Box sx={{ marginTop: "24px" }}>
                 <Divider variant="middle" />
               </Box>
+              <center>
               <Box sx={{ margin: "24px" }}>
                 <Typography variant="h4" style={{color:'black'}}>
                   <b>Verse</b>
@@ -52,17 +53,17 @@ export default function Spotifyhtml() {
               <Box sx={{ margin: "24px" }}>
                 <Typography variant="h6" gutterBottom component="div" style={{color:'black'}}>
                   {" "}
-                  Hey! To find matches, we need access to your spotify data.{" "}
-                </Typography>
-                <Typography variant="h6" gutterBottom component="div" style={{color:'black'}}>
-                  <b>
-                    By giving us the access you agree that Verse will be able
-                    to:
-                  </b>
-                </Typography>
-                <Typography variant="h6" gutterBottom component="div" style={{color:'black'}}>
-                  Your name and username, your profile picture, how many
+                  Hey! To find matches, we need access to your spotify data.{" "}<b>
+                    By giving us the permission you agree that Verse will be able
+                    to access:
+                  </b> Your name and username, your profile picture, how many
                   followers you have on Spotify and your public playlists
+                </Typography>
+                <Typography variant="h6" gutterBottom component="div" style={{color:'black'}}>
+                  
+                </Typography>
+                <Typography variant="h6" gutterBottom component="div" style={{color:'black'}}>
+                 
                 </Typography>
               </Box>
 
@@ -75,6 +76,7 @@ export default function Spotifyhtml() {
                   </Link>
                 </center>
               </Box>
+              </center>
             </Card.Body>
           </Card>
         </div>
