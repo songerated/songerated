@@ -2,25 +2,20 @@ import React, { useEffect, useRef, useState } from "react";
 import { Form, Card, Alert } from "react-bootstrap";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container } from "react-bootstrap";
 import Box from "@mui/material/Box";
 import { Link, useNavigate } from "react-router-dom";
-import ResponsiveAppBar from "./ResponsiveAppBar";
 import { useAuth } from "../contexts/authContexts";
-import { link } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 import firebase from "firebase/compat/app";
 import { getFirestore } from "firebase/firestore";
 import "firebase/compat/firestore";
 import "../App.css";
-import GoogleLogin from "react-google-login";
 import axios from "axios";
-import { Carousel } from "3d-react-carousal";
 import Stack from "@mui/material/Stack";
 import { Divider } from "@mui/material";
 import { Typography } from "@mui/material";
-import { SvgIcon } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { styled } from "@mui/material/styles";
+import GoogleIcon from "@mui/icons-material/Google";
 
 const style = {
   width: 297,
@@ -30,27 +25,22 @@ const style = {
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-const url = `url(${process.env.PUBLIC_URL + "/assets/spaceship.jpg"})`;
+const ContinueButton = styled(Button)(({ theme }) => ({
+  color: "#fff",
+  backgroundColor: "#000",
 
-let slides = [
-  <img src="https://i.ibb.co/D8wx8r7/pngwing-com.png" alt="2" />,
-  <img src="https://i.ibb.co/qDvvv9R/pngwing-com-10.png" alt="3" />,
-  <img src="https://i.ibb.co/G02S2Bg/pngwing-com-3.png" alt="4" />,
-  <img src="https://i.ibb.co/cFwVG5G/pngwing-com-9.png" alt="5" />,
-  <img src="https://i.ibb.co/bdtHbTR/pngwing-com-11.png" alt="1" />,
-];
-
-const callback = function (index) {
-  console.log("callback", index);
-};
+  borderColor: "#000",
+}));
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: "100vh",
-    backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/temp3.png'})`,
-
+    height: "100vh",
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/temp3.png"})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 
@@ -124,78 +114,65 @@ export default function Login() {
 
   return (
     <div className={classes.root}>
-      <center>
-        <Stack
-          direction="row"
-          justifyContent="space-evenly"
-          alignItems="center"
-          spacing={0}
-          sx={{ height: "100vh" }}
-        >
-          <div
-            style={{
-              width: "600px",
-              height: "600px",
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
+      <div
+        style={{
+          background: "rgba(230,    224, 227, 0.31)",
+          display: "flex",
+          width: "90%",
+          height: "90vh",
+        }}
+      >
+        <Stack direction="row" style={{ width: "100%" }}>
+          <Card.Body>
             <center>
-              <Carousel
-                slides={slides}
-                autoplay={true}
-                interval={2000}
-                onSlideChange={callback}
-              />
-            </center>
-          </div>
+              <img
+                src={process.env.PUBLIC_URL + "/assets/verselogo.png"}
+                width="200px"
+              ></img>
+              <Typography variant="h6" color="rgba(5,5,5)">
+                <b>WELCOME BACK</b>
+              </Typography>
+              <Typography variant="subtitle2" style={{ marginBottom: "16px" }}>
+                Please enter your details
+              </Typography>
+              {error && <Alert variant="danger">{error}</Alert>}
+              <Stack direction="column">
+                <center>
+                  <TextField
+                    id="outlined-basic"
+                    label="Enter your email"
+                    variant="outlined"
+                    size="small"
+                    style={{ width: "70%" }}
+                  />
+                  <ContinueButton
+                    variant="contained"
+                    style={{ width: "70%", margin: "16px" }}
+                    onClick={handleOnClick}
+                  >
+                    Continue
+                  </ContinueButton>
+                  <Divider style={{ width: "70%", margin: "8px" }}>OR</Divider>
 
-          <Stack direction="column">
-            <Typography variant="h4" color="rgba(5,5,5)" gutterBottom>
-              WELCOME BACK
-            </Typography>
-            <Card
-              style={{
-                width: "400px",
-              }}
-            >
-              <Card.Body>
-                <h2 className="text-center mb-4">Log In</h2>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
-                  <Form.Group id="email" style={{ padding: "8px" }}>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" ref={emailRef} required />
-                  </Form.Group>
-                  <Form.Group id="password" style={{ padding: "8px" }}>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" ref={passwordRef} required />
-                  </Form.Group>
-
-                  <Box sx={{ margin: "8px" }}>
-                    <Button disabled={loading} className="w-100" type="submit">
-                      Sign in
-                    </Button>
-                  </Box>
-                  <Divider variant="middle" />
-
-                  <Box sx={{ margin: "8px" }}>
+                  <Box>
                     <center>
                       <SignIn />
                     </center>
                   </Box>
-                </Form>
-              </Card.Body>
-            </Card>
-
-            <div className="w-100 text-center-mt-2">
-              Need an account? <Link to="/signup">Sign Up</Link>
-            </div>
-          </Stack>
+                  <div className="w-100 text-center-mt-2">
+                    Need an account? <Link to="/signup">Sign Up</Link>
+                  </div>
+                </center>
+              </Stack>
+            </center>
+          </Card.Body>
+          <img
+            src={process.env.PUBLIC_URL + "/assets/0104-modified.jpg"}
+            width="60%"
+            style={{ padding: "16px", objectFit: "cover" }}
+          ></img>
         </Stack>
-      </center>
+      </div>
     </div>
   );
 }
@@ -206,7 +183,17 @@ function SignIn() {
     auth.signInWithPopup(provider);
   };
   return (
-    <Button className="sign-in" onClick={signInWithGoogle}>
+    <Button
+      variant="outlined"
+      startIcon={<GoogleIcon />}
+      style={{
+        background: "#000",
+        color: "#fff",
+        width: "70%",
+        margin: "16px",
+      }}
+      onClick={signInWithGoogle}
+    >
       Sign in with Google
     </Button>
   );
