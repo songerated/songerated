@@ -19,13 +19,19 @@ import { useNavigate } from "react-router-dom";
 import StepperComponent from "./StepperComponent";
 import { useAuth } from "../contexts/authContexts";
 import { TokenOutlined } from "@mui/icons-material";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import Skeleton from "@mui/material/Skeleton";
 import Link from "@mui/material/Link";
+import { Stack } from "react-bootstrap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
     backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/temp3.png"})`,
+    justifyContent: "center",
+    alignItems: "center",
+     display:'flex',
 
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
@@ -117,23 +123,80 @@ export default function UserInfo() {
       });
   };
 
-  const getTopArtists = async (e) => {
-    e.preventDefault();
-    const { data } = await axios.get(spotify_url + "/me/top/artists", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params: {},
-    });
-    console.log(data);
-
-    setTopArtists(data.items);
-  };
 
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
   const [isTopTracks, setIsTopTracks] = useState(false);
   const [isTopArtists, setIsTopArtists] = useState(false);
+
+  const renderTopTracks = () => {
+    return (
+      <TableContainer >
+        <Table  aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Track Name</StyledTableCell>
+              <StyledTableCell align="right">Artists</StyledTableCell>
+              <StyledTableCell align="right">Album</StyledTableCell>
+              <StyledTableCell align="right">Popularity</StyledTableCell>
+              <StyledTableCell align="right">Explicit</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {topTracks?.map((track) => (
+              <StyledTableRow
+                key={track.id}
+                style={{
+                  backgroundColor: "rgba(230,    224, 227, 0.51)",
+                }}
+              >
+                <StyledTableCell component="th" scope="row">
+                  {
+                    <Link
+                      href={track.external_urls.spotify}
+                      underline="hover"
+                      style={{ color: "#000" }}
+                    >
+                      {track.name}
+                    </Link>
+                  }
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {
+                    <Link
+                      href={track.artists[0].external_urls.spotify}
+                      underline="hover"
+                      style={{ color: "#000" }}
+                    >
+                      {" "}
+                      {track.artists.map((artist) => artist.name).join(", ")}
+                    </Link>
+                  }
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {
+                    <Link
+                      href={track.album.external_urls.spotify}
+                      underline="hover"
+                      style={{ color: "#000" }}
+                    >
+                      {track.album.name}
+                    </Link>
+                  }
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {track.popularity}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {track.explicit.toString()}
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  };
 
   const renderTopArtists = () => {
     return (
@@ -214,122 +277,39 @@ export default function UserInfo() {
 
   return (
     <div className={classes.root}>
-      <div style={{ paddingTop: "64px" }}>
-        <StepperComponent activeStep={1}></StepperComponent>
+        {!isTopTracks || !isTopArtists ? (
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress color="inherit" />
+          </Box>
+        ) : (
+          <Stack style={{justifyContent:'center'}}>
+          
+            <div style={{ paddingTop: "64px" }}>
+              <StepperComponent activeStep={1}></StepperComponent>
+            </div>
+            <center>
+            <div style={{ margin: "32px", width: "80%",  width:'80%' }}>
+              {renderTopTracks()}
+            </div>
+            <div style={{ margin: "32px", width: "80%" }}>
+              {renderTopArtists()}
+            </div>
+            <div style={{ width: "80%" }}>
+              <Button
+                type={"submit"}
+                variant="contained"
+                sx={{ bgcolor: "black", margin: "16px" }}
+                onClick={handleOnSubmit}
+              >
+                Submit Data
+              </Button>
+            </div>
+            </center>
+
+
+            
+          </Stack>
+        )}
       </div>
-      <center>
-        <Box sx={{ margin: "32px", width: "80%" }}>
-          {!isTopTracks && (
-            <Grid container spacing={8}>
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-              <Skeleton width="100%" />
-            </Grid>
-          )}
-          {isTopTracks && (
-            <TableContainer>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell>Track Name</StyledTableCell>
-                    <StyledTableCell align="right">Artists</StyledTableCell>
-                    <StyledTableCell align="right">Album</StyledTableCell>
-                    <StyledTableCell align="right">Popularity</StyledTableCell>
-                    <StyledTableCell align="right">Explicit</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {topTracks?.map((track) => (
-                    <StyledTableRow
-                      key={track.id}
-                      style={{
-                        backgroundColor: "rgba(230,    224, 227, 0.51)",
-                      }}
-                    >
-                      <StyledTableCell component="th" scope="row">
-                        {
-                          <Link
-                            href={track.external_urls.spotify}
-                            underline="hover"
-                            style={{ color: "#000" }}
-                          >
-                            {track.name}
-                          </Link>
-                        }
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {
-                          <Link
-                            href={track.artists[0].external_urls.spotify}
-                            underline="hover"
-                            style={{ color: "#000" }}
-                          >
-                            {" "}
-                            {track.artists
-                              .map((artist) => artist.name)
-                              .join(", ")}
-                          </Link>
-                        }
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {
-                          <Link
-                            href={track.album.external_urls.spotify}
-                            underline="hover"
-                            style={{ color: "#000" }}
-                          >
-                            {track.album.name}
-                          </Link>
-                        }
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {track.popularity}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {track.explicit.toString()}
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
-
-          {/* </form> */}
-        </Box>
-        <Box sx={{ margin: "32px", width: "80%" }}>
-          {isTopArtists && renderTopArtists()}
-        </Box>
-
-        <Box sx={{ width: "80%" }}>
-          <form onSubmit={getTopArtists}>
-            <Button
-              type={"submit"}
-              variant="contained"
-              sx={{ bgcolor: "black", margin: "16px" }}
-              onClick={handleOnSubmit}
-            >
-              Submit Data
-            </Button>
-          </form>
-        </Box>
-      </center>
-    </div>
   );
 }
