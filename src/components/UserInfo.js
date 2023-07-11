@@ -15,18 +15,17 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StepperComponent from "./StepperComponent";
 import { useAuth } from "../contexts/authContexts";
 import { TokenOutlined } from "@mui/icons-material";
 import Skeleton from "@mui/material/Skeleton";
-import Link from '@mui/material/Link';
-
+import Link from "@mui/material/Link";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundImage: `url(${process.env.PUBLIC_URL + '/assets/temp3.png'})`,
+    backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/temp3.png"})`,
 
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
@@ -47,7 +46,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  
   // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
@@ -67,15 +65,15 @@ export default function UserInfo() {
   useEffect(() => {
     const hash = window.location.hash;
     let tokent = window.localStorage.getItem("token");
+    if (tokent == null) {
+      tokent = hash
+        .substring(1)
+        .split("&")
+        .find((elem) => elem.startsWith("access_token"))
+        .split("=")[1];
 
-    tokent = hash
-      .substring(1)
-      .split("&")
-      .find((elem) => elem.startsWith("access_token"))
-      .split("=")[1];
-
-    window.location.hash = "";
-    window.localStorage.setItem("token", tokent);
+      window.localStorage.setItem("token", tokent);
+    }
     setToken(tokent);
     console.log(tokent);
   }, []);
@@ -151,9 +149,20 @@ export default function UserInfo() {
           </TableHead>
           <TableBody>
             {topArtists?.map((artist) => (
-              <StyledTableRow key={artist.id} style={{ backgroundColor: "rgba(230,    224, 227, 0.51)" }}>
+              <StyledTableRow
+                key={artist.id}
+                style={{ backgroundColor: "rgba(230,    224, 227, 0.51)" }}
+              >
                 <StyledTableCell component="th" scope="row">
-                  {<Link href={artist.external_urls.spotify} underline="hover" style={{color:'#000'}}>{artist.name}</Link> }
+                  {
+                    <Link
+                      href={artist.external_urls.spotify}
+                      underline="hover"
+                      style={{ color: "#000" }}
+                    >
+                      {artist.name}
+                    </Link>
+                  }
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   {artist.genres.join(", ")}
@@ -234,10 +243,10 @@ export default function UserInfo() {
             </Grid>
           )}
           {isTopTracks && (
-            <TableContainer >
+            <TableContainer>
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
-                  <TableRow >
+                  <TableRow>
                     <StyledTableCell>Track Name</StyledTableCell>
                     <StyledTableCell align="right">Artists</StyledTableCell>
                     <StyledTableCell align="right">Album</StyledTableCell>
@@ -247,15 +256,47 @@ export default function UserInfo() {
                 </TableHead>
                 <TableBody>
                   {topTracks?.map((track) => (
-                    <StyledTableRow key={track.id} style={{ backgroundColor: "rgba(230,    224, 227, 0.51)" }}>
+                    <StyledTableRow
+                      key={track.id}
+                      style={{
+                        backgroundColor: "rgba(230,    224, 227, 0.51)",
+                      }}
+                    >
                       <StyledTableCell component="th" scope="row">
-                        {<Link href={track.external_urls.spotify} underline="hover" style={{color:'#000'}}>{track.name}</Link> }
+                        {
+                          <Link
+                            href={track.external_urls.spotify}
+                            underline="hover"
+                            style={{ color: "#000" }}
+                          >
+                            {track.name}
+                          </Link>
+                        }
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {<Link href={track.artists[0].external_urls.spotify} underline="hover" style={{color:'#000'}}> {track.artists.map((artist) => artist.name).join(", ")}</Link>}
+                        {
+                          <Link
+                            href={track.artists[0].external_urls.spotify}
+                            underline="hover"
+                            style={{ color: "#000" }}
+                          >
+                            {" "}
+                            {track.artists
+                              .map((artist) => artist.name)
+                              .join(", ")}
+                          </Link>
+                        }
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {<Link href={track.album.external_urls.spotify} underline="hover" style={{color:'#000'}}>{track.album.name}</Link>}
+                        {
+                          <Link
+                            href={track.album.external_urls.spotify}
+                            underline="hover"
+                            style={{ color: "#000" }}
+                          >
+                            {track.album.name}
+                          </Link>
+                        }
                       </StyledTableCell>
                       <StyledTableCell align="right">
                         {track.popularity}
@@ -276,7 +317,7 @@ export default function UserInfo() {
           {isTopArtists && renderTopArtists()}
         </Box>
 
-        <Box sx={{  width: "80%" }}>
+        <Box sx={{ width: "80%" }}>
           <form onSubmit={getTopArtists}>
             <Button
               type={"submit"}
