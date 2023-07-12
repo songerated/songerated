@@ -16,6 +16,8 @@ import { Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 import GoogleIcon from "@mui/icons-material/Google";
+import CircularProgress from "@mui/material/CircularProgress";
+
 
 const style = {
   width: 297,
@@ -81,6 +83,7 @@ export default function Login() {
                 },
               })
               .then((res) => {
+                setLoading(false)
                 if (res.data.length === 0) {
                   navigate("/connectspotify");
                 } else {
@@ -112,9 +115,36 @@ export default function Login() {
     setLoading(false);
   }
 
+  function SignIn() {
+    const signInWithGoogle = () => {
+      setLoading(true)
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider);
+    };
+    return (
+      <Button
+        variant="outlined"
+        startIcon={<GoogleIcon />}
+        style={{
+          background: "#000",
+          color: "#fff",
+          width: "70%",
+          margin: "16px",
+        }}
+        onClick={signInWithGoogle}
+      >
+        Sign in with Google
+      </Button>
+    );
+  }
+
   return (
     <div className={classes.root}>
-      <div
+      {loading ? (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress color="inherit" />
+        </Box>
+      ) : (<div
         style={{
           background: "rgba(230,    224, 227, 0.31)",
           display: "flex",
@@ -173,28 +203,9 @@ export default function Login() {
           ></img>
         </Stack>
       </div>
+      )}
     </div>
   );
 }
 
-function SignIn() {
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  };
-  return (
-    <Button
-      variant="outlined"
-      startIcon={<GoogleIcon />}
-      style={{
-        background: "#000",
-        color: "#fff",
-        width: "70%",
-        margin: "16px",
-      }}
-      onClick={signInWithGoogle}
-    >
-      Sign in with Google
-    </Button>
-  );
-}
+
