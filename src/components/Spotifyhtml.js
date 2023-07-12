@@ -16,6 +16,7 @@ export default function Spotifyhtml() {
   const SPACE_DELIMITER = "%20";
   const SCOPES = ["user-top-read"];
   const SCOMES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
+  console.log(`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOMES_URL_PARAM}&response_type=${RESPONSE_TYPE}`)
 
   return (
     <div>

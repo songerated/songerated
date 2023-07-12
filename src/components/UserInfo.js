@@ -1,13 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ResponsiveAppBar from "./ResponsiveAppBar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import Card from "react-bootstrap/Card";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -18,12 +14,10 @@ import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
 import StepperComponent from "./StepperComponent";
 import { useAuth } from "../contexts/authContexts";
-import { TokenOutlined } from "@mui/icons-material";
-import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import Skeleton from "@mui/material/Skeleton";
 import Link from "@mui/material/Link";
 import { Stack } from "react-bootstrap";
+import { Typography } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,8 +25,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: `url(${process.env.PUBLIC_URL + "/assets/temp3.png"})`,
     justifyContent: "center",
     alignItems: "center",
-     display:'flex',
-
+    display: "flex",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
   },
@@ -52,7 +45,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -67,19 +59,27 @@ export default function UserInfo() {
   const classes = useStyles();
   const server_base_url = process.env.REACT_APP_SERVER_URL;
 
+  const CLIENT_ID = "f9e6e2d07abd4cedaf792ba099e88c69";
+  const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URL;
+  const AUTH_ENDPOINT = process.env.REACT_APP_SPOTIFY_AUTH_APP;
+  const RESPONSE_TYPE = "token";
+  const SPACE_DELIMITER = "%20";
+  const SCOPES = ["user-top-read"];
+  const SCOMES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
+
   //This is the function that gets the token from the URL
   useEffect(() => {
     const hash = window.location.hash;
-    let tokent = window.localStorage.getItem("token");
+    let tokent = hash
+      ?.substring(1)
+      ?.split("&")
+      ?.find((elem) => elem.startsWith("access_token"))
+      ?.split("=")[1];
     if (tokent == null) {
-      tokent = hash
-        .substring(1)
-        .split("&")
-        .find((elem) => elem.startsWith("access_token"))
-        .split("=")[1];
-
-      window.localStorage.setItem("token", tokent);
+      tokent = window.localStorage.getItem("token");
     }
+    window.localStorage.setItem("token", tokent);
+
     setToken(tokent);
     console.log(tokent);
   }, []);
@@ -104,6 +104,12 @@ export default function UserInfo() {
         setTopTracks(response.data.items);
         setIsTopTracks(true);
         console.log(response.data.items);
+      })
+      .catch((error) => {
+        window.location.replace(
+          `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOMES_URL_PARAM}&response_type=${RESPONSE_TYPE}`
+        );
+        console.log(error.response.status);
       });
   };
 
@@ -123,7 +129,6 @@ export default function UserInfo() {
       });
   };
 
-
   const [topArtists, setTopArtists] = useState([]);
   const [topTracks, setTopTracks] = useState([]);
   const [isTopTracks, setIsTopTracks] = useState(false);
@@ -131,8 +136,9 @@ export default function UserInfo() {
 
   const renderTopTracks = () => {
     return (
-      <TableContainer >
-        <Table  aria-label="customized table">
+      <TableContainer>
+        <Typography variant="h4">Your most listened songs</Typography>
+        <Table aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Track Name</StyledTableCell>
@@ -277,18 +283,17 @@ export default function UserInfo() {
 
   return (
     <div className={classes.root}>
-        {!isTopTracks || !isTopArtists ? (
-          <Box sx={{ display: "flex" }}>
-            <CircularProgress color="inherit" />
-          </Box>
-        ) : (
-          <Stack style={{justifyContent:'center'}}>
-          
-            <div style={{ paddingTop: "64px" }}>
-              <StepperComponent activeStep={1}></StepperComponent>
-            </div>
-            <center>
-            <div style={{ margin: "32px", width: "80%",  width:'80%' }}>
+      {!isTopTracks || !isTopArtists ? (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress color="inherit" />
+        </Box>
+      ) : (
+        <Stack style={{ justifyContent: "center" }}>
+          <div style={{ paddingTop: "64px" }}>
+            <StepperComponent activeStep={1}></StepperComponent>
+          </div>
+          <center>
+            <div style={{ margin: "32px", width: "80%" }}>
               {renderTopTracks()}
             </div>
             <div style={{ margin: "32px", width: "80%" }}>
@@ -304,12 +309,9 @@ export default function UserInfo() {
                 Submit Data
               </Button>
             </div>
-            </center>
-
-
-            
-          </Stack>
-        )}
-      </div>
+          </center>
+        </Stack>
+      )}
+    </div>
   );
 }
