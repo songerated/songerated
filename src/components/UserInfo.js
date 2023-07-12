@@ -133,124 +133,155 @@ export default function UserInfo() {
   const [topTracks, setTopTracks] = useState([]);
   const [isTopTracks, setIsTopTracks] = useState(false);
   const [isTopArtists, setIsTopArtists] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const renderTopTracks = () => {
     return (
-      <TableContainer>
-        <Typography variant="h4">Your most listened songs</Typography>
-        <Table aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Track Name</StyledTableCell>
-              <StyledTableCell align="right">Artists</StyledTableCell>
-              <StyledTableCell align="right">Album</StyledTableCell>
-              <StyledTableCell align="right">Popularity</StyledTableCell>
-              <StyledTableCell align="right">Explicit</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {topTracks?.map((track) => (
-              <StyledTableRow
-                key={track.id}
-                style={{
-                  backgroundColor: "rgba(230,    224, 227, 0.51)",
-                }}
-              >
-                <StyledTableCell component="th" scope="row">
-                  {
-                    <Link
-                      href={track.external_urls.spotify}
-                      underline="hover"
-                      style={{ color: "#000" }}
-                    >
-                      {track.name}
-                    </Link>
-                  }
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {
-                    <Link
-                      href={track.artists[0].external_urls.spotify}
-                      underline="hover"
-                      style={{ color: "#000" }}
-                    >
-                      {" "}
-                      {track.artists.map((artist) => artist.name).join(", ")}
-                    </Link>
-                  }
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {
-                    <Link
-                      href={track.album.external_urls.spotify}
-                      underline="hover"
-                      style={{ color: "#000" }}
-                    >
-                      {track.album.name}
-                    </Link>
-                  }
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {track.popularity}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {track.explicit.toString()}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <>
+        <Typography
+          variant="h6"
+          style={{
+            background: "rgba(230,    224, 227, 0.61)",
+            borderRadius: "100",
+            padding: "8px",
+            marginTop: "8px",
+            marginBottom: "8px",
+          }}
+        >
+          Your most listened songs
+        </Typography>
+
+        <TableContainer>
+          <Table aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Track Name</StyledTableCell>
+                <StyledTableCell align="right">Artists</StyledTableCell>
+                <StyledTableCell align="right">Album</StyledTableCell>
+                <StyledTableCell align="right">Popularity</StyledTableCell>
+                <StyledTableCell align="right">Explicit</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {topTracks?.map((track) => (
+                <StyledTableRow
+                  key={track.id}
+                  style={{
+                    backgroundColor: "rgba(230,    224, 227, 0.51)",
+                  }}
+                >
+                  <StyledTableCell component="th" scope="row">
+                    {
+                      <Link
+                        href={track.external_urls.spotify}
+                        underline="hover"
+                        style={{ color: "#000" }}
+                      >
+                        {track.name}
+                      </Link>
+                    }
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {
+                      <Link
+                        href={track.artists[0].external_urls.spotify}
+                        underline="hover"
+                        style={{ color: "#000" }}
+                      >
+                        {" "}
+                        {track.artists.map((artist) => artist.name).join(", ")}
+                      </Link>
+                    }
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {
+                      <Link
+                        href={track.album.external_urls.spotify}
+                        underline="hover"
+                        style={{ color: "#000" }}
+                      >
+                        {track.album.name}
+                      </Link>
+                    }
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {track.popularity}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {track.explicit.toString()}
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
     );
   };
 
   const renderTopArtists = () => {
     return (
-      <TableContainer>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Artist Name</StyledTableCell>
-              <StyledTableCell align="right">Genres</StyledTableCell>
-              <StyledTableCell align="right">Followers</StyledTableCell>
-              <StyledTableCell align="right">Popularity</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {topArtists?.map((artist) => (
-              <StyledTableRow
-                key={artist.id}
-                style={{ backgroundColor: "rgba(230,    224, 227, 0.51)" }}
-              >
-                <StyledTableCell component="th" scope="row">
-                  {
-                    <Link
-                      href={artist.external_urls.spotify}
-                      underline="hover"
-                      style={{ color: "#000" }}
-                    >
-                      {artist.name}
-                    </Link>
-                  }
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {artist.genres.join(", ")}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {artist.followers.total}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {artist.popularity}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <>
+        {" "}
+        <Typography
+          variant="h6"
+          style={{
+            background: "rgba(230,    224, 227, 0.61)",
+            borderRadius: "100",
+            padding: "8px",
+            marginTop: "8px",
+            marginBottom: "8px",
+          }}
+        >
+          Your favourite artists
+        </Typography>
+        <TableContainer>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Artist Name</StyledTableCell>
+                <StyledTableCell align="right">Genres</StyledTableCell>
+                <StyledTableCell align="right">Followers</StyledTableCell>
+                <StyledTableCell align="right">Popularity</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {topArtists?.map((artist) => (
+                <StyledTableRow
+                  key={artist.id}
+                  style={{ backgroundColor: "rgba(230,    224, 227, 0.51)" }}
+                >
+                  <StyledTableCell component="th" scope="row">
+                    {
+                      <Link
+                        href={artist.external_urls.spotify}
+                        underline="hover"
+                        style={{ color: "#000" }}
+                      >
+                        {artist.name}
+                      </Link>
+                    }
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {artist.genres.join(", ")}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {artist.followers.total}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {artist.popularity}
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
     );
   };
 
   function handleOnSubmit() {
+    setLoading(true);
     window.localStorage.setItem("topArtists", [
       topArtists[0].id,
       topArtists[1].id,
@@ -274,7 +305,7 @@ export default function UserInfo() {
               topTracks: topTracks,
               uid: id,
             })
-            .then((response) => navigate("/addmovies"));
+             .then((response) => navigate("/addmovies"));
         } else {
           navigate("/addmovies");
         }
@@ -283,7 +314,7 @@ export default function UserInfo() {
 
   return (
     <div className={classes.root}>
-      {!isTopTracks || !isTopArtists ? (
+      {!isTopTracks || !isTopArtists || loading ? (
         <Box sx={{ display: "flex" }}>
           <CircularProgress color="inherit" />
         </Box>
@@ -308,6 +339,11 @@ export default function UserInfo() {
               >
                 Submit Data
               </Button>
+              {loading && (
+              <Box sx={{ display: "flex" }}>
+                <CircularProgress color="inherit" />
+              </Box>)
+}
             </div>
           </center>
         </Stack>
