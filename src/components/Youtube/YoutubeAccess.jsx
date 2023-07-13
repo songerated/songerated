@@ -9,7 +9,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 
 const YoutubeAccess = (props) => {
   return (
-    <Card sx={{ maxWidth: 345 }} style={{ margin: "32px" }}>
+    <Card style={{ margin: "32px" , width:'40%', padding:'32px', background:'rgba(230, 224, 227, 0.41)'}}>
       <CardMedia
         component="img"
         alt="green iguana"
@@ -20,16 +20,16 @@ const YoutubeAccess = (props) => {
         <Typography gutterBottom variant="h5" component="div">
           Subscriptions List
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          The Last step is to help us know about your Youtube taste. Once you
-          grant us access, the Youtube API sends us a list of all your channel
-          subscriptions.
+        <Typography variant="body1">
+          
+ The final step involves providing us with information regarding your YouTube subscriptions. Upon granting us access, the YouTube API will transmit a comprehensive list of the channels to which you are subscribed.
         </Typography>
       </CardContent>
         <CardActions style={{justifyContent:'center'}}>
         <center>
 
-          <Button size="small" onClick={props.handleOnClick}>Grant Access</Button>
+          <Button size="small" variant=
+        "outlined" onClick={props.handleOnClick} style={{background:'#000', color:'#fff', borderColor:'#000'}}>Grant Access</Button>
           </center>
 
         </CardActions>

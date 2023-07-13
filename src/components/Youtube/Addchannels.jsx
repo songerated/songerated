@@ -9,7 +9,7 @@ import StepperComponent from ".././StepperComponent";
 import YoutubeAccess from "./YoutubeAccess";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authContexts";
-
+import { Grid } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,7 +56,10 @@ const Addchannels = () => {
         .then((response) => {
           console.log(response.data);
           setAccessToken(response.data.access_token);
-          window.localStorage.setItem("youtubeAccessToken", response.data.access_token)
+          window.localStorage.setItem(
+            "youtubeAccessToken",
+            response.data.access_token
+          );
         });
     }
     console.log(tokent);
@@ -70,7 +73,9 @@ const Addchannels = () => {
         "https://youtube.googleapis.com/youtube/v3/subscriptions?maxResults=50&part=snippet%2CcontentDetails&mine=true&key=AIzaSyBeKd2iinxLIEFceasDvpubSug-qQbn4Y8",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("youtubeAccessToken")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "youtubeAccessToken"
+            )}`,
           },
         }
       )
@@ -111,24 +116,36 @@ const Addchannels = () => {
           <YoutubeAccess handleOnClick={handlOnCliCk} />
         </center>
       )}
-
-      {channelList?.map((channel) => {
-        {
-          console.log(channel);
-        }
-        return (
-          <ChannelCard
-            title={channel.snippet.title}
-            publishedAt={channel.snippet.publishedAt}
-            description={channel.snippet.description}
-            imgsrc={channel.snippet.thumbnails.default.url}
-          />
-        );
-      })}
+      <center>
+        <Grid container spacing={2}>
+          {channelList?.map((channel) => {
+            return (
+              <Grid xs={4}>
+                <div
+                style={{
+                  width: "70%",
+                  height: "500px",
+                  background: "rgba(230,    224, 227, 0.51)",
+                  borderRadius: "15px",
+                  margin: "16px",
+                }}>
+                <ChannelCard
+                
+                  title={channel.snippet.title}
+                  publishedAt={channel.snippet.publishedAt}
+                  description={channel.snippet.description}
+                  imgsrc={channel.snippet.thumbnails.default.url}
+                />
+                </div>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </center>
 
       {isAccessGranted && (
         <center>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={handleSubmit} variant="outlined" style={{background:"#000", color:'#fff'}}>Submit</Button>
         </center>
       )}
     </div>
