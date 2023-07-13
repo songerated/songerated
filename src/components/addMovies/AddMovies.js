@@ -25,6 +25,8 @@ import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import BackupIcon from "@mui/icons-material/Backup";
 import Rating from "@mui/material/Rating";
 import { MovieCard } from "./MovieCard";
+import { setLogLevel } from "firebase/firestore";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const fetch = require("node-fetch");
 
@@ -44,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     borderRadius: 5,
-    margin: '8px',
+    margin: "8px",
     "&:hover": {
       backgroundColor: "#fff",
     },
@@ -128,8 +130,6 @@ const SubmitButton = styled(Button)(({ theme }) => ({
   borderColor: "#000",
 }));
 
-
-
 export default function AddMovies() {
   const [movies, setMovies] = useState({});
   const [selectedMovies, setSelectedMovies] = useState([]);
@@ -143,6 +143,7 @@ export default function AddMovies() {
   const server_base_url = process.env.REACT_APP_SERVER_URL;
   const spotify_url = process.env.REACT_APP_SERVER_URL;
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   let token = window.localStorage.getItem("token");
 
@@ -153,6 +154,7 @@ export default function AddMovies() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   const loadMovies = (event) => {
+    setLoading(true);
     setAnchorEl(event.currentTarget);
 
     const url =
@@ -173,6 +175,7 @@ export default function AddMovies() {
       .then((res) => res.json())
       .then((json) => {
         setMovies(json);
+        setLoading(false);
       })
       .catch((err) => console.error("error:" + err));
   };
@@ -187,179 +190,215 @@ export default function AddMovies() {
 
   return (
     <div className={classes.root}>
-      <div style={{ padding: "32px" }}>
-        <StepperComponent activeStep={2}></StepperComponent>
-      </div>
-      <div className="addMoviesSearch">
-        <center>
-          <Card
-            variant="outlined"
-            sx={{
-              backgroundColor: "rgba(255,255,255,0.5)",
-              padding: "16px",
-              marginBottom: "16px",
-            }}
-            style={{ width: "75%" }}
-            alignContent="center"
-          >
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{ color: "rgba(0,0,0)" }}
-              justifyContent="left"
-              alignContent="left"
+      <>
+        <div style={{ padding: "32px" }}>
+          <StepperComponent activeStep={2}></StepperComponent>
+        </div>
+        <div className="addMoviesSearch">
+          <center>
+            <Card
+              variant="outlined"
+              sx={{
+                backgroundColor: "rgba(255,255,255,0.5)",
+                padding: "16px",
+                marginBottom: "16px",
+              }}
+              style={{ width: "75%" }}
+              alignContent="center"
             >
-              The next step is to tell us about your favourite movies.
-              <br></br> No.of movies you add ∝ No. of matches we find for you
-            </Typography>
-
-            <center>
-              <Stack
-                sx={{ padding: "8px" }}
-                direction="row"
-                spacing={2}
-                justifyContent="center"
+              <Typography
+                variant="h6"
+                gutterBottom
+                sx={{ color: "rgba(0,0,0)" }}
+                justifyContent="left"
+                alignContent="left"
               >
-                <Autocomplete
-                  onChange={(event, value) => setSelected(value)}
-                  freeSolo
-                  id="combo-box-demo"
-                  options={top100Films.map((option) => option.label)}
-                  sx={{ width: "45%" }}
-                  PaperComponent={({ children }) => (
-                    <Paper
+                The next step is to tell us about your favourite movies.
+                <br></br> No.of movies you add ∝ No. of matches we find for you
+              </Typography>
+
+              <center>
+                <Stack
+                  sx={{ padding: "8px" }}
+                  direction="row"
+                  spacing={2}
+                  justifyContent="center"
+                >
+                  <Autocomplete
+                    onChange={(event, value) => setSelected(value)}
+                    freeSolo
+                    id="combo-box-demo"
+                    options={top100Films.map((option) => option.label)}
+                    sx={{ width: "45%" }}
+                    PaperComponent={({ children }) => (
+                      <Paper
+                        style={{
+                          background: "rgba(255,255,255,0.8)",
+                          padding: "8px",
+                          fontSize: "1.10em",
+                          borderRadius: "100",
+                          color: "#000",
+                        }}
+                      >
+                        {children}
+                      </Paper>
+                    )}
+                    renderInput={(params) => (
+                      <ThemeProvider theme={customTheme(outerTheme)}>
+                        <TextField
+                          style={{ borderColor: "#000" }}
+                          onChange={(event, value) =>
+                            setSelected(event.target.value)
+                          }
+                          {...params}
+                          label="Movie Name"
+                          InputProps={{
+                            ...params.InputProps,
+                            sx: {
+                              // this is necessary if you don't want to input value to be
+                              // placed under the icon at the end
+                              "&&&": { pr: "70px" },
+                            },
+                            endAdornment: (
+                              <React.Fragment>
+                                {params.InputProps.endAdornment}
+                                <SearchButton
+                                  variant="contained"
+                                  onClick={loadMovies}
+                                  color="primary"
+                                  style={{ backgroundColor: "#000" }}
+                                  sx={{
+                                    position: "absolute",
+                                    right: 15,
+                                  }}
+                                  endIcon={<SearchIcon />}
+                                >
+                                  Search
+                                </SearchButton>
+                              </React.Fragment>
+                            ),
+                          }}
+                        />
+                      </ThemeProvider>
+                    )}
+                  />
+                </Stack>
+              </center>
+            </Card>
+          </center>
+
+          {loading ? (
+              <Box sx={{ display: "flex", justifyContent:'center' }}>
+                <CircularProgress color="inherit" />
+              </Box>
+            ) : (
+          <Popover
+            id={id}
+            open={open}
+            onClick={handleClose}
+            onClose={handleClose}
+            anchorReference="none"
+            classes={{
+              root: classes.popoverRoot,
+            }}
+            sx={{
+              ".MuiPopover-paper": {
+                background: "rgba(230,    224, 227, 0.31)",
+                boxShadow: "none",
+              },
+            }}
+            style={{ width: "100%" }}
+          >
+            
+              <center>
+                <div style={{ padding: "16px", margin: "16px" }}>
+                  <Grid container spacing={2}>
+                    {movies.results?.map((i) => (
+                      <Grid xs={4}>
+                        <div
+                          key={i.id}
+                          style={{
+                            width: "70%",
+                            height: "500px",
+                            background: "rgba(230,    224, 227, 0.91)",
+                            borderRadius: "15px",
+                            margin: "16px",
+                          }}
+                        >
+                          <CardActionArea
+                            style={{ height: "100%" }}
+                            onClick={(evt) => {
+                              console.log(i.id);
+                              selectedMovies.push(i);
+                              console.log(selectedMovies);
+                              axios
+                                .post(server_base_url + "/addmovie", {
+                                  movie: i,
+                                  uid: currentUser.uid,
+                                })
+                                .then((response) => handleClose());
+                            }}
+                          >
+                            <MovieCard
+                              title={i.original_title}
+                              release_date={i.release_date}
+                              vote_average={i.vote_average}
+                              overview={i.overview}
+                              poster_path={i.poster_path}
+                            />
+                          </CardActionArea>
+                        </div>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </div>
+              </center>
+            
+          </Popover>)}
+
+          <div style={{ padding: "16px", margin: "16px" }}>
+            <center>
+              <Grid container spacing={2}>
+                {selectedMovies?.map((i) => (
+                  <Grid xs={4}>
+                    <div
+                      key={i.id}
                       style={{
-                        background: "rgba(255,255,255,0.8)",
-                        padding: "8px",
-                        fontSize: "1.10em",
-                        borderRadius: "100",
-                        color: "#000",
+                        width: "70%",
+                        height: "500px",
+                        background: "rgba(230,    224, 227, 0.31)",
+                        borderRadius: "15px",
+                        margin: "16px",
                       }}
                     >
-                      {children}
-                    </Paper>
-                  )}
-                  renderInput={(params) => (
-                    <ThemeProvider theme={customTheme(outerTheme)}>
-                      <TextField
-                        style={{ borderColor: "#000" }}
-                        onChange={(event, value) =>
-                          setSelected(event.target.value)
-                        }
-                        {...params}
-                        label="Movie Name"
-                        InputProps={{
-                          ...params.InputProps,
-                          sx: {
-                            // this is necessary if you don't want to input value to be
-                            // placed under the icon at the end
-                            "&&&": { pr: "70px" },
-                          },
-                          endAdornment: (
-                            <React.Fragment>
-                              {params.InputProps.endAdornment}
-                              <SearchButton
-                                variant="contained"
-                                onClick={loadMovies}
-                                color="primary"
-                                style={{ backgroundColor: "#000" }}
-                                sx={{
-                                  position: "absolute",
-                                  right: 15,
-                                }}
-                                endIcon={<SearchIcon />}
-                              >
-                                Search
-                              </SearchButton>
-                            </React.Fragment>
-                          ),
-                        }}
+                      <MovieCard
+                        title={i.original_title}
+                        release_date={i.release_date}
+                        vote_average={i.vote_average}
+                        overview={i.overview}
+                        poster_path={i.poster_path}
                       />
-                    </ThemeProvider>
-                  )}
-                />
-              </Stack>
+                    </div>
+                  </Grid>
+                ))}
+              </Grid>
+            </center>
+          </div>
+          {selectedMovies.length != 0 && (
+            <center>
               <SubmitButton
                 variant="contained"
                 onClick={handleSubmit}
                 size="large"
                 endIcon={<BackupIcon />}
+                style={{ marginBottom: "32px" }}
               >
                 Submit
               </SubmitButton>
             </center>
-          </Card>
-        </center>
-
-        <Popover
-          id={id}
-          open={open}
-          onClick={handleClose}
-          onClose={handleClose}
-          anchorReference="none"
-          classes={{
-            root: classes.popoverRoot,
-          }}
-          sx={{
-            ".MuiPopover-paper": {
-              background: "rgba(230,    224, 227, 0.31)",
-              boxShadow: "none",
-            },
-          }}
-          style={{ width: "100%" }}
-        >
-          <center>
-            <div style={{ padding: '16px', margin: '16px' }}>
-              <Grid container spacing={2} >
-
-                {movies.results?.map((i) => (
-                  <Grid xs={4}>
-
-                    <div key={i.id} style={{ width: '70%', height: '500px', background: 'rgba(230,    224, 227, 0.91)', borderRadius: '15px', margin: '16px' }}>
-                      <CardActionArea style={{ height: '100%' }} onClick={(evt) => {
-                        console.log(i.id);
-                        selectedMovies.push(i);
-                        console.log(selectedMovies);
-                        axios
-                          .post(server_base_url + "/addmovie", {
-                            movie: i,
-                            uid: currentUser.uid,
-                          })
-                          .then((response) => handleClose());
-                      }}>
-
-                        <MovieCard title={i.original_title} release_date={i.release_date} vote_average={i.vote_average} overview={i.overview} poster_path={i.poster_path} />
-
-
-
-                      </CardActionArea>
-                    </div>
-                  </Grid>
-
-
-                ))}
-              </Grid>
-
-            </div>
-          </center>
-        </Popover>
-
-        <div style={{ padding: '16px', margin: '16px' }}>
-          <center>
-          <Grid container spacing={2} >
-
-            {selectedMovies?.map((i) => (
-              <Grid xs={4}>
-                <div key={i.id} style={{ width: '70%', height: '500px', background: 'rgba(230,    224, 227, 0.51)', borderRadius: '15px', margin: '16px' }}>
-
-                  <MovieCard title={i.original_title} release_date={i.release_date} vote_average={i.vote_average} overview={i.overview} poster_path={i.poster_path} />
-                </div>
-              </Grid>
-            ))}
-          </Grid>
-          </center>
+          )}
         </div>
-      </div>
+      </>
     </div>
   );
 }

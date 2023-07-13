@@ -15,7 +15,7 @@ export const MovieCard = (props) => {
                     <CardMedia
                         component="img"
                         sx={{ width: '60%', }}
-                        style={{ borderRadius: '15px', margin: '16px', border:'2px solid #dadada', outline:'none', borderColor:'#9ecaed', boxShadow:'0 0 10px #9ecaed' }}
+                        style={{ borderRadius: '15px', margin: '16px', border:'2px solid #dadada', outline:'none', borderColor:'#303233', boxShadow:'0 0 10px #303233' }}
                         image={
                             "https://image.tmdb.org/t/p/original" + props.poster_path
                         }
