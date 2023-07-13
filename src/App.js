@@ -15,9 +15,13 @@ import ChatRoom from './components/ChatRoom';
 import Submit from './components/SubmitData';
 import Login from './components/Login'
 import Team from './components/Team';
-import AddMovies from './components/AddMovies';
+import AddMovies from './components/addMovies/AddMovies';
 import UserHomePage from './components/userhome/UserHomePage';
 import Addchannels from './components/Youtube/Addchannels';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 export default function App() {
 

@@ -1,44 +1,30 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
-import ResponsiveAppBar from "./ResponsiveAppBar";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import { useEffect, useState } from "react";
-import { List } from "@mui/material";
-import { ListItem } from "@mui/material";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-import { alpha } from "@mui/material/styles";
 import Popover from "@mui/material/Popover";
 import { CardActionArea } from "@mui/material";
 import axios from "axios";
-import { useAuth } from "../contexts/authContexts";
-import StepperComponent from "./StepperComponent";
+import { useAuth } from "../../contexts/authContexts";
+import StepperComponent from "../StepperComponent";
 import { grey } from "@mui/material/colors";
 import { Link, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
-import { Search } from "@mui/icons-material";
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 import BackupIcon from "@mui/icons-material/Backup";
-import { autocompleteClasses } from "@mui/material/Autocomplete";
-import Popper from "@mui/material/Popper";
 import Rating from "@mui/material/Rating";
+import { MovieCard } from "./MovieCard";
 
 const fetch = require("node-fetch");
 
@@ -58,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     borderRadius: 5,
-    margin:'8px',
+    margin: '8px',
     "&:hover": {
       backgroundColor: "#fff",
     },
@@ -141,6 +127,8 @@ const SubmitButton = styled(Button)(({ theme }) => ({
   borderRadius: 100,
   borderColor: "#000",
 }));
+
+
 
 export default function AddMovies() {
   const [movies, setMovies] = useState({});
@@ -314,154 +302,62 @@ export default function AddMovies() {
           }}
           sx={{
             ".MuiPopover-paper": {
-              background: "transparent",
+              background: "rgba(230,    224, 227, 0.31)",
               boxShadow: "none",
             },
           }}
           style={{ width: "100%" }}
         >
           <center>
-            <div style={{ width: "75%", padding:'16px', margin:'16px' }}>
-              {movies.results?.map((i) => (
-                <div key={i.id} className={classes.card}  
-          >
-                  <CardActionArea
-                    onClick={(evt) => {
-                      console.log(i.id);
-                      selectedMovies.push(i);
-                      console.log(selectedMovies);
-                      axios
-                        .post(server_base_url + "/addmovie", {
-                          movie: i,
-                          uid: currentUser.uid,
-                        })
-                        .then((response) => handleClose());
-                    }}
-                  >
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Box sx={{ display: "flex", flexDirection: "column" }}>
-                        <CardContent>
-                          <Typography
-                            component="div"
-                            variant="h5"
-                            style={{ textAlign: "left" }}
-                          >
-                            {i.original_title}
-                          </Typography>
-                          <Stack direction="row" justifyContent="space-between">
-                          <Typography
-                            variant="subtitle2"
-                            color="text.primary"
-                            component="div"
-                            style={{ textAlign: "left", paddingTop:'8px' }}
+            <div style={{ padding: '16px', margin: '16px' }}>
+              <Grid container spacing={2} >
 
-                          >
-                             {i.release_date}
-                          </Typography>
-                          <Rating name="read-only" value={i.vote_average} max={10} style={{paddingTop:'8px', paddingBottom:'8px'}} />
+                {movies.results?.map((i) => (
+                  <Grid xs={4}>
 
-                          </Stack>
-                          
-                          
-                          <Typography
-                            variant="body1"
-                            color="text.primary"
-                            component="div"
-                            sx={{ marginTop: "8px" }}
-                            style={{
-                              textOverflow: "ellipsis",
-                              wordWrap: "break-word",
-                              overflow: "hidden",
-                              maxHeight: "9.6em",
-                              lineHeight: "1.8em",
-                              textAlign:'left'
-                            }}
-                          >
-                            {i.overview}
-                          </Typography>
+                    <div key={i.id} style={{ width: '70%', height: '500px', background: 'rgba(230,    224, 227, 0.91)', borderRadius: '15px', margin: '16px' }}>
+                      <CardActionArea style={{ height: '100%' }} onClick={(evt) => {
+                        console.log(i.id);
+                        selectedMovies.push(i);
+                        console.log(selectedMovies);
+                        axios
+                          .post(server_base_url + "/addmovie", {
+                            movie: i,
+                            uid: currentUser.uid,
+                          })
+                          .then((response) => handleClose());
+                      }}>
+
+                        <MovieCard title={i.original_title} release_date={i.release_date} vote_average={i.vote_average} overview={i.overview} poster_path={i.poster_path} />
 
 
-                          
-                        </CardContent>
-                      </Box>
 
-                      <CardMedia
-                        component="img"
-                        sx={{width:'20%'}}
-                        image={
-                          "https://image.tmdb.org/t/p/original" + i.poster_path
-                        }
-                        alt="Live from space album cover"
-                      />
-                      
-                    </Stack>
-                  </CardActionArea>
-                </div>
-              ))}
+                      </CardActionArea>
+                    </div>
+                  </Grid>
+
+
+                ))}
+              </Grid>
+
             </div>
           </center>
         </Popover>
 
-        <div>
-          {selectedMovies?.map((i) => (
-            <Card key={i.id} className={classes.cardMain}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  <CardContent>
-                    <Typography component="div" variant="h5">
-                      {i.original_title}
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      color="text.secondary"
-                      component="div"
-                    >
-                      Release Date: {i.release_date}
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      color="text.secondary"
-                      component="div"
-                    >
-                      Popularity: {i.popularity}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      color="text.secondary"
-                      component="div"
-                      sx={{ marginTop: "8px" }}
-                    >
-                      {i.overview}
-                    </Typography>
+        <div style={{ padding: '16px', margin: '16px' }}>
+          <center>
+          <Grid container spacing={2} >
 
-                    <Typography
-                      variant="subtitle2"
-                      color="text.secondary"
-                      component="div"
-                      sx={{ marginTop: "8px" }}
-                    >
-                      Average Rating: {i.vote_average}
-                    </Typography>
-                  </CardContent>
-                </Box>
+            {selectedMovies?.map((i) => (
+              <Grid xs={4}>
+                <div key={i.id} style={{ width: '70%', height: '500px', background: 'rgba(230,    224, 227, 0.51)', borderRadius: '15px', margin: '16px' }}>
 
-                <CardMedia
-                  component="img"
-                  sx={{ width: 151, margin: "16px" }}
-                  image={"https://image.tmdb.org/t/p/original" + i.poster_path}
-                  alt="Live from space album cover"
-                />
-              </Stack>
-            </Card>
-          ))}
+                  <MovieCard title={i.original_title} release_date={i.release_date} vote_average={i.vote_average} overview={i.overview} poster_path={i.poster_path} />
+                </div>
+              </Grid>
+            ))}
+          </Grid>
+          </center>
         </div>
       </div>
     </div>
