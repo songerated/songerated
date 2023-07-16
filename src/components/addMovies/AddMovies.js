@@ -199,11 +199,11 @@ export default function AddMovies() {
             <Card
               variant="outlined"
               sx={{
-                backgroundColor: "rgba(255,255,255,0.5)",
+                backgroundColor: "rgba(255,255,255,0.3)",
                 padding: "16px",
                 marginBottom: "16px",
               }}
-              style={{ width: "75%" }}
+              style={{ width: "50%", borderRadius:'15px' }}
               alignContent="center"
             >
               <Typography
