@@ -21,10 +21,10 @@ export default function Spotifyhtml() {
   return (
     <div>
       <Container
-        className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "100vh" }}
+        className="d-flex justify-content-center"
+        style={{ minHeight: "100vh", width:'50%', marginTop:'32px' }}
       >
-        <div className="w-100" style={{ maxWidth: "650px" }}>
+        <div className="w-100" style={{ width:'25%' }}>
           <Card style={{ backgroundColor: "rgba(230, 224, 227, 0.71)" }}>
             <Card.Body>
               <Box
