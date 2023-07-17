@@ -29,7 +29,6 @@ function MatchComponent(props) {
 
   return (
     <center>
-      <Card sx={{width:600, display: 'inline-block', margin: '16px' }}>
       <Box sx={{ display: 'flex', flexDirection: 'row' }}>
         <CardMedia
             component="img"
@@ -37,7 +36,7 @@ function MatchComponent(props) {
             image=  {"../../assets/" + num + ".png"}
             alt="Live from space album cover"
         />
-        <center>
+        {/* <center>
         <CardContent sx={{ flex: '1 0 auto', margin: '20px' }}>
           <Typography component="div" variant="h5">
             {props.name}
@@ -67,11 +66,10 @@ function MatchComponent(props) {
             {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
           </IconButton>
         </Box>
-        </center>
+        </center> */}
         
       </Box>
      
-    </Card>
     </center>
   )
 }

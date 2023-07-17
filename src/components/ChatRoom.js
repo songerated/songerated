@@ -9,7 +9,6 @@ import { PropaneSharp } from '@mui/icons-material';
 import { LeakAddTwoTone } from '@material-ui/icons';
 import ResponsiveAppBar from './ResponsiveAppBar'
 import React, { useEffect, useRef, useState } from 'react'
-import MatchComponent from './MatchComponent'
 import { makeStyles } from '@material-ui/core/styles';
 import { Query } from 'firebase/firestore';
 import { where } from 'firebase/firestore';

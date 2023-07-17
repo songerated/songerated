@@ -31,15 +31,9 @@ const RecommendedSongsPopover = (props) => {
   const classes = useStyles();
 
   const [popoverOpen, setPopoverOpen] = useState(true);
-  const [isRecommendationExecuted, setIsRecommendationExecuted] =
-    useState(false);
 
   const handleClose = () => {
     setPopoverOpen(false);
-  };
-
-  const handleOpen = () => {
-    setPopoverOpen(true);
   };
 
   console.log(props.recommendedSongs)

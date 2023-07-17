@@ -2,7 +2,6 @@ import Header from './Header'
 import Teamcard from './Teamcard'
 import ResponsiveAppBar from './ResponsiveAppBar'
 import React, { useEffect, useRef, useState } from 'react'
-import MatchComponent from './MatchComponent'
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@mui/material'
 const useStyles = makeStyles((theme) => ({
