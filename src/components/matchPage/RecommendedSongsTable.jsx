@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
+import { Box } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -19,19 +20,19 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
+  "&:nth-of-type()": {
     backgroundColor: theme.palette.action.hover,
   },
   // hide last border
   "&:last-child td, &:last-child th": {
-    border: 0,
+    backgroundColor: theme.palette.action.hover,
   },
 }));
 
 const RecommendedSongsTable = (props) => {
   return (
-    <div >
-      <TableContainer>
+      <TableContainer         style={{ backgroundColor: "#0000" }}
+      >
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
@@ -44,7 +45,8 @@ const RecommendedSongsTable = (props) => {
               </TableHead>
               <TableBody>
                 {props.recommendedSongs?.map((track) => (
-                  <StyledTableRow key={track.id}>
+                  <StyledTableRow key={track.id}                 style={{ backgroundColor: "rgba(230, 224, 227, 0.91)" }}
+                  >
                     <StyledTableCell component="th" scope="row">
                       {track.name}
                     </StyledTableCell>
@@ -65,7 +67,6 @@ const RecommendedSongsTable = (props) => {
               </TableBody>
             </Table>
           </TableContainer>
-    </div>
   )
 }
 

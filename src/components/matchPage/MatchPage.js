@@ -187,20 +187,44 @@ function MatchPage() {
             root: classes.popoverRoot,
           }}
           anchorReference="none"
-
+          sx={{
+            ".MuiPopover-paper": {
+              background: "rgba(230,    224, 227, 0.31)",
+              boxShadow: "none",
+              overflow: "hidden",
+              width: "100%",
+              borderRadius: "15px",
+            },
+          }}
         >
           {isRecommendationExecuted && (
-            <center>
-              <Box sx={{ margin: "32px" }}>
-                <Typography variant="h6" gutterBottom>
-                  Our AI Model generated some songs based on your top Artists
-                  and top Songs <br />
-                </Typography>
-              </Box>
-              <Box sx={{ margin: "32px", width: "80%" }}>
+            <div style={{ margin: "48px" }}>
+              <div
+                style={{
+                  padding: "16px",
+                  background: "rgba(230,    224, 227, 0.91)",
+                  marginBottom: "8px",
+                }}
+              >
+                <center>
+                  <Typography variant="h6">
+                    Our AI Model generated some songs based on your top Artists
+                    and top Songs <br />
+                  </Typography>
+                </center>
+              </div>
+              <Box
+                sx={{
+                  bgcolor: "transparent",
+                  margin: "auto",
+                  overflowY: "auto",
+                  width: "100%",
+                  height: "100vh",
+                }}
+              >
                 <RecommendedSongsTable recommendedSongs={recommendedSongs} />
               </Box>
-            </center>
+            </div>
           )}
         </Popover>
       )}
