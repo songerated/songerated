@@ -5,21 +5,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import MatchComponent from ".././MatchComponent";
-import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { useAuth } from "../../contexts/authContexts";
-import Typography from "@mui/material/Typography";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Popover from "@mui/material/Popover";
 import CircularProgress from "@mui/material/CircularProgress";
-import RecommendedSongsTable from "./RecommendedSongsTable";
+import RecommendedSongsPopover from "./RecommendedSongsPopover";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,24 +49,21 @@ function MatchPage() {
   const topArtists = window.localStorage.getItem("topArtists");
   const topTracks = window.localStorage.getItem("topTracks");
 
-  const topArtistsArray = topArtists.split(",");
-  const topTracksArray = topTracks.split(",");
-
   const [recommendedSongs, setRecommendedSongs] = useState([]);
-  const open = Boolean(anchorEl);
-  const [popoverOpen, setPopoverOpen] = useState(true);
+  const [popoverOpen, setPopoveropen] = useState(true)
 
   console.log(topArtists);
   console.log(topTracks);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-    setPopoverOpen(false);
-  };
+  const handlePopoverButton = () => {
+    setPopoveropen(true)
+  }
 
-  const handleOpen = () => {
-    setPopoverOpen(true);
-  };
+  const handlePopoverClick = () => {
+    setPopoveropen(false)
+  }
+
+  
 
   const getRecommendedSongs = async (e) => {
     const { data } = await axios.get(spotify_url + "/recommendations", {
@@ -177,56 +163,8 @@ function MatchPage() {
           <CircularProgress color="inherit" />
         </Box>
       ) : (
-        <Popover
-          open={popoverOpen}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          onClick={handleClose}
-          style={{ width: "100%" }}
-          classes={{
-            root: classes.popoverRoot,
-          }}
-          anchorReference="none"
-          sx={{
-            ".MuiPopover-paper": {
-              background: "rgba(230,    224, 227, 0.31)",
-              boxShadow: "none",
-              overflow: "hidden",
-              width: "100%",
-              borderRadius: "15px",
-            },
-          }}
-        >
-          {isRecommendationExecuted && (
-            <div style={{ margin: "48px" }}>
-              <div
-                style={{
-                  padding: "16px",
-                  background: "rgba(230,    224, 227, 0.91)",
-                  marginBottom: "8px",
-                }}
-              >
-                <center>
-                  <Typography variant="h6">
-                    Our AI Model generated some songs based on your top Artists
-                    and top Songs <br />
-                  </Typography>
-                </center>
-              </div>
-              <Box
-                sx={{
-                  bgcolor: "transparent",
-                  margin: "auto",
-                  overflowY: "auto",
-                  width: "100%",
-                  height: "100vh",
-                }}
-              >
-                <RecommendedSongsTable recommendedSongs={recommendedSongs} />
-              </Box>
-            </div>
-          )}
-        </Popover>
+        popoverOpen && (<RecommendedSongsPopover recommendedSongs={recommendedSongs} popoverClick={handlePopoverClick}/>)
+        
       )}
 
       {!loading && (
@@ -246,7 +184,7 @@ function MatchPage() {
               type={"submit"}
               variant="contained"
               sx={{ bgcolor: "black", margin: "16px" }}
-              onClick={handleOpen}
+              onClick={handlePopoverButton}
             >
               Show AI Recommended Songs
             </Button>

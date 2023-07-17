@@ -6,8 +6,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import { Box } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,8 +28,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const RecommendedSongsTable = (props) => {
+  console.log(props.recommendedSongs)
   return (
-      <TableContainer         style={{ backgroundColor: "#0000" }}
+      <TableContainer style={{ backgroundColor: "#0000" }}
       >
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>

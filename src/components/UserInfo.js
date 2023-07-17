@@ -283,13 +283,13 @@ export default function UserInfo() {
   function handleOnSubmit() {
     setLoading(true);
     window.localStorage.setItem("topArtists", [
-      topArtists[0].id,
-      topArtists[1].id,
-      topArtists[2].id,
+      topArtists[0]?.id,
+      topArtists[1]?.id,
+      topArtists[2]?.id,
     ]);
     window.localStorage.setItem("topTracks", [
-      topTracks[0].id,
-      topTracks[1].id,
+      topTracks[0]?.id,
+      topTracks[1]?.id,
     ]);
 
     axios
