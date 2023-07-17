@@ -90,7 +90,10 @@ function MatchPage() {
             },
           })
           .then((response2) => {
+            console.log(response2.data)
+            if(response2.data != null){
             setArtistCount(response2.data);
+            }
             axios
               .get(server_base_url + "/matchingmovies", {
                 params: {
@@ -98,7 +101,10 @@ function MatchPage() {
                 },
               })
               .then((response3) => {
+                console.log(response3.data)
+                if(response3.data!=null){
                 setMovieCount(response3.data);
+                }
                 setLoading(false);
               });
           });
