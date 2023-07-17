@@ -96,8 +96,7 @@ const Addchannels = () => {
         channels: channelList,
         uid: id,
       })
-      .then((response) => navigate("/addmovies"));
-    navigate("/match");
+      .then((response) => navigate("/match"));
   };
 
   const handlOnCliCk = () => {
@@ -111,7 +110,7 @@ const Addchannels = () => {
       <div style={{ margin: "32px" }}>
         <StepperComponent activeStep={3}></StepperComponent>
       </div>
-      {!isAccessGranted && (
+      {!channelList && (
         <center>
           <YoutubeAccess handleOnClick={handlOnCliCk} />
         </center>
@@ -143,7 +142,7 @@ const Addchannels = () => {
         </Grid>
       </center>
 
-      {isAccessGranted && (
+      {channelList && (
         <center>
           <Button onClick={handleSubmit} variant="outlined" style={{background:"#000", color:'#fff'}}>Submit</Button>
         </center>

@@ -9,7 +9,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 
 const YoutubeAccess = (props) => {
   return (
-    <Card style={{ margin: "32px" , width:'40%', padding:'32px', background:'rgba(230, 224, 227, 0.41)'}}>
+    <Card style={{ margin: "32px" , width:'40%', padding:'32px', background:'rgba(230, 224, 227, 0.41)', borderRadius:'15px'}}>
       <CardMedia
         component="img"
         alt="green iguana"

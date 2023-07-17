@@ -10,7 +10,7 @@ import ConnectSpotify from './components/ConnectSpotify';
 import DatabaseHome from './components/databaseComponents/DatabaseHome';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
 import { Profile } from './components/Profile';
-import MatchPage from './components/MatchPage';
+import MatchPage from './components/matchPage/MatchPage';
 import ChatRoom from './components/ChatRoom';
 import Submit from './components/SubmitData';
 import Login from './components/Login'
